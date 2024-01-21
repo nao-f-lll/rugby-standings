@@ -1,0 +1,50 @@
+package com.standings.model;
+
+import java.io.Serializable;
+
+public class Game implements Serializable{
+		
+	    
+	 	private static final long serialVersionUID = 5936600953675640410L;
+		private final Team localTeam;
+	    private final Team visitorTeam;
+	    private int localScore;
+	    private int visitorScore;
+	    private int weekNumber;
+	    private Fecha fecha;
+
+	    public Game(Team localTeam, Team visitorTeam, int localScore, int visitorScore, int weekNumber) {
+	    	
+	        this.localTeam = localTeam;
+	        this.visitorTeam = visitorTeam;
+	        this.localScore = localScore;
+	        this.visitorScore = visitorScore;	          
+	        this.weekNumber = weekNumber;
+	    }
+
+	    // getters
+	    
+	    public Team getLocalTeam() { return localTeam; }
+
+	    public Team getVisitorTeam() { return visitorTeam; }
+
+	    public int getLocalScore() { return localScore; }
+
+	    public int getVisitorScore() { return visitorScore; }
+	    
+	    public int getWeekNumber() { return weekNumber;}
+	    
+	    // setters
+
+	    public void setLocalScore(int localScore)     {  this.localScore = localScore; }
+
+	    public void setVisitorScore(int visitorScore) {  this.visitorScore = visitorScore;}
+
+		@Override
+		public String toString() {
+			return "Game " + localTeam.getName() + ", " + visitorTeam.getName() + "," + localScore
+					+ ", " + visitorScore + ", " + weekNumber + ", " + fecha + "]";
+		}
+}
+
+
