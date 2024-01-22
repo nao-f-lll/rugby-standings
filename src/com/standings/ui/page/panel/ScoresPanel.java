@@ -6,9 +6,7 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -18,11 +16,17 @@ import javax.swing.JPanel;
 
 import com.standings.model.design.CustomBorder;
 import com.standings.model.design.CustomButton;
+import com.standings.ui.page.panel.scores.WeekEighthPanel;
+import com.standings.ui.page.panel.scores.WeekFivePanel;
+import com.standings.ui.page.panel.scores.WeekFourPanel;
+import com.standings.ui.page.panel.scores.WeekNinePanel;
 import com.standings.ui.page.panel.scores.WeekOnePanel;
-import com.standings.model.Game;
+import com.standings.ui.page.panel.scores.WeekSevenPanel;
+import com.standings.ui.page.panel.scores.WeekSixPanel;
+import com.standings.ui.page.panel.scores.WeekTenPanel;
+import com.standings.ui.page.panel.scores.WeekThreePanel;
+import com.standings.ui.page.panel.scores.WeekTwoPanel;
 import com.standings.model.Season;
-import com.standings.model.Team;
-import com.standings.model.Week;
 
 public class ScoresPanel extends JPanel implements ActionListener{
 
@@ -30,15 +34,15 @@ public class ScoresPanel extends JPanel implements ActionListener{
 
 	
 	private WeekOnePanel weekOnePanel;
-	//private WeekTwoPanel weekTwoPanel;
-	//private WeekThreePanel weekThreePanel;
-	//private WeekFourPanel weekFourPanel;
-	//private WeekFivePanel weekFivePanel;	
-	//private WeekSixPanel weekSixPanel;
-	//private WeekSevenPanel weekSevenPanel;
-	//private WeekEighthPanel weekEighthPanel;
-	//private WeekNinePanel weekNinePanel;
-	//private WeekTenPanel weekTenPanel;
+	private WeekTwoPanel weekTwoPanel;
+	private WeekThreePanel weekThreePanel;
+	private WeekFourPanel weekFourPanel;
+	private WeekFivePanel weekFivePanel;	
+	private WeekSixPanel weekSixPanel;
+	private WeekSevenPanel weekSevenPanel;
+	private WeekEighthPanel weekEighthPanel;
+	private WeekNinePanel weekNinePanel;
+	private WeekTenPanel weekTenPanel;
 	
 	private JPanel weeksPanelButton;
 	private JPanel panelButton;
@@ -217,18 +221,19 @@ public class ScoresPanel extends JPanel implements ActionListener{
 	public void initializeWeekPanels() {
 		
 		 weekOnePanel    = new WeekOnePanel(this.season.getTeams(),this.season.getGames());
-		 /*
-		 weekTwoPanel    = new WeekTwoPanel(this.teams, this.games, teamLogos);
-		 weekThreePanel  = new WeekThreePanel(this.teams, this.games, teamLogos);
-		 weekFourPanel   = new WeekFourPanel(this.teams, this.games, teamLogos);
-		 weekFivePanel   = new WeekFivePanel(this.teams, this.games, teamLogos);
-		 weekSixPanel    = new WeekSixPanel(this.teams, this.games, teamLogos);
-		 weekSevenPanel  = new WeekSevenPanel(this.teams, this.games, teamLogos);
-		 weekEighthPanel = new WeekEighthPanel(this.teams, this.games, teamLogos);
-		 weekNinePanel   = new WeekNinePanel(this.teams, this.games, teamLogos);
-		 weekTenPanel   = new WeekTenPanel(this.teams, this.games, teamLogos);
+		 
+		 weekTwoPanel    = new WeekTwoPanel(this.season.getTeams(),this.season.getGames());
+		 
+		 weekThreePanel  = new WeekThreePanel(this.season.getTeams(),this.season.getGames());
+		 weekFourPanel   = new WeekFourPanel(this.season.getTeams(),this.season.getGames());
+		 weekFivePanel   = new WeekFivePanel(this.season.getTeams(),this.season.getGames());
+		 weekSixPanel    = new WeekSixPanel(this.season.getTeams(),this.season.getGames());
+		 weekSevenPanel  = new WeekSevenPanel(this.season.getTeams(),this.season.getGames());
+		 weekEighthPanel = new WeekEighthPanel(this.season.getTeams(),this.season.getGames());
+		 weekNinePanel   = new WeekNinePanel(this.season.getTeams(),this.season.getGames());
+		 weekTenPanel   = new WeekTenPanel(this.season.getTeams(),this.season.getGames());
 
-		*/
+		
 		 this.add(weekOnePanel);
 	}
 	
@@ -244,37 +249,38 @@ public class ScoresPanel extends JPanel implements ActionListener{
 		case 1:
 			weekOnePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
-			/*
+			
 		case 2:
-			weekTwoPanel.addGameInfo(this.teams, this.games);
+			weekTwoPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
+			
 		case 3:
-			weekThreePanel.addGameInfo(this.teams, this.games);
+			weekThreePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
 		case 4:
-			weekFourPanel.addGameInfo(this.teams, this.games);
+			weekFourPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
 		case 5:
-			weekFivePanel.addGameInfo(this.teams, this.games);
+			weekFivePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;	
 		case 6:
-			weekSixPanel.addGameInfo(this.teams, this.games);
+			weekSixPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
 		case 7:
-			weekSevenPanel.addGameInfo(this.teams, this.games);
+			weekSevenPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
 		case 8:
-			weekEighthPanel.addGameInfo(this.teams, this.games);
+			weekEighthPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
 		case 9:
-			weekNinePanel.addGameInfo(this.teams, this.games);
+			weekNinePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 			break;
 		case 10:	
 			
-		weekTenPanel.addGameInfo(this.teams, this.games);
+		weekTenPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
 
 			break;
-			*/
+			
 		default:
 			
 		}
@@ -303,8 +309,9 @@ public class ScoresPanel extends JPanel implements ActionListener{
       
     	Map<JButton, JPanel> buttonPanelMap = new HashMap<>();
         buttonPanelMap.put(weekOneButton, weekOnePanel);
-        /*
+       
         buttonPanelMap.put(weekTwoButton, weekTwoPanel);
+       
         buttonPanelMap.put(weekThreeButton, weekThreePanel);
         buttonPanelMap.put(weekFourButton, weekFourPanel);
         buttonPanelMap.put(weekFiveButton, weekFivePanel);
@@ -313,7 +320,7 @@ public class ScoresPanel extends JPanel implements ActionListener{
         buttonPanelMap.put(weekEighthButton, weekEighthPanel);
         buttonPanelMap.put(weekNineButton, weekNinePanel);
         buttonPanelMap.put(weekTenButton, weekTenPanel);
-      */
+   
         for (JButton button : buttonPanelMap.keySet()) {
             button.setBorder(null);
         }

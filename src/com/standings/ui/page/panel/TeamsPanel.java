@@ -90,8 +90,8 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	       teamsPanelButton.setBounds(0, 62, 1522, 60);
 	       this.add(teamsPanelButton);
 
-	       int buttonWidth = 190;
-	       int horizontalGap = 3; 
+	       int buttonWidth = 187;
+	       int horizontalGap = 2; 
 	       int initialX = 10;
 
 	       allBlacksButton = new JButton("All Blacks");

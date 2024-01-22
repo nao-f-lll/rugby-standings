@@ -11,10 +11,14 @@ import com.standings.model.design.CustomBorder;
 
 import java.awt.Color;
 
-public class WeekOnePanel extends JPanel{
+public class WeekTwoPanel extends JPanel{
 
-	private static final long serialVersionUID = 2821219558128276869L;
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -304933483533019200L;
 	private JLabel firstLocalTeamName;
 	private JLabel firstLocalTeamPoint;
 	
@@ -36,14 +40,14 @@ public class WeekOnePanel extends JPanel{
 	private ArrayList<Team> teams;
 	private ArrayList<Game> games;
 	
-	final int  GAME_ONE = 0;
-	final int  GAME_TWO = 1;
-	final int  GAME_THREE = 2;
+	final int  GAME_ONE = 3;
+	final int  GAME_TWO = 4;
+	final int  GAME_THREE = 5;
 	private JPanel gameThreePanel;
 	private JPanel gameTwoPanel;
 	
 
-	public WeekOnePanel(ArrayList<Team> teams, ArrayList<Game> games) {
+	public WeekTwoPanel(ArrayList<Team> teams, ArrayList<Game> games) {
 		
 		   	this.setBounds(0, 115, 1525, 845);
 		   	this.setLayout(null);

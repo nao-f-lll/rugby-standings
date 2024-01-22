@@ -12,6 +12,7 @@ public class Season implements Serializable{
 	private ArrayList<Week>  weeks;
 	private ArrayList<Team> teams;
 	private ArrayList<Game> games;
+	private boolean state;
 	
 	
 	public Season(int seasonCode, int year, ArrayList<Week>  weeks,  ArrayList<Team> teams, ArrayList<Game> games) {

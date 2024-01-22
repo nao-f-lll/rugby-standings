@@ -48,28 +48,6 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
 	private ArrayList<Season> seasons;
 	private FileIO<Season> fileIo;
 	
-	/////
-
-    /* 
-    
-    private JLabel allBalckIconLabel; 
-    private ImageIcon allbalcksIcon;
-    private  JLabel allbalcksStadiumLabel;
-    private JLabel allbalcksStadiumNameLabel;
-    private JLabel allbalcksFundiationYearLabel;
-    private JLabel allbalcksCityNameLabel;
-    private JLabel allbalcksFundiationLabel;
-    private JLabel allbalcksCityLabel;
-    private JLabel allbalcksDescriptionLabel;
-    
-    
-        */
-
-     
-	
-	
-	
-	/////
 
 	
 	
@@ -112,7 +90,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
         games = new ArrayList<>();
         weeks = new ArrayList<>();
         
-      // season = new Season(1, 2023, weeks, teams, games);
+       //season = new Season(1, 2023, weeks, teams, games);
        //seasons.add(season);
     }
     
@@ -138,8 +116,8 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
     }
     
     private void initializeButtonPanels() {
-       // standingsPanel = new StandingsPanel(teams, games, weeks);   
-       // teamsPanel = new TeamsPanel();          
+         
+              
        // updateDataPanel = new UpdateDataPanel(teams, games,standingsPanel, scoresPanel);
         
     	standingsPanel = new StandingsPanel(season, seasons);
@@ -148,15 +126,13 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);
         seasonsManagement = new SeasonsManagement();
         
-        
-        
 
-        
    
         scoresPanel.setLayout(null);
         standingsPanel.setLayout(null);
         teamsPanel.setLayout(null);
         updateDataPanel.setLayout(null);
+        seasonsManagement.setLayout(null);
       
     
         
@@ -166,83 +142,23 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
         
         
         	
-        
-        
-        	//	allbalcksIcon = new ImageIcon(SportsDashboardPage.class.getResource("/images/all_blacks_logo.png"));
-
-        
-               
-             
-    	
+       
         
        mainPanel.add(scoresPanel, BorderLayout.CENTER);
        scoresPanel.add(panelButton);
        
        
-       /*
-       
-       allBalckIconLabel = new JLabel("");
-       
-       allBalckIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
-       allBalckIconLabel.setIcon(allbalcksIcon);
-       allBalckIconLabel.setBounds(520, 132, 423, 220);
-       scoresPanel.add(allBalckIconLabel);
-       
-       
-       allbalcksCityLabel = new JLabel("Ciudad");
-       scoresPanel.add(allbalcksCityLabel);
-       allbalcksCityLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-       allbalcksCityLabel.setBounds(470, 632, 148, 54);
-       
-       allbalcksFundiationLabel = new JLabel("Fundación");
-       scoresPanel.add(allbalcksFundiationLabel);
-       allbalcksFundiationLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-       allbalcksFundiationLabel.setBounds(753, 566, 148, 54);
-       
-        
-        allbalcksStadiumLabel = new JLabel("Estadio");
-        scoresPanel.add(allbalcksStadiumLabel);
-        allbalcksStadiumLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        allbalcksStadiumLabel.setBounds(113, 632, 109, 54);
-        
-           
-           allbalcksStadiumNameLabel = new JLabel("Eden Park");
-           scoresPanel.add(allbalcksStadiumNameLabel);
-           allbalcksStadiumNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-           allbalcksStadiumNameLabel.setBounds(108, 688, 300, 54);
-           
-           
-           allbalcksCityNameLabel = new JLabel("Auckland");
-           scoresPanel.add(allbalcksCityNameLabel);
-           allbalcksCityNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-           allbalcksCityNameLabel.setBounds(454, 698, 148, 54);
-           
-           allbalcksFundiationYearLabel = new JLabel("1960");
-           scoresPanel.add(allbalcksFundiationYearLabel);
-           allbalcksFundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-           allbalcksFundiationYearLabel.setBounds(753, 632, 148, 54);
-           
-
        
        
     
-           allbalcksDescriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks.<br>"
-           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-                                                   + "como uno de los equipos deportivos más exitosos de la historia.</html>");
-           scoresPanel.add(allbalcksDescriptionLabel);
-           allbalcksDescriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-           allbalcksDescriptionLabel.setBounds(208, 364, 628, 205);
-        */
+        
 
 
   
     }
    
     
-    
-    /////////
-    
-    
+ 
     
 
     	
@@ -262,14 +178,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
  
     
  
-    
-    
-   
-    
-    
-    
-    
-    ///
+
     
     private void initializeButtons() {
         goToScoresButton = new JButton("Partidos");
@@ -311,7 +220,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
         
         goToSeasonsMangement  = new JButton("Gestión de Temporadas");
         goToSeasonsMangement.setFont(new Font("Tahoma", Font.BOLD, 25));
-        goToSeasonsMangement.setBounds(600, 10, 200, 33);
+        goToSeasonsMangement.setBounds(600, 10, 373, 33);
         goToSeasonsMangement.setFocusable(false);
         goToSeasonsMangement.setBackground(Color.WHITE);
         goToSeasonsMangement.setUI(new CustomButton()); 

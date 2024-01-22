@@ -69,7 +69,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
     private JComboBox<String> weekComboBox;
     private DefaultComboBoxModel<String> comboWeekModel;
     
-    private JButton submitButton;
+   
     private JButton updateButton;
   
     
@@ -93,32 +93,32 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 	
 	private JLabel firstLocalTeamName;
-	private JLabel firstLocalTeamIcon;
+	
 	private JTextField firstLocalTeamPointField;
 	private JLabel firstLocalTeamPointLabel;
 	
 	private JLabel firstVisitorTeamName;
-	private JLabel firstVisitorTeamIcon;
+	
 	private JTextField firstVisitorTeamPointField;
 	private JLabel firstVisitorTeamPointLabel;   
 	
 	private JLabel secondLocalTeamName;
-	private JLabel secondLocalTeamIcon;
+	
 	private JTextField secondLocalTeamPointField;
 	private JLabel secondLocalTeamPointLabel;
 	
 	private JLabel secondVisitorTeamName;
-	private JLabel secondVisitorTeamIcon;
+
 	private JTextField secondVisitorTeamPointField;
 	private JLabel secondVisitorTeamPointLabel;
 	
 	private JLabel thirdLocalTeamName;
-	private JLabel thirdLocalTeamIcon;
+
 	private JTextField thirdLocalTeamPointField;
 	private JLabel thirdLocalTeamPointLabel;
 	
 	private JLabel thirdVisitorTeamName;
-	private JLabel thirdVisitorTeamIcon;
+
 	private JTextField thirdVisitorTeamPointField;
 	private JLabel thirdVisitorTeamPointLabel;
 	
@@ -181,19 +181,17 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	private void initializegameOneGraphics() {
 		firstLocalTeamName = new JLabel(); 	
         firstLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        firstLocalTeamName.setBounds(1033, 200, 100, 37);
+        firstLocalTeamName.setBounds(900, 200, 100, 37);
         this.add(firstLocalTeamName);
         
-        firstLocalTeamIcon = new JLabel("");
-        firstLocalTeamIcon.setBounds(840, 160, 100, 118);
-        this.add(firstLocalTeamIcon);
+
         
         
        
       
         firstLocalTeamPointField = new JTextField();
         firstLocalTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        firstLocalTeamPointField.setBounds(1250, 203, 33, 27);
+        firstLocalTeamPointField.setBounds(1110, 203, 33, 27);
         this.add(firstLocalTeamPointField);
         firstLocalTeamPointField.setVisible(false);
         
@@ -201,31 +199,29 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
         
         firstLocalTeamPointLabel = new JLabel();
         firstLocalTeamPointLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        firstLocalTeamPointLabel.setBounds(1250, 203, 33, 27);
+        firstLocalTeamPointLabel.setBounds(1110, 203, 33, 27);
         this.add(firstLocalTeamPointLabel);
         
         
         firstVisitorTeamName = new JLabel();
   	    firstVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-  	    firstVisitorTeamName.setBounds(1033, 240, 100, 37);
+  	    firstVisitorTeamName.setBounds(900, 240, 100, 37);
   	    this.add(firstVisitorTeamName);
   	       
-  	    firstVisitorTeamIcon = new JLabel();
-  	    firstVisitorTeamIcon.setBounds(840, 200, 100, 118);
-  	    this.add(firstVisitorTeamIcon);     
+  	       
   	     
   	 
   	    
   	    firstVisitorTeamPointField = new JTextField();
   	    firstVisitorTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-  	    firstVisitorTeamPointField.setBounds(1250, 242, 33, 27);
+  	    firstVisitorTeamPointField.setBounds(1110, 242, 33, 27);
   	    this.add(firstVisitorTeamPointField);
   	    firstVisitorTeamPointField.setVisible(false);
      		
   	    
   	    firstVisitorTeamPointLabel = new JLabel();
   	    firstVisitorTeamPointLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-  	    firstVisitorTeamPointLabel.setBounds(1250, 242, 33, 27);
+  	    firstVisitorTeamPointLabel.setBounds(1110, 242, 33, 27);
   	    this.add(firstVisitorTeamPointLabel);
   	    
 	}
@@ -233,23 +229,21 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	private void initializeGameTwoGraphics() {
 		 secondLocalTeamName = new JLabel();
 		    secondLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    secondLocalTeamName.setBounds(1033, 340, 100, 37);
+		    secondLocalTeamName.setBounds(900, 340, 100, 37);
 		    this.add(secondLocalTeamName);
 		       
-		    secondLocalTeamIcon = new JLabel();
-		    secondLocalTeamIcon.setBounds(840, 300, 100, 118);
-		    this.add(secondLocalTeamIcon);
+	
 		      	       
 		    secondLocalTeamPointField = new JTextField();
 		    secondLocalTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    secondLocalTeamPointField.setBounds(1250, 342, 33, 27);
+		    secondLocalTeamPointField.setBounds(1110, 342, 33, 27);
 		    this.add(secondLocalTeamPointField);
 		    secondLocalTeamPointField.setVisible(false);
 		    
 		    
 		    secondLocalTeamPointLabel = new JLabel(); 
 		    secondLocalTeamPointLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    secondLocalTeamPointLabel.setBounds(1250, 342, 33, 27);
+		    secondLocalTeamPointLabel.setBounds(1110, 342, 33, 27);
 		    this.add(secondLocalTeamPointLabel);
 		    
 		    
@@ -258,25 +252,23 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	    
 		    secondVisitorTeamName = new JLabel();
 		    secondVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    secondVisitorTeamName.setBounds(1033, 380, 100, 37);      
+		    secondVisitorTeamName.setBounds(900, 380, 100, 37);      
 		    this.add(secondVisitorTeamName);
 		       
 	  
-		    secondVisitorTeamIcon = new JLabel();
-		    secondVisitorTeamIcon.setBounds(840, 340, 100, 118);
-		    this.add(secondVisitorTeamIcon);
+	
 		       
 		       
 		    secondVisitorTeamPointField = new JTextField();
 		    secondVisitorTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    secondVisitorTeamPointField.setBounds(1250, 382, 33, 27);
+		    secondVisitorTeamPointField.setBounds(1110, 382, 33, 27);
 		    this.add(secondVisitorTeamPointField);
 		    secondVisitorTeamPointField.setVisible(false);
 		    
 		    
 		    secondVisitorTeamPointLabel = new JLabel(); 
 		    secondVisitorTeamPointLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    secondVisitorTeamPointLabel.setBounds(1250, 382, 33, 27);
+		    secondVisitorTeamPointLabel.setBounds(1110, 382, 33, 27);
 		    this.add(secondVisitorTeamPointLabel);
 		    
 	}
@@ -285,23 +277,20 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	     
 		    thirdLocalTeamName = new JLabel();
 		    thirdLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    thirdLocalTeamName.setBounds(1033, 480, 100, 37);
+		    thirdLocalTeamName.setBounds(900, 480, 100, 37);
 		    this.add(thirdLocalTeamName);
-		       
-		    thirdLocalTeamIcon = new JLabel();
-		    thirdLocalTeamIcon.setBounds(840, 440, 100, 118);
-		    this.add(thirdLocalTeamIcon);
+		
 		       
 		    thirdLocalTeamPointField = new JTextField();
 		    thirdLocalTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    thirdLocalTeamPointField.setBounds(1250, 482, 33, 27);
+		    thirdLocalTeamPointField.setBounds(1110, 482, 33, 27);
 		    this.add(thirdLocalTeamPointField);
 		    thirdLocalTeamPointField.setVisible(false);   
 
 		    
 		    thirdLocalTeamPointLabel = new JLabel(); 
 		    thirdLocalTeamPointLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    thirdLocalTeamPointLabel.setBounds(1250, 482, 33, 27);
+		    thirdLocalTeamPointLabel.setBounds(1110, 482, 33, 27);
 		    this.add(thirdLocalTeamPointLabel);
 		    
 		    
@@ -309,24 +298,22 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		    
 		    thirdVisitorTeamName = new JLabel();
 		    thirdVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    thirdVisitorTeamName.setBounds(1033, 520, 100, 37);
+		    thirdVisitorTeamName.setBounds(900, 520, 100, 37);
 		    this.add(thirdVisitorTeamName);
 		       
 		       
-		    thirdVisitorTeamIcon = new JLabel();
-		    thirdVisitorTeamIcon.setBounds(840, 480, 100, 118);
-		    this.add(thirdVisitorTeamIcon);
+		
 		       
 		    thirdVisitorTeamPointField = new JTextField();
 		    thirdVisitorTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    thirdVisitorTeamPointField.setBounds(1250, 522, 33, 27);
+		    thirdVisitorTeamPointField.setBounds(1110, 522, 33, 27);
 		    this.add(thirdVisitorTeamPointField);
 		    thirdVisitorTeamPointField.setVisible(false);   
 
 		    
 		    thirdVisitorTeamPointLabel = new JLabel(); 
 		    thirdVisitorTeamPointLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		    thirdVisitorTeamPointLabel.setBounds(1250, 522, 33, 27);
+		    thirdVisitorTeamPointLabel.setBounds(1110, 522, 33, 27);
 		    this.add(thirdVisitorTeamPointLabel);
 		    
 		    
@@ -366,17 +353,12 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 
         
-        submitButton = new JButton("Guardar");
-        submitButton.setBounds(930, 620, 130, 45);
-        submitButton.setFocusable(false);
-        submitButton.setBackground(Color.lightGray);
-        submitButton.addActionListener(this);
-        this.add(submitButton);
+     
         
        
         
         updateButton = new JButton("Actualizar");
-        updateButton.setBounds(1130, 620, 130, 45);
+        updateButton.setBounds(1070, 620, 130, 45);
         updateButton.setFocusable(false);
         updateButton.setBackground(Color.lightGray);
         updateButton.addActionListener(this);
@@ -423,7 +405,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
         instructionPanel.add(instructionsLabel);
         instructionsLabel.setBounds(21, 179, 596, 227);
         
-        nflIcon = new ImageIcon(ParentFrame.ResizeIconStatic("/images/worldRugbyLogoBlack.png",100,80));
+        nflIcon = new ImageIcon(ParentFrame.ResizeIconStatic("/images/worldRugbyLogoBlack.png",120,120));
         JLabel nflIconLabel = new JLabel("");
 		nflIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nflIconLabel.setIcon(nflIcon);
@@ -762,7 +744,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	    selectedWeekNumber = 1;
 	    
 	    
-	    submitButton.setEnabled(false);
+	    
 
 	    updateButton.setEnabled(true);
 	    	   	
@@ -790,21 +772,21 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	            		thirdGameBox.setSelected(false);
 	            		
 	            		if (firstLocalTeamPointField.getText().equals("?")) {
-	        	    		submitButton.setEnabled(true);
+	        	    		
 	        	    		updateButton.setEnabled(false);
 	        	    	
 	        	    		
 	        	    	} else if (secondLocalTeamPointField.getText().equals("?")) {
-	        	    		submitButton.setEnabled(true);
+	        	    		
 	        	    		
 	        	    	
 	        	    	
 	        	    	} else if (thirdLocalTeamPointField.getText().equals("?")) {
-	        	    		submitButton.setEnabled(true);
+	        	    		
 	        	    		
 	        	    	
 	        	    	} else {
-	        	    		 submitButton.setEnabled(false);
+	        	    		 
 	        	    		 updateButton.setEnabled(true);
 	        	    	}
 	                } catch (NumberFormatException ex) {
