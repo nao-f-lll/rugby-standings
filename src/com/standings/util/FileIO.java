@@ -9,11 +9,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FileIO <T>{
-	
-	private static BufferedWriter bufferWriter;
+public class FileIO <T>   {
+
+
+	private static  BufferedWriter bufferWriter;
 	public static FileWriter fileWriter; 
  
 	

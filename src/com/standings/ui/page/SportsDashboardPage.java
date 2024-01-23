@@ -288,20 +288,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		if (hasSeasondataCHanged) {
 			userDialog("Guardando...", "Datos Modificados", JOptionPane.INFORMATION_MESSAGE);
 			
-			try {
-				FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
-				ObjectOutputStream streamOut = new ObjectOutputStream(fileOut);
-				streamOut.writeObject(this.seasons);
-				streamOut.close();
-				fileOut.close();
-				
-			} catch (FileNotFoundException event) {
-				event.printStackTrace();
-				
-			} catch (IOException event) {
-				
-				event.printStackTrace();
-			}
+			fileIo.writeObject(FILE_PATH, seasons);
 		}
 		
 		System.exit(0);
