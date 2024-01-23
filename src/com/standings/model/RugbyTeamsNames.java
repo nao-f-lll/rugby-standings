@@ -6,6 +6,7 @@ public enum RugbyTeamsNames {
     Sakuras,
     RedRose,
     Shamrock,
-    Wallabies
-  
+    Wallabies,
+    Thistle,
+    Feathers
 }

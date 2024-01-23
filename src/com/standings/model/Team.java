@@ -10,7 +10,7 @@ public class Team implements Serializable{
 	    private int wins;
 	    private int losses;
 	    private int ties;
-	    private Estadio estadio;
+	  
 	    
 
 	    public Team(String name) {
@@ -61,7 +61,14 @@ public class Team implements Serializable{
 	    
 	    public void decrementGamesPlayed() { gamesPlayed--; }
 
+		@Override
+		public String toString() {
+			return "Team [name=" + name + "]";
+		}
 
+
+	    
+	    
 }
 
 

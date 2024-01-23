@@ -5,7 +5,11 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -14,9 +18,8 @@ import javax.swing.table.JTableHeader;
 import com.standings.model.RugbyTeamsNames;
 import com.standings.model.Season;
 import com.standings.model.Team;
-import com.standings.util.StandingsCalculation;
 
-public class StandingsPanel extends JPanel  {
+public class StandingsPanel extends JPanel implements ActionListener {
    
 
 	private static final long serialVersionUID = 1L;
@@ -59,6 +62,7 @@ public class StandingsPanel extends JPanel  {
 			  printPdfButton.setFocusable(false);
 			  printPdfButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			  add(printPdfButton);
+			  printPdfButton.addActionListener(this);
 			  
 			  printXmlButton = new JButton("Exportar XML");
 			  printXmlButton.setBounds(550, 720, 150, 40);
@@ -66,6 +70,7 @@ public class StandingsPanel extends JPanel  {
 			  printXmlButton.setFocusable(false);
 			  printXmlButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			  add(printXmlButton);
+			  printXmlButton.addActionListener(this);
 		}
 		
 		//REQUIRES: icons must have six objects
@@ -75,7 +80,8 @@ public class StandingsPanel extends JPanel  {
 		private void initializeTeams( ) {
 			
 			this.teams = season.getTeams();
-			
+		
+			/*
 			rugbyTeamsNames = RugbyTeamsNames.values();
 			int logoIndex = 0;
 			
@@ -84,6 +90,7 @@ public class StandingsPanel extends JPanel  {
 				this.teams.add(team);
 			   logoIndex++;
 	    	}
+	    	*/
 		}
 		
 		private void initializeTabel() {
@@ -169,4 +176,64 @@ public class StandingsPanel extends JPanel  {
 		
 	  
 		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == printPdfButton) {
+				printTabelAsPDF();
+			} else if (e.getSource() == printXmlButton) {
+				CreatXML();
+			}
+			
+			
+		}
+		
+
+		private void printTabelAsPDF() {
+			
+		
+			MessageFormat header = new MessageFormat("Clasificaión de la temporada " + season.getYear());
+			MessageFormat footer = new MessageFormat("Federación de World Rugby");
+	
+		
+			try {
+	 
+				table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				userDialog("Se ha exportado el archivo PDF", "Exportar PDF", JOptionPane.INFORMATION_MESSAGE);
+				
+			} catch(java.awt.print.PrinterException e) {
+				System.err.format("error al imprimir", e.getMessage());
+			}
+
+		}
+		
+		private void CreatXML() {
+			season.convertToXML();
+			userDialog("Se ha exportado el archivo XML", "Exportar XML", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+
+		/**
+		 * Este metodo muestra un ventana que contiene un mensaje de error
+		 * 
+		 * @param warrningText  la descripcion del error
+		 * @param warrningTitle el titulo mensaje de error
+		 */
+		private void userDialog(String dialogText, String dialogTitle, int meesageType) {
+			
+			 JOptionPane fieldRequirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);
+
+			 fieldRequirementPane.setMessageType(meesageType);
+
+		        JPanel buttonPanel = (JPanel)fieldRequirementPane.getComponent(1);
+		        
+		        JButton accepetButton = (JButton)buttonPanel.getComponent(0);
+		        accepetButton.setText("Aceptar");
+		        accepetButton.setFocusable(false);
+		        accepetButton.setBackground(Color.LIGHT_GRAY);
+		        
+		        JDialog passwordRequirementdialog = fieldRequirementPane.createDialog(this, dialogTitle);
+		        passwordRequirementdialog.setVisible(true);
+		}
+		
+		
 }

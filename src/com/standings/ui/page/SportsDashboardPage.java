@@ -3,6 +3,12 @@ package com.standings.ui.page;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +28,10 @@ import com.standings.model.Week;
 import com.standings.model.Game;
 
 
-public class SportsDashboardPage extends ParentFrame implements ActionListener {
+public class SportsDashboardPage extends ParentFrame implements ActionListener, WindowListener {
 
     private static final long serialVersionUID = 1L;
-    private final   String FILE_PATH = "data/objects/seasons.ser";
+    private final String FILE_PATH = "data/objects/seasons.ser";
     
     private JPanel mainPanel;
     private JPanel panelButton;
@@ -47,6 +53,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
 	private Season season;
 	private ArrayList<Season> seasons;
 	private FileIO<Season> fileIo;
+	private static boolean hasSeasondataCHanged;
 	
 
 	
@@ -68,6 +75,8 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
     
     private void initializeFrameGraphics() {
     	setTitle("Panel administrativo");
+    	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    	this.addWindowListener(this);
         setResizable(false);
         setSizeAndCenter();
     }
@@ -79,7 +88,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
   
     
     private void initializeStandingsData() {
-    	
+    	hasSeasondataCHanged = false;
     	seasons = new ArrayList<>();
     	fileIo = new FileIO<>();
     	seasons = fileIo.readObject(FILE_PATH, seasons);
@@ -116,10 +125,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
     }
     
     private void initializeButtonPanels() {
-         
-              
-       // updateDataPanel = new UpdateDataPanel(teams, games,standingsPanel, scoresPanel);
-        
+      
     	standingsPanel = new StandingsPanel(season, seasons);
     	scoresPanel = new ScoresPanel(panelButton, season);
     	teamsPanel = new TeamsPanel(panelButton);          
@@ -135,49 +141,15 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
         seasonsManagement.setLayout(null);
       
     
-        
-        
-        
-     
-        
-        
-        	
-       
-        
        mainPanel.add(scoresPanel, BorderLayout.CENTER);
        scoresPanel.add(panelButton);
        
-       
-       
-       
-    
-        
-
-
+ 
   
     }
    
     
- 
-    
 
-    	
-    
-
-    
-  
-    
-    
-
-    
-    
-   
-    
-   
-   
- 
-    
- 
 
     
     private void initializeButtons() {
@@ -280,7 +252,15 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
         }
     }
     
-    
+
+	public boolean isHasSeasondataCHanged() {
+		return hasSeasondataCHanged;
+	}
+
+	public static  void setHasSeasondataCHanged(boolean hasSeasondataCHanged) {
+		SportsDashboardPage.hasSeasondataCHanged = hasSeasondataCHanged;
+	}
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -292,5 +272,87 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener {
 				}
 			}
 		});
+	}
+	
+	
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+
+		if (hasSeasondataCHanged) {
+			userDialog("Guardando...", "Datos Modificados", JOptionPane.INFORMATION_MESSAGE);
+			
+			try {
+				FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
+				ObjectOutputStream streamOut = new ObjectOutputStream(fileOut);
+				streamOut.writeObject(this.seasons);
+				streamOut.close();
+				fileOut.close();
+				
+			} catch (FileNotFoundException event) {
+				event.printStackTrace();
+				
+			} catch (IOException event) {
+				
+				event.printStackTrace();
+			}
+		}
+		
+		System.exit(0);
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	private void userDialog(String dialogText, String dialogTitle, int meesageType) {
+		
+		 JOptionPane fieldRequirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);
+
+		 fieldRequirementPane.setMessageType(meesageType);
+
+	        JPanel buttonPanel = (JPanel)fieldRequirementPane.getComponent(1);
+	        
+	        JButton accepetButton = (JButton)buttonPanel.getComponent(0);
+	        accepetButton.setText("Aceptar");
+	        accepetButton.setFocusable(false);
+	        accepetButton.setBackground(Color.LIGHT_GRAY);
+	        
+	        JDialog passwordRequirementdialog = fieldRequirementPane.createDialog(this, dialogTitle);
+	        passwordRequirementdialog.setVisible(true);
 	}
 }

@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,25 +31,21 @@ import com.standings.ui.page.SportsDashboardPage;
 //import com.standings.util.AddGameUtil;
 import com.standings.util.StandingsCalculation;
 //import com.standings.util.StandingsDataUtil;
+import com.standings.util.StandingsDataUtil;
 
 public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 	private static final long serialVersionUID = -3261993617585437616L;
 	
-	private final static String NEW_STANDINGS_TYPE = "New entry";
 	private final static String EXISTING_STANDINGS_TYPE = "Exisitng entry";
 
 	private final int SOME_OR_ALL_FIELDS_ARE_EMPTY = 1;
-	private final int NO_CHECK_BOX_IS_SELECTED_ADD_CASE = 2;
-	private final int MULTIPLE_CHEC_BOXES_ARE_SELECTED_ADD_CASE = 3;
 	private final int NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE = 4;
 	private final int MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE = 5;
 	private final int ALL_POINTS_ARE_INVALID = 6;
 	private final int LOCAL_POINTS_ARE_INVALID = 7;
 	private final int VISITOR_POINTS_ARE_INVALID = 8; 
-	private final int GAME_IS_ALREADY_IN_STANDINGS = 9;  
 	private final int WEEK_NUMBER_IS_INCORRECT = 10;  
-	private final int GAME_DOES_NOT_EXISTS = 11;
 	 
 	private final int WARRNING_MESSAGE_TYPE = 2;
 	private final int INFORMATION_MESSAGE_TYPE = 1;
@@ -123,10 +116,6 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	private JLabel thirdVisitorTeamPointLabel;
 	
 	
-	private Map<String, String> teamLogos;
-
-	
-	
 	public CustomCheckBox firstGameBox;
 	public CustomCheckBox secondGameBox;
 	public CustomCheckBox thirdGameBox;
@@ -135,12 +124,6 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	public boolean isSecondBoxSelected;
 	public boolean isThirdBoxSelected;
 	
-
-	private int currentStep;
-	private boolean gameAdded;
-	private boolean isGameOneAdded;   
-	private boolean isGameTwoAdded;
-	private boolean isGameThreeAdded;
 	
 	public UpdateDataPanel( ArrayList<Team> teams, List<Game> games, StandingsPanel standingsPanel, ScoresPanel scoresPanel) {
  
@@ -148,11 +131,6 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
     	this.teams = teams;
     	this.standingsPanel = standingsPanel;
     	this.scoresPanel = scoresPanel;
-    	this.teamLogos = new HashMap<>();  
-    	currentStep = 1;
-    	isGameOneAdded = false;
-    	isGameTwoAdded = false;
-    	isGameThreeAdded = false;
     	isFirstBoxSelected = false;
     	isSecondBoxSelected = false;
     	isThirdBoxSelected = false;
@@ -440,296 +418,63 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	}
     
 
-	private void userClickLoginLogic(ActionEvent e) {
-/*
-	
-	    if (e.getSource() == submitButton) {
-	        StandingsDataUtil.checkWhichBoxIsSelected(this);
+    private void userClickLoginLogic(ActionEvent e) {
 
-	        if (StandingsDataUtil.areMultipleBoxesSelected(this)) {
-	            
-	            handleValidationNumber(MULTIPLE_CHEC_BOXES_ARE_SELECTED_ADD_CASE);
-	            
-	        }else if (StandingsDataUtil.checkIfNoBoxIsSelected(this) == 0) {
-	        	handleValidationNumber(NO_CHECK_BOX_IS_SELECTED_ADD_CASE);
+        if (e.getSource() == updateButton) {
 
-	        } else  if (whichWeekIsSelected() != 10) {  
-	        	
-   
-	        	handleValidationNumber(GAME_IS_ALREADY_IN_STANDINGS);     
+            StandingsDataUtil.checkWhichBoxIsSelected(this);
 
-	        } else {
-	        	
-	        	if (currentStep <= 3) {
-	        	
-					gameAdded = false;
-	        		
-	        		if (isFirstBoxSelected && currentStep == 1) {
-	        			handleStepOne();
-	        			gameAdded = true;
-	        			} else if (isSecondBoxSelected && currentStep == 2) {
-	        			handleStepTwo();
-	        			gameAdded = true;
-	        		} else if (isThirdBoxSelected && currentStep == 3) {
-	        			handleStepThree();
-	        			gameAdded = true;
+            if (StandingsDataUtil.checkIfNoBoxIsSelected(this) == 0) {
+                handleValidationNumber(NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE);
+            } else if (StandingsDataUtil.areMultipleBoxesSelected(this)) {
+                handleValidationNumber(MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE);
+            } else {
+                if (isFirstBoxSelected) {
+                    choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
+                } else if (isSecondBoxSelected) {
+                    choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
+                } else if (isThirdBoxSelected) {
+                    choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
+                }
 
-	        		} else if (isFirstBoxSelected) {
-						handleStepOne();
-						currentStep--;
-						if (isGameExist()) {
-						
-							gameAdded = true;
-							return;
-						}
-					} else if (isSecondBoxSelected) {
-						handleStepTwo();
-						currentStep--;
-						if (isGameExist()) {
-						
-							gameAdded = true;
-							return;
-						}
-					} else if (isThirdBoxSelected) {
-						handleStepThree();
-						currentStep--;
-						if (isGameExist()) {
-						
-							gameAdded = true;
-							return;
-						}
-					}
-	            
+                validationNumber = StandingsDataUtil.validateStandingsDataForPoints(localClubPointsField.getText(), visitorClubPointsField.getText());
 
-	        		if (!gameAdded) {
-	        			userDialog("Los partidos se deben añadir secuencialmente", "Requisitos para añadir partidos", INFORMATION_MESSAGE_TYPE);
-	        			return;
-	        		}
-	        		
-	        	} else {
-    		     	
-	        		if (isFirstBoxSelected) {
-	        			handleStepOne();
-	        		} else if (isSecondBoxSelected) {
-	        			handleStepTwo();
-	        		} else if (isThirdBoxSelected) {
-	        			handleStepThree();  		
-	        		}
-	        	}
+                if (StandingsDataUtil.validateStandingsDataForEmpties(localClubField.getText(), visitorClubField.getText(), localClubPointsField.getText(), visitorClubPointsField.getText())) {
+                    handleValidationNumber(SOME_OR_ALL_FIELDS_ARE_EMPTY);
+                } else if (validationNumber == ALL_POINTS_ARE_INVALID || validationNumber == LOCAL_POINTS_ARE_INVALID || validationNumber == VISITOR_POINTS_ARE_INVALID) {
+                    handleValidationNumber(validationNumber);
+                } else {
+                    for (int i = 0; i < games.size(); i++) {
+                        if (games.get(i).getLocalTeam().getName().equals(localClubField.getText()) && games.get(i).getVisitorTeam().getName().equals(visitorClubField.getText())) {
+                            if (games.get(i).getWeekNumber() == whichWeekIsSelected()) {
+                                games.get(i).setOldLocalScore(games.get(i).getLocalScore());
+                                games.get(i).setOldVisitorScore(games.get(i).getVisitorScore());
+                                games.get(i).setLocalScore(Integer.parseInt(localClubPointsField.getText()));
+                                games.get(i).setVisitorScore(Integer.parseInt(visitorClubPointsField.getText()));
+                                for (Team team : this.teams) {
+                                    if (team.getName().equals(localClubField.getText()) || team.getName().equals(visitorClubField.getText())) {
+                                        StandingsCalculation.updateStandings(team, games.get(i), EXISTING_STANDINGS_TYPE);
+                                    }
+                                }
+                            }
+                        }
+                    }
 
-	        	if (StandingsDataUtil.validateStandingsDataForEmpties(localClubField.getText(), visitorClubField.getText(), localClubPointsField.getText(),visitorClubPointsField.getText())) {
-	    			handleValidationNumber(SOME_OR_ALL_FIELDS_ARE_EMPTY);
-	        		
-	        	} else {
-	            
-	            validationNumber = StandingsDataUtil.validateStandingsDataForPoints(localClubPointsField.getText(), visitorClubPointsField.getText());
-
-	            if (validationNumber == ALL_POINTS_ARE_INVALID || validationNumber == LOCAL_POINTS_ARE_INVALID || validationNumber == VISITOR_POINTS_ARE_INVALID) {
-	                handleValidationNumber(validationNumber);
-	                resetFields();
-	            } else {
-	                boolean isgameExist = false;
-	                for (int i = 0; i < games.size(); i++) {
-	                    isgameExist = (games.get(i).getLocalTeam().equals(localClubField.getText())) && (games.get(i).getVisitorTeam().equals(visitorClubField.getText()));
-	                    if (isgameExist) {
-							if (!gameAdded) {
-								handleValidationNumber(GAME_IS_ALREADY_IN_STANDINGS);
-							}
+                    StandingsCalculation.sortStandings(this.teams);
+                    standingsPanel.renderUpdatedStandings();
+                    scoresPanel.renderWeeksScores(whichWeekIsSelected());
+                    resetFieldsAndWeek();
+                    userDialog("Su partido se ha actualizado correctamente", "Actualizar entrada", INFORMATION_MESSAGE_TYPE);
+                    SportsDashboardPage.setHasSeasondataCHanged(true);
+                }
+            }
+        }
+    }
 
 
-	                        break;
-	                    }
-	                }
-
-	                 
-	                    if (!isgameExist) {
-	                        
-	                       
-	                        if (localClubField.getText().equals("Cardinals")) {
-	                        	isGameOneAdded = true;
-	                        	updateButton.setEnabled(true);
-	                        	
-	                        	
-	                        }else if (localClubField.getText().equals("Raiders")) {
-	                        	 isGameTwoAdded = true;	
-	                        	
-	                        } else if (localClubField.getText().equals("Steelers")) {
-	                        	 isGameThreeAdded = true;
-	                        	 submitButton.setEnabled(false);
-	                        		
-	                        }
-	                        
-	                        addGameAndUpdateStandings();
-	                    }
-	               
-	            }
-	        }
-	       }
-       	        
-	    } else if (e.getSource() == updateButton) {
-	    	
-	    	 StandingsDataUtil.checkWhichBoxIsSelected(this);
-	    	 if (StandingsDataUtil.checkIfNoBoxIsSelected(this) == 0) {
-		        	handleValidationNumber(NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE);
-	    	 } else if (StandingsDataUtil.areMultipleBoxesSelected(this)) {
-	    		 	handleValidationNumber(MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE);
-	    	 } else {
-		        	if (isFirstBoxSelected) {
-		        		if (whichWeekIsSelected() != 10)  {
-		        			choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
-		        		} else if (isGameOneAdded) {
-		        			choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
-		        		} else {
-		        			handleValidationNumber(GAME_DOES_NOT_EXISTS);
-		        			return;
-		        		}
-		        		
-		        	} else if (isSecondBoxSelected) {
-		        		if (whichWeekIsSelected() != 10)  {
-		        			choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
-		        		} else if (isGameTwoAdded) {
-		        			choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
-		        		} else {
-		        			handleValidationNumber(GAME_DOES_NOT_EXISTS);
-		        			return;
-		        		}
-		        		
-		        	} else if (isThirdBoxSelected) {
-		        		if (whichWeekIsSelected() != 10)  {
-		        			choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
-		        		} else if (isGameThreeAdded) {
-		        			choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
-		        		} else {
-		        			handleValidationNumber(GAME_DOES_NOT_EXISTS);
-		        			return;
-		        		}
-		        	}
-	    	
-		        	validationNumber = StandingsDataUtil.validateStandingsDataForPoints(localClubPointsField.getText(),visitorClubPointsField.getText());
-
-			
-		        	if (StandingsDataUtil.validateStandingsDataForEmpties(localClubField.getText(), visitorClubField.getText(), localClubPointsField.getText(),visitorClubPointsField.getText())) {
-		        		handleValidationNumber(SOME_OR_ALL_FIELDS_ARE_EMPTY);
-		        		currentStep++;
-				
-		        	} else if (validationNumber == ALL_POINTS_ARE_INVALID || validationNumber == LOCAL_POINTS_ARE_INVALID || validationNumber == VISITOR_POINTS_ARE_INVALID)  {
-		        		handleValidationNumber(validationNumber);
-		        		currentStep++;
-		        		
-		        	} else {
-				
-	
-		        		boolean updateStandings = false;
-		        		boolean doesGameNotExist = true;
-				
-				 
-				 
-		        		for (int i = 0; i < games.size(); i++) {
-					
-		        			if (games.get(i).getLocalTeam().equals(localClubField.getText()) && games.get(i).getVisitorTeam().equals(visitorClubField.getText())) {
-						
-		        				if (games.get(i).getWeekNumber() == whichWeekIsSelected()) {
-						
-						
-		        					games.get(i).setOldLocalScore(games.get(i).getLocalScore());
-		        					games.get(i).setOldVisitorScore(games.get(i).getVisitorScore());
-						
-		        					games.get(i).setLocalScore(Integer.parseInt(localClubPointsField.getText()));
-		        					games.get(i).setVisitorScore(Integer.parseInt(visitorClubPointsField.getText()));
-						
-		        					for (Team team : this.teams) {
-		        						if (team.getName().equals(localClubField.getText()) || team.getName().equals(visitorClubField.getText())) {
-		        							StandingsCalculation.updateStandings(team, games.get(i), EXISTING_STANDINGS_TYPE);  
-								
-		        						}
-		        					}
-		        					updateStandings = true;
-							
-		        				} else {
-		        					handleValidationNumber(WEEK_NUMBER_IS_INCORRECT);
-		        					doesGameNotExist = false;
-		        				}
-						
-		        			}
-		        		}
-				
-		        		if (doesGameNotExist && !updateStandings) {	
-		        			handleValidationNumber(GAME_DOES_NOT_EXISTS);
-		        		}		
-		
-		        		if (updateStandings) {
-		        			StandingsCalculation.sortStandings(this.teams);
-		        			standingsPanel.renderUpdatedStandings();
-		        			scoresPanel.renderWeeksScores(whichWeekIsSelected());	
-		        			resetFieldsAndWeek();
-		        			userDialog("Su partido se ha actualizado correctamente", "Actualizar entrada", INFORMATION_MESSAGE_TYPE);
-		        			
-		        		}
-				
-		        	}
-
-	    	 }
-	    }
-		*/
-	}
-
-	private boolean isGameExist() {
-
-		boolean isgameExist = false;
-		for (int i = 0; i < games.size(); i++) {
-			isgameExist = (games.get(i).getLocalTeam().equals(localClubField.getText())) && (games.get(i).getVisitorTeam().equals(visitorClubField.getText()));
-			if (isgameExist) {
-				handleValidationNumber(GAME_IS_ALREADY_IN_STANDINGS);
-				break;
-			}
-		}
-		return isgameExist;
-	}
-	
-	
-	private void handleStepOne() {
-	    localClubPointsField.setText(firstLocalTeamPointField.getText());
-	    visitorClubPointsField.setText(firstVisitorTeamPointField.getText());
-	    localClubField.setText("Cardinals");
-	    visitorClubField.setText("Cowboys");
-	    currentStep++;
-	}
-
-	private void handleStepTwo() {
-	    localClubPointsField.setText(secondLocalTeamPointField.getText());
-	    visitorClubPointsField.setText(secondVisitorTeamPointField.getText());
-	    localClubField.setText("Raiders");
-	    visitorClubField.setText("Bengals");
-	    currentStep++;
-	}
-
-	private void handleStepThree() {
-	    localClubPointsField.setText(thirdLocalTeamPointField.getText());
-	    visitorClubPointsField.setText(thirdVisitorTeamPointField.getText());
-	    localClubField.setText("Steelers");
-	    visitorClubField.setText("Chiefs");
-	    currentStep++;
-	}
 
 	
-	//MODIFIES: Game, Team, Standings
-	//EFFECTS: create a game and add it to games array, and then call the standings utility to update the data.
-	/*
-	private void addGameAndUpdateStandings() {
-	    new AddGameUtil(this.games, localClubField.getText(), visitorClubField.getText(), localClubPointsField.getText(), visitorClubPointsField.getText(), whichWeekIsSelected());
-	    for (Team team : this.teams) {
-	        if (team.getName().equals(localClubField.getText()) || team.getName().equals(visitorClubField.getText())) {
-	            int sizeOfListOfGames = games.size() - 1;
-	            StandingsCalculation.updateStandings(team, games.get(sizeOfListOfGames), NEW_STANDINGS_TYPE);
-	        }
-	    }
-	    StandingsCalculation.sortStandings(this.teams);
-	    standingsPanel.renderUpdatedStandings();
-	    scoresPanel.renderWeeksScores(whichWeekIsSelected());
-	    resetFieldsAndWeek();
-	    userDialog("Su partido se ha registrado correctamente", "Insertar entrada", INFORMATION_MESSAGE_TYPE);
-	}
-*/
+
 	
 	//MODIFIES: this
 	//EFFECTS: create a comboBox and store the selectedWeekNumber
@@ -1152,29 +897,20 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		switch (validationNumber) {
 		case SOME_OR_ALL_FIELDS_ARE_EMPTY:
 			userDialog("Algunos campos están vacíos, le faltan campos por rellenar", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
-			currentStep--;
+			
 			break;
 		case ALL_POINTS_ARE_INVALID:
 			userDialog("Puntos incorrectos, los puntos deben ser dentro de este rango (0 a 99)","Requisitos de campos", WARRNING_MESSAGE_TYPE);
-			currentStep--;
+			
 			break;
 		case LOCAL_POINTS_ARE_INVALID:	
 			userDialog("Puntos incorrectos, los puntos deben ser dentro de este rango (0 a 99)","Requisitos de campos", WARRNING_MESSAGE_TYPE);
-			currentStep--;
+			
 			break;
 		case VISITOR_POINTS_ARE_INVALID:
 			userDialog("Puntos incorrectos, los puntos deben ser dentro de este rango (0 a 99)","Requisitos de campos", WARRNING_MESSAGE_TYPE);
-			currentStep--;
+			
 			break;	
-		case MULTIPLE_CHEC_BOXES_ARE_SELECTED_ADD_CASE:
-			userDialog("Se permite añadir solo un partido", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
-			break;
-		case GAME_IS_ALREADY_IN_STANDINGS:
-			userDialog("Este partido ya existe, asegurate que has introducido un nuevo partido","Requisitos de campos", WARRNING_MESSAGE_TYPE);
-			break;
-		case NO_CHECK_BOX_IS_SELECTED_ADD_CASE:
-			userDialog("Tienes que selecionar un partido para guardar", "Requisitos de campos",WARRNING_MESSAGE_TYPE);
-			break;
 		case NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE:
 			userDialog("Tienes que selecionar un partido para actualizar", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
 			break;
@@ -1184,9 +920,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		case WEEK_NUMBER_IS_INCORRECT:
 			userDialog("La semana del partido que quieres modifcar es incorrecta", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
 			break;
-		case GAME_DOES_NOT_EXISTS:
-			userDialog("El partido que quieres modificar no existe", "Requisitos de campos",WARRNING_MESSAGE_TYPE);
-			break;
+		
 		default :
 		}
 	}	

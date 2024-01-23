@@ -33,7 +33,7 @@ public class FileIO <T>{
 			bufferWriter.write("Registro: " + additionalInfo + ", Datos: " + data + ", ID de sesion: " + sessionId + ", tiempo: " + timeStamps);
 			bufferWriter.newLine();
 			bufferWriter.close();
-			//add fileWriter.close();
+			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
