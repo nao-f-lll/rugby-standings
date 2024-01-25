@@ -172,13 +172,7 @@ public class WeekOnePanel extends JPanel implements ActionListener{
 				   add(exoportXMLButton);
 				   exoportXMLButton.addActionListener(this);
 		       
-				   
-				   for (Week week : weeks) {
-						for (int i = 0; i < week.getGames().size(); i++) {
-							System.out.println(week.getGames().get(i).toString() + " " + week.getWeekID());
-						
-						}
-					}
+			
 		       addGameInfo(this.teams, this.games);
 	       
 	}
@@ -230,7 +224,6 @@ public class WeekOnePanel extends JPanel implements ActionListener{
 			fileIO = new FileIO<>();
 			fileIO.convertToXML(weeks);	
 		}
-	
 		
 	}
 }

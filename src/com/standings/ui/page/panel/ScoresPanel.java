@@ -221,15 +221,15 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	public void initializeWeekPanels() {
 		
 		 weekOnePanel    = new WeekOnePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());	 
-		 weekTwoPanel    = new WeekTwoPanel(this.season.getTeams(),this.season.getGames());	 
-		 weekThreePanel  = new WeekThreePanel(this.season.getTeams(),this.season.getGames());
-		 weekFourPanel   = new WeekFourPanel(this.season.getTeams(),this.season.getGames());
-		 weekFivePanel   = new WeekFivePanel(this.season.getTeams(),this.season.getGames());
-		 weekSixPanel    = new WeekSixPanel(this.season.getTeams(),this.season.getGames());
-		 weekSevenPanel  = new WeekSevenPanel(this.season.getTeams(),this.season.getGames());
-		 weekEighthPanel = new WeekEighthPanel(this.season.getTeams(),this.season.getGames());
-		 weekNinePanel   = new WeekNinePanel(this.season.getTeams(),this.season.getGames());
-		 weekTenPanel   = new WeekTenPanel(this.season.getTeams(),this.season.getGames());
+		 weekTwoPanel    = new WeekTwoPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());	 
+		 weekThreePanel  = new WeekThreePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekFourPanel   = new WeekFourPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekFivePanel   = new WeekFivePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekSixPanel    = new WeekSixPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekSevenPanel  = new WeekSevenPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekEighthPanel = new WeekEighthPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekNinePanel   = new WeekNinePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekTenPanel   = new WeekTenPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
 
 		
 		 this.add(weekOnePanel);

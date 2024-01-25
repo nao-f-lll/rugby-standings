@@ -10,8 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.standings.model.Game;
+import com.standings.model.Season;
 import com.standings.model.Team;
+import com.standings.model.Week;
 import com.standings.model.design.CustomBorder;
+import com.standings.util.FileIO;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -43,22 +46,24 @@ public class WeekSevenPanel extends JPanel implements ActionListener{
 	
 	private ArrayList<Team> teams;
 	private ArrayList<Game> games;
-	
+	private ArrayList<Week> weeks;
+	private FileIO<Season> fileIO;
 	final int  GAME_ONE = 18;
 	final int  GAME_TWO = 19;
 	final int  GAME_THREE = 20;
 	private JPanel gameThreePanel;
 	private JPanel gameTwoPanel;
 	private JPanel gameOnePanel;
-	
+	private JButton exoportXMLButton;
 
-	public WeekSevenPanel(ArrayList<Team> teams, ArrayList<Game> games) {
+	public WeekSevenPanel(ArrayList<Team> teams, ArrayList<Game> games, ArrayList<Week> weeks) {
 		
 		   	this.setBounds(0, 115, 1525, 845);
 		   	this.setLayout(null);
 		   	this.games = games;
 		   	this.teams = teams;
-		       
+		   	this.weeks = weeks;   
+		   	
 		    gameOnePanel = new JPanel();
 		       gameOnePanel.setBackground(Color.LIGHT_GRAY);
 		       gameOnePanel.setBounds(101, 44, 437, 266);
@@ -158,7 +163,7 @@ public class WeekSevenPanel extends JPanel implements ActionListener{
 		           gameTwoPanel.add(secondVisitorTeamPoint);
 		           secondVisitorTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		           
-		           JButton exoportXMLButton = new JButton("Export XML");
+		           exoportXMLButton = new JButton("Export XML");
 		           exoportXMLButton.setBounds(1338, 296, 150, 40);
 		           exoportXMLButton.setBackground(Color.lightGray);
 		           exoportXMLButton.setFocusable(false);
@@ -213,7 +218,10 @@ public class WeekSevenPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == exoportXMLButton) {
+			fileIO = new FileIO<>();
+			fileIO.convertToXML(weeks);	
+		}
 		
 	}
 }
