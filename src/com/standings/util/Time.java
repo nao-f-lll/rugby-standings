@@ -1,12 +1,17 @@
 package com.standings.util;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class Time {
+public class Time implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8379067663590711231L;
 	private static Instant instant; 
 	private static LocalDateTime dateTime ;
 	private static DateTimeFormatter formatter;

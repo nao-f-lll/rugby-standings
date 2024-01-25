@@ -465,7 +465,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
                     scoresPanel.renderWeeksScores(whichWeekIsSelected());
                     resetFieldsAndWeek();
                     userDialog("Su partido se ha actualizado correctamente", "Actualizar entrada", INFORMATION_MESSAGE_TYPE);
-                    SportsDashboardPage.setHasSeasondataCHanged(true);
+                    SportsDashboardPage.setHasSeasonDataChanged(true);
                 }
             }
         }

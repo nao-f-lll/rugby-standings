@@ -10,6 +10,7 @@ import java.util.List;
 import com.standings.model.Season;
 import com.standings.model.Game;
 import com.standings.model.Team;
+import com.standings.model.Week;
 
 public class StandingsCalculation {
 
@@ -28,18 +29,19 @@ public class StandingsCalculation {
 	public StandingsCalculation(Season season, ArrayList<Season> seasons) {
 		this.season = season;
 		this.seasons = seasons;
-		initializeTheCalculation(this.season.getTeams(),this.season.getGames());
-		saveSeasonData();
+		initializeTheCalculation(this.season.getTeams(),this.season.getGames(), this.season);
+		//saveSeasonData();
 	}
 	
 
 		  //MODIFIES : teams, games
 		  //EFFECTS  : generate and update the standings table data.
 		
-		private static void initializeTheCalculation( ArrayList<Team> teams,  ArrayList<Game> games) {
+		private static void initializeTheCalculation( ArrayList<Team> teams,  ArrayList<Game> games, Season season) {
 			
 			games.addAll(generateMatchesDataFirstHalfPart(teams)); 
 			games.addAll(generateMatchesDataSecondHalfPart(teams));
+			initializeWeeks(season);
 			updateStandings(teams, games);           
 			sortStandings(teams);
 			
@@ -47,7 +49,7 @@ public class StandingsCalculation {
 		}
 		
 		
-		public  void saveSeasonData() {
+		private  void saveSeasonData() {
 			try {
 				FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
 				ObjectOutputStream streamOut = new ObjectOutputStream(fileOut);
@@ -254,6 +256,8 @@ public class StandingsCalculation {
 	                int visitorScore = (int) (Math.random() * 99);
 
 	                Game game = new Game(team1, team2, localScore, visitorScore ,defaultLocalScore, defaultVisitorScore, weekNumber);
+	               
+	              
 	                games.add(game);
 	            }
 
@@ -284,6 +288,27 @@ public class StandingsCalculation {
 	        }
 
 	        return games;
+	    }
+	    
+	    
+	    private static void initializeWeeks(Season season) {
+	    	ArrayList<Week> weeks = new ArrayList<Week>();
+	    	int indexFrom = 0;
+	    	int indexTo = 3;
+	    	int weeksSize = 10;
+	    	for (int i = 1; i <= weeksSize; i++) {
+	    			ArrayList<Game> weekGames = new ArrayList<>(season.getGames().subList(indexFrom, indexTo));
+	    			Week week = new Week(i, weekGames);
+		    		weeks.add(week);
+		    		indexFrom+= 3;
+		    		indexTo+= 3;
+		    		
+	    	}
+	    	
+	    	season.setWeeks(weeks);
+	    	
+	    	
+
 	    }
 
 	    private static void rotateTeamsList(ArrayList<Team> teams) {

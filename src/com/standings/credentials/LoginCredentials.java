@@ -1,14 +1,19 @@
 package com.standings.credentials;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.standings.model.User;
 import com.standings.util.FileIO;
 
-public class LoginCredentials {
+public class LoginCredentials implements Serializable{
 
-    private HashMap<String, String> loginInfo = new HashMap<String, String>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8698867336887932284L;
+	private HashMap<String, String> loginInfo = new HashMap<String, String>();
     private final String FILE_PATH = "data/objects/users.ser";
     private ArrayList<User> users;
     private ArrayList<Integer> sessionIds;

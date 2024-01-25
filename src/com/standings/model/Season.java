@@ -10,31 +10,28 @@ public class Season implements Serializable{
 	
 
 	private static final long serialVersionUID = -2800306066578213671L;
-	private int seasonID;
 	private int year;
 	private ArrayList<Week>  weeks;
 	private ArrayList<Team> teams;
 	private ArrayList<Game> games;
-	private boolean state;
-	private  BufferedWriter bufferWriter;
-	public  FileWriter fileWriter; 
+	private boolean active;
+	private transient BufferedWriter bufferWriter;
+	public  transient FileWriter fileWriter; 
 	
 	
-	public Season(int seasonCode, int year, ArrayList<Week>  weeks,  ArrayList<Team> teams, ArrayList<Game> games) {
-		this.seasonID = seasonCode;
+	public Season( int year, ArrayList<Week>  weeks,  ArrayList<Team> teams, ArrayList<Game> games) {
 		this.year = year;
 		this.weeks = weeks;
 		this.teams = teams;
 		this.games = games;
+		this.active = true;
 	}
 	
-	public int getSeasonID() {
-		return seasonID;
+	
+	public boolean isActive() {
+		return active;
 	}
-
-	public void setSeasonID(int seasonID) {
-		this.seasonID = seasonID;
-	}
+	
 
 	public ArrayList<Game> getGames() {
 		return games;
@@ -45,7 +42,6 @@ public class Season implements Serializable{
 	}
 
 	public Season(int seasonCode, int year) {
-		this.seasonID = seasonCode;
 		this.year = year;
 		this.weeks = new ArrayList<>();
 		this.teams = new ArrayList<>();
@@ -56,9 +52,7 @@ public class Season implements Serializable{
 		return this.year;
 	}
 
-	public int getSeasonCode() {
-		return seasonID;
-	}
+	
 	
 	public ArrayList<Team> getTeams() {
 		return teams;
@@ -71,10 +65,11 @@ public class Season implements Serializable{
 	
 	
 
-	public void setSeasonCode(int seasonCode) {
-		this.seasonID = seasonCode;
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
-
+	
 
 	public void setWeeks(ArrayList<Week> weeks) {
 		this.weeks = weeks;
@@ -108,6 +103,7 @@ public class Season implements Serializable{
 			bufferWriter.newLine();
 		
 			
+			
 			for (int i = 0; i < teams.size(); i++) {
 			    String id = String.valueOf(i + 1);
 				String fila = "<fila id=\"" + id + "\">";
@@ -118,8 +114,8 @@ public class Season implements Serializable{
 				bufferWriter.newLine();
 				bufferWriter.write("<equipo>"); 
 				bufferWriter.newLine();
-				String imagePath = "media/Imagenes/logos/south_Africa_national_rugby_union_team.png";
-				bufferWriter.write("<logo>"+ imagePath + "</logo>"); 
+				String imagePath = teams.get(i).getIconPath();
+				bufferWriter.write("<logo>"+ imagePath + "</logo>");
 				bufferWriter.newLine();
 				bufferWriter.write("<nombre>"+ teams.get(i).getName() + "</nombre>"); 
 				bufferWriter.newLine();
@@ -148,9 +144,5 @@ public class Season implements Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	
-	
+	}	
 }

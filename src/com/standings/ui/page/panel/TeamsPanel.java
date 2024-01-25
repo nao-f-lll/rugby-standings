@@ -95,7 +95,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	       int initialX = 10;
 
 	       allBlacksButton = new JButton("All Blacks");
-	       allBlacksButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       allBlacksButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       allBlacksButton.setFocusable(false);
 	       allBlacksButton.setBorder(new CustomBorder(20));
 	       allBlacksButton.setBackground(Color.WHITE);
@@ -107,7 +107,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 
 
 	       springBoksButton = new JButton("Springboks");
-	       springBoksButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       springBoksButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       springBoksButton.setFocusable(false);
 	       springBoksButton.setUI(new CustomButton());
 	       springBoksButton.setBorder(null);
@@ -118,7 +118,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	       
 	       
 	       sakurasButton = new JButton("Sakuras");
-	       sakurasButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       sakurasButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       sakurasButton.setFocusable(false);
 	       sakurasButton.setUI(new CustomButton());
 	       sakurasButton.setBorder(null);
@@ -131,7 +131,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 
 	       
 	       shamrockButton  = new JButton("Shamrock");
-	       shamrockButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       shamrockButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       shamrockButton.setFocusable(false);
 	       shamrockButton.setUI(new CustomButton());
 	       shamrockButton.setBorder(null);
@@ -143,7 +143,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	  
 	       
 	       wallabiesButton = new JButton("Wallabies");
-	       wallabiesButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       wallabiesButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       wallabiesButton.setFocusable(false);
 	       wallabiesButton.setUI(new CustomButton());
 	       wallabiesButton.setBorder(null);
@@ -156,7 +156,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	      
 	       
 	       redRoseButton  = new JButton("Red Rose");
-	       redRoseButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       redRoseButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       redRoseButton.setFocusable(false);
 	       redRoseButton.setUI(new CustomButton());
 	       redRoseButton.setBorder(null);
@@ -167,7 +167,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	       
 	       
 	       feathersButton  = new JButton("Feathers");
-	       feathersButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       feathersButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       feathersButton.setFocusable(false);
 	       feathersButton.setUI(new CustomButton());
 	       feathersButton.setBorder(null);
@@ -178,7 +178,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	       
 	       
 	       thistleButton  = new JButton("Thistle");
-	       thistleButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+	       thistleButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 	       thistleButton.setFocusable(false);
 	       thistleButton.setUI(new CustomButton());
 	       thistleButton.setBorder(null);

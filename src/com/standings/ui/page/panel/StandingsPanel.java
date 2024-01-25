@@ -18,12 +18,14 @@ import javax.swing.table.JTableHeader;
 import com.standings.model.RugbyTeamsNames;
 import com.standings.model.Season;
 import com.standings.model.Team;
+import com.standings.util.StandingsCalculation;
 
 public class StandingsPanel extends JPanel implements ActionListener {
    
-
-	private static final long serialVersionUID = 1L;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2913604003111840139L;
 	private JTable table;
 	private ArrayList<Team> teams;
 	private RugbyTeamsNames[] rugbyTeamsNames;
@@ -31,19 +33,47 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	private String[] columns;
 	private Season season;
 	private ArrayList<Season> seasons;
+	private ArrayList<Team> allTeams;
 	private JButton printPdfButton;
 	private JButton printXmlButton;
+	
+	private String allblacksLogoPath;
+	private String shamrockLogoPath;
+	private String sakurasLogoPath;
+	private String redRoseLogoPath;
+	private String wallabiesLogoPath;
+	private String springboksLogoPath;
+	private String thistleLogoPath;
+	private String feathersLogoPath;
+	
+	private boolean isNewSeason;
+	
 
 
-		public StandingsPanel( Season season, ArrayList<Season> seasons) {
-	    	
+		public StandingsPanel( Season season, ArrayList<Season> seasons, ArrayList<Team> allTeams) {
+			
 			initializeFrameGraphics();
             this.season = season;
             this.seasons = seasons;		
+            this.allTeams = allTeams;
 			initializeTeams();
+			initializeAllTeams(this.allTeams);
 			initializeTabel();
-	
-	}	
+	}
+		
+	public StandingsPanel( Season season, ArrayList<Season> seasons, ArrayList<Team> allTeams, boolean isNewSeason) {
+			
+			initializeFrameGraphics();
+            this.season = season;
+            this.seasons = seasons;		
+            this.allTeams = allTeams;
+            this.isNewSeason = isNewSeason;
+			initializeTeams();
+			initializeAllTeams(this.allTeams);
+			initializeTabel();
+	}
+		
+		
 		private void initializeFrameGraphics() {
 			
             table = new JTable();
@@ -73,24 +103,76 @@ public class StandingsPanel extends JPanel implements ActionListener {
 			  printXmlButton.addActionListener(this);
 		}
 		
+		
+	
+		
 		//REQUIRES: icons must have six objects
 		//MODIFIES: Team
 		//EFFECTS:  assign to every team, it's icon
 		
-		private void initializeTeams( ) {
+		private void initializeTeams() {
 			
-			this.teams = season.getTeams();
+	
+				this.teams = season.getTeams(); 
+				
+				if (this.isNewSeason) {
+					initializeIcons();
+					String[] iconsPath = {allblacksLogoPath,springboksLogoPath,sakurasLogoPath,  redRoseLogoPath, shamrockLogoPath, wallabiesLogoPath, thistleLogoPath, feathersLogoPath};	
+				
+						rugbyTeamsNames = RugbyTeamsNames.values();
+						int index = 0;
+				
+							for (int i = 0; i < rugbyTeamsNames.length - 2; i++) {	
+								Team team = new Team(rugbyTeamsNames[i].name(), iconsPath[index]);
+								this.teams.add(team);		
+								index++;					
+					}
+				}	
+		}
+	
 		
-			/*
-			rugbyTeamsNames = RugbyTeamsNames.values();
-			int logoIndex = 0;
+		//REQUIRES: icons must have six objects
+		//MODIFIES: Team
+		//EFFECTS:  assign to every team, it's icon
+		
+		private void initializeAllTeams(ArrayList<Team> teams) {
 			
-			for (RugbyTeamsNames rugbyTeam : rugbyTeamsNames) {
-				Team team = new Team(rugbyTeam.name());
-				this.teams.add(team);
-			   logoIndex++;
-	    	}
-	    	*/
+	
+				this.teams = season.getTeams(); 
+				
+				if (true) {
+					initializeIcons();
+					String[] iconsPath = {allblacksLogoPath,springboksLogoPath,sakurasLogoPath,  redRoseLogoPath, shamrockLogoPath, wallabiesLogoPath, thistleLogoPath, feathersLogoPath};	
+				
+						rugbyTeamsNames = RugbyTeamsNames.values();
+						int index = 0;
+				
+							for (int i = 0; i < rugbyTeamsNames.length ; i++) {	
+								Team team = new Team(rugbyTeamsNames[i].name(), iconsPath[index]);
+								teams.add(team);		
+								index++;					
+					}
+				}	
+		}
+		
+		
+
+		
+		
+		
+		private void initializeIcons() {
+			allblacksLogoPath = "media/Imagenes/logos/all_blacks_badge_white.png";
+			shamrockLogoPath = "media/Imagenes/logos/shamrock-logo.png";
+			sakurasLogoPath = "media/Imagenes/logos/sakuras-logo.png";
+			springboksLogoPath = "media/Imagenes/logos/south_Africa_national_rugby_union_team.png";
+			redRoseLogoPath = "media/Imagenes/logos/red_rose_logo.png";
+			wallabiesLogoPath = "media/Imagenes/logos/wallabies-logo.png";
+			thistleLogoPath = "media/Imagenes/logos/thistle_logo.png";
+			feathersLogoPath = "media/Imagenes/logos/feathers_logo.png";
+			
+			
+		
+
 		}
 		
 		private void initializeTabel() {
@@ -110,7 +192,9 @@ public class StandingsPanel extends JPanel implements ActionListener {
 
 					 
 					/// use this only when creating anew season ////
-					//new StandingsCalculation(this.season, this.seasons);
+					if (isNewSeason) {
+						new StandingsCalculation(this.season, this.seasons);
+					}
 					renderUpdatedStandings();
 
 
@@ -169,6 +253,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	          	rows[i][4] = this.teams.get(teamIndex).getTies();
 	          	rows[i][5] = this.teams.get(teamIndex).getPoints();	            	 
 	           	teamIndex++;
+	     
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));

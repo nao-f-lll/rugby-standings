@@ -5,14 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import com.standings.model.design.CustomBorder;
 import com.standings.model.design.CustomButton;
 import com.standings.ui.page.panel.ScoresPanel;
@@ -28,7 +27,7 @@ import com.standings.model.Week;
 import com.standings.model.Game;
 
 
-public class SportsDashboardPage extends ParentFrame implements ActionListener, WindowListener {
+public class SportsDashboardPage extends ParentFrame implements ActionListener, WindowListener, ListSelectionListener {
 
     private static final long serialVersionUID = 1L;
     private final String FILE_PATH = "data/objects/seasons.ser";
@@ -48,30 +47,57 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     private JButton goToUpdateDataButton;
     private JButton goToSeasonsMangement;
     private ArrayList<Team> teams;
+    private ArrayList<Team> allTeams;
 	private ArrayList<Game> games;
 	private ArrayList<Week> weeks;
 	private Season season;
 	private ArrayList<Season> seasons;
 	private FileIO<Season> fileIo;
 	private static boolean hasSeasondataCHanged;
+	private boolean isNewSeason;
+	
+	/////
+	
+	/*
+	private JTextField textField;
+	private JLabel teamsLabel;	
+	private DefaultListModel<Team> listModel;
+	
+    private JList<Team> teamList;
+    private JLabel sectionTitle;
+    private JLabel yearLabel;
+    private JButton creatSeasonButton;
+	*/
+	
+	
 	
 
 	
+	////
 	
 	   public SportsDashboardPage() {
 		   initializeFrameGraphics();	
-	    	initializeStandingsData();
+	    	
+	        allTeams = new ArrayList<>();
+	        isNewSeason = true;
+	        if (isNewSeason) {
+	        	initializeStandingsNewSeason();
+	        } else {
+	        	initializeStandingsData();
+	        }
 			initializePanelGraphics();	
-	   }
-
+		   
+	  }
+/*
     public SportsDashboardPage(String selectedSeason, ArrayList<Season>seasons) {
     	
     	
     	initializeFrameGraphics();	
-    	initializeStandingsData();
+    	//initializeStandingsData();
+    	initializeStandingsNewSeason();
 		initializePanelGraphics();	
     }
-     
+     */
     
     private void initializeFrameGraphics() {
     	setTitle("Panel administrativo");
@@ -89,18 +115,25 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     
     private void initializeStandingsData() {
     	hasSeasondataCHanged = false;
-    	seasons = new ArrayList<>();
     	fileIo = new FileIO<>();
+    	seasons = new ArrayList<>();
     	seasons = fileIo.readObject(FILE_PATH, seasons);
     	season = seasons.get(seasons.size() - 1);
     	
     	
-        teams = new ArrayList<>();
-        games = new ArrayList<>();
-        weeks = new ArrayList<>();
-        
-       //season = new Season(1, 2023, weeks, teams, games);
-       //seasons.add(season);
+
+    }
+    
+    private void initializeStandingsNewSeason() {
+    	   fileIo = new FileIO<>();
+    	   teams = new ArrayList<>();
+           games = new ArrayList<>();
+           weeks = new ArrayList<>();
+           seasons = new ArrayList<>();
+          season = new Season(2023, weeks, teams, games);
+          seasons.add(season);
+          hasSeasondataCHanged = true;
+      
     }
     
     private void initializePanelGraphics() {
@@ -125,15 +158,19 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     }
     
     private void initializeButtonPanels() {
-      
-    	standingsPanel = new StandingsPanel(season, seasons);
+    	
+    	if (isNewSeason) {
+    		standingsPanel = new StandingsPanel(season, seasons, allTeams, isNewSeason);
+    	} else {
+    		standingsPanel = new StandingsPanel(season, seasons, allTeams);
+    	}
+    	
     	scoresPanel = new ScoresPanel(panelButton, season);
     	teamsPanel = new TeamsPanel(panelButton);          
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);
-        seasonsManagement = new SeasonsManagement();
+        seasonsManagement = new SeasonsManagement(allTeams);
         
 
-   
         scoresPanel.setLayout(null);
         standingsPanel.setLayout(null);
         teamsPanel.setLayout(null);
@@ -143,11 +180,65 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     
        mainPanel.add(scoresPanel, BorderLayout.CENTER);
        scoresPanel.add(panelButton);
-       
- 
+          
+    	
+		///////////////////////////////////7
+		/*
+		 * 
+		 *      
+        mainPanel.add(seasonsManagement, BorderLayout.CENTER);
+        seasonsManagement.add(panelButton); 
+        
+        sectionTitle = new JLabel("Crear una temporada");
+        sectionTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        sectionTitle.setBounds(232, 80, 264, 68);
+        getContentPane().add(sectionTitle);
+        
+        textField = new JTextField();
+        textField.setBounds(422, 190, 115, 45);
+        getContentPane().add(textField);
+        textField.setColumns(10);
+        
+        yearLabel = new JLabel("Año");
+        yearLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        yearLabel.setBounds(192, 174, 75, 68);
+        getContentPane().add(yearLabel);
+        
+        teamsLabel = new JLabel("Equipos");
+        teamsLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        teamsLabel.setBounds(192, 287, 75, 68);
+        getContentPane().add(teamsLabel);
+        
+        
+        
+        listModel = new DefaultListModel<Team>();
+        
+        teamList = new JList<Team>();
+        teamList.setBounds(422, 287, 115, 169);
+        teamList.setModel(listModel);
+        teamList.addListSelectionListener(this);
+        getContentPane().add(teamList);
+        
+        creatSeasonButton = new JButton("Crear Temporada");
+        creatSeasonButton.setBounds(301, 545, 139, 28);
+        getContentPane().add(creatSeasonButton);
+
+        
+        
+        addTeamsToList();
+ */
   
     }
-   
+   /*
+	
+	private void addTeamsToList() {
+		for (Team team : allTeams) {
+			listModel.addElement(team);
+		}
+		
+	}*/
+	
+	///////////////////////////////
     
 
 
@@ -253,11 +344,11 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     }
     
 
-	public boolean isHasSeasondataCHanged() {
+	public boolean hasSeasondataCHanged() {
 		return hasSeasondataCHanged;
 	}
 
-	public static  void setHasSeasondataCHanged(boolean hasSeasondataCHanged) {
+	public static  void setHasSeasonDataChanged(boolean hasSeasondataCHanged) {
 		SportsDashboardPage.hasSeasondataCHanged = hasSeasondataCHanged;
 	}
 
@@ -284,11 +375,19 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-
+		
 		if (hasSeasondataCHanged) {
+		
+			fileIo.writeObject(FILE_PATH, seasons);
+			
 			userDialog("Guardando...", "Datos Modificados", JOptionPane.INFORMATION_MESSAGE);
 			
-			fileIo.writeObject(FILE_PATH, seasons);
+			
+			
+			
+			
+			
+			
 		}
 		
 		System.exit(0);
@@ -341,5 +440,11 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	        
 	        JDialog passwordRequirementdialog = fieldRequirementPane.createDialog(this, dialogTitle);
 	        passwordRequirementdialog.setVisible(true);
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

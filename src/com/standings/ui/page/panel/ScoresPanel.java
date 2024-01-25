@@ -28,7 +28,7 @@ import com.standings.ui.page.panel.scores.WeekThreePanel;
 import com.standings.ui.page.panel.scores.WeekTwoPanel;
 import com.standings.model.Season;
 
-public class ScoresPanel extends JPanel implements ActionListener{
+public class ScoresPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 2653188263518760831L;
 
@@ -220,10 +220,8 @@ public class ScoresPanel extends JPanel implements ActionListener{
 	
 	public void initializeWeekPanels() {
 		
-		 weekOnePanel    = new WeekOnePanel(this.season.getTeams(),this.season.getGames());
-		 
-		 weekTwoPanel    = new WeekTwoPanel(this.season.getTeams(),this.season.getGames());
-		 
+		 weekOnePanel    = new WeekOnePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());	 
+		 weekTwoPanel    = new WeekTwoPanel(this.season.getTeams(),this.season.getGames());	 
 		 weekThreePanel  = new WeekThreePanel(this.season.getTeams(),this.season.getGames());
 		 weekFourPanel   = new WeekFourPanel(this.season.getTeams(),this.season.getGames());
 		 weekFivePanel   = new WeekFivePanel(this.season.getTeams(),this.season.getGames());

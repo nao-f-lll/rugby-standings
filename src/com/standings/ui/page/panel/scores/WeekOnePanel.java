@@ -1,17 +1,25 @@
 package com.standings.ui.page.panel.scores;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.standings.model.Game;
+import com.standings.model.Season;
 import com.standings.model.Team;
+import com.standings.model.Week;
 import com.standings.model.design.CustomBorder;
+import com.standings.util.FileIO;
 
 import java.awt.Color;
+import java.awt.Cursor;
 
-public class WeekOnePanel extends JPanel{
+import javax.swing.JButton;
+
+public class WeekOnePanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 2821219558128276869L;
 
@@ -35,24 +43,31 @@ public class WeekOnePanel extends JPanel{
 	
 	private ArrayList<Team> teams;
 	private ArrayList<Game> games;
+	private ArrayList<Week> weeks;
+	private FileIO<Season> fileIO;
+	
+	private JButton exoportXMLButton;
 	
 	final int  GAME_ONE = 0;
 	final int  GAME_TWO = 1;
 	final int  GAME_THREE = 2;
 	private JPanel gameThreePanel;
 	private JPanel gameTwoPanel;
+	private JPanel gameOnePanel;
 	
 
-	public WeekOnePanel(ArrayList<Team> teams, ArrayList<Game> games) {
+	public WeekOnePanel(ArrayList<Team> teams, ArrayList<Game> games, ArrayList<Week> weeks) {
 		
 		   	this.setBounds(0, 115, 1525, 845);
 		   	this.setLayout(null);
 		   	this.games = games;
 		   	this.teams = teams;
+		   	this.weeks = weeks;
+		   	
 		       
-		       JPanel gameOnePanel = new JPanel();
+		       gameOnePanel = new JPanel();
 		       gameOnePanel.setBackground(Color.LIGHT_GRAY);
-		       gameOnePanel.setBounds(98, 345, 384, 225);
+		       gameOnePanel.setBounds(101, 44, 437, 266);
 		       add(gameOnePanel);
 		       gameOnePanel.setBorder(new CustomBorder(20));
 		       gameOnePanel.setLayout(null);
@@ -61,52 +76,52 @@ public class WeekOnePanel extends JPanel{
 		              
 		       		
 		       	       firstLocalTeamName = new JLabel("");
-		       	       firstLocalTeamName.setBounds(29, 10, 159, 95);
+		       	       firstLocalTeamName.setBounds(53, 26, 159, 95);
 		       	       gameOnePanel.add(firstLocalTeamName);
 		       	       firstLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       	       
 		       	             
 		       	       
 		       	       firstVisitorTeamName = new JLabel("");
-		       	       firstVisitorTeamName.setBounds(29, 105, 159, 95);
+		       	       firstVisitorTeamName.setBounds(53, 131, 159, 95);
 		       	       gameOnePanel.add(firstVisitorTeamName);
 		       	       firstVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       	       
 		       	        
 		       	        firstLocalTeamPoint = new JLabel("");
-		       	        firstLocalTeamPoint.setBounds(258, 10, 58, 95);
+		       	        firstLocalTeamPoint.setBounds(281, 26, 58, 95);
 		       	        gameOnePanel.add(firstLocalTeamPoint);
 		       	        firstLocalTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       	        
 		       
 		       firstVisitorTeamPoint = new JLabel("");
-		       firstVisitorTeamPoint.setBounds(258, 105, 58, 95);
+		       firstVisitorTeamPoint.setBounds(281, 131, 58, 95);
 		       gameOnePanel.add(firstVisitorTeamPoint);
 		       firstVisitorTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       
 		       gameThreePanel = new JPanel();
 		       gameThreePanel.setBackground(Color.LIGHT_GRAY);
-		       gameThreePanel.setBounds(1049, 345, 384, 225);
+		       gameThreePanel.setBounds(758, 191, 443, 277);
 		       gameThreePanel.setBorder(new CustomBorder(20));
 		       add(gameThreePanel);
 		       gameThreePanel.setLayout(null);
 		       
 		       
 		       thirdLocalTeamName = new JLabel("");
-		       thirdLocalTeamName.setBounds(28, 10, 159, 95);
+		       thirdLocalTeamName.setBounds(64, 21, 159, 95);
 		       gameThreePanel.add(thirdLocalTeamName);
 		       thirdLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       
 		       
 		       thirdVisitorTeamName = new JLabel("");
-		       thirdVisitorTeamName.setBounds(28, 102, 159, 95);
+		       thirdVisitorTeamName.setBounds(64, 141, 159, 95);
 		       gameThreePanel.add(thirdVisitorTeamName);
 		       thirdVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       
 		 
 		       
 		       thirdLocalTeamPoint = new JLabel("");
-		       thirdLocalTeamPoint.setBounds(260, 10, 58, 95);
+		       thirdLocalTeamPoint.setBounds(310, 21, 58, 95);
 		       gameThreePanel.add(thirdLocalTeamPoint);
 		       thirdLocalTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       
@@ -114,42 +129,56 @@ public class WeekOnePanel extends JPanel{
 		  
 		       
 		       thirdVisitorTeamPoint = new JLabel("");
-		       thirdVisitorTeamPoint.setBounds(260, 102, 58, 95);
+		       thirdVisitorTeamPoint.setBounds(310, 141, 58, 95);
 		       gameThreePanel.add(thirdVisitorTeamPoint);
 		       thirdVisitorTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       
 		       gameTwoPanel = new JPanel();
 		       gameTwoPanel.setBackground(Color.LIGHT_GRAY);
-		       gameTwoPanel.setBounds(573, 35, 384, 255);
+		       gameTwoPanel.setBounds(101, 379, 437, 267);
 		       gameTwoPanel.setBorder(new CustomBorder(20));
 		       add(gameTwoPanel);
 		       gameTwoPanel.setLayout(null);
 		       
 		       
 		       secondLocalTeamName = new JLabel("");
-		       secondLocalTeamName.setBounds(39, 32, 172, 95);
+		       secondLocalTeamName.setBounds(45, 21, 172, 95);
 		       gameTwoPanel.add(secondLocalTeamName);
 		       secondLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       
 		       
 		       secondVisitorTeamName = new JLabel("");
-		       secondVisitorTeamName.setBounds(39, 115, 178, 95);
+		       secondVisitorTeamName.setBounds(45, 126, 178, 95);
 		       gameTwoPanel.add(secondVisitorTeamName);
 		       secondVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		       
 		          	       
 		           secondLocalTeamPoint = new JLabel("");
-		           secondLocalTeamPoint.setBounds(275, 32, 58, 95);
+		           secondLocalTeamPoint.setBounds(275, 21, 58, 95);
 		           gameTwoPanel.add(secondLocalTeamPoint);
 		           secondLocalTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		           
 		           
 		           secondVisitorTeamPoint = new JLabel("");
-		           secondVisitorTeamPoint.setBounds(275, 115, 58, 95);
+		           secondVisitorTeamPoint.setBounds(275, 126, 58, 95);
 		           gameTwoPanel.add(secondVisitorTeamPoint);
 		           secondVisitorTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		           
+		           exoportXMLButton = new JButton("Export XML");
+		           exoportXMLButton.setBounds(1338, 296, 150, 40);
+		           exoportXMLButton.setBackground(Color.lightGray);
+		           exoportXMLButton.setFocusable(false);
+		           exoportXMLButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				   add(exoportXMLButton);
+				   exoportXMLButton.addActionListener(this);
 		       
-
+				   
+				   for (Week week : weeks) {
+						for (int i = 0; i < week.getGames().size(); i++) {
+							System.out.println(week.getGames().get(i).toString() + " " + week.getWeekID());
+						
+						}
+					}
 		       addGameInfo(this.teams, this.games);
 	       
 	}
@@ -191,4 +220,17 @@ public class WeekOnePanel extends JPanel{
     	  
     	  thirdVisitorTeamPoint.setText(String.valueOf(games.get(GAME_THREE).getVisitorScore()));
     }
+
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == exoportXMLButton) {
+			fileIO = new FileIO<>();
+			fileIO.convertToXML(weeks);	
+		}
+	
+		
+	}
 }

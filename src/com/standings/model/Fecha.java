@@ -1,5 +1,12 @@
 package com.standings.model;
 
-public class Fecha {
+import java.io.Serializable;
+
+public class Fecha implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 529923849420527344L;
 
 }
