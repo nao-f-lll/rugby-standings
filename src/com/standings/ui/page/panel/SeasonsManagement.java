@@ -26,7 +26,7 @@ import javax.swing.table.JTableHeader;
 import com.standings.model.Season;
 import com.standings.model.Team;
 
-public class SeasonsManagement extends JPanel implements ActionListener, ListSelectionListener{
+public class SeasonsManagement extends JPanel implements ActionListener{
  
 	private JLabel desendentTeamsLabel;	
     private JLabel AddSeasonTitle;
@@ -137,9 +137,8 @@ public class SeasonsManagement extends JPanel implements ActionListener, ListSel
 			tableHeader.setPreferredSize(headerSize);
 			tableHeader.setReorderingAllowed(false);
 
-	        addRowButton = new JButton("Add Row");
-	        addRowButton.addActionListener(e -> addRowToTable(model));
-	        this.add(addRowButton, BorderLayout.SOUTH);
+	       
+	       
 	        
 	        modifySeasonPanel = new JPanel();
 	        modifySeasonPanel.setBounds(632, 59, 890, 754);
@@ -164,6 +163,7 @@ public class SeasonsManagement extends JPanel implements ActionListener, ListSel
 	    	    model.addColumn(column);
 	    	}
 	    	
+	    	addRowToTable( model);
 	
 	
 	}
@@ -176,23 +176,34 @@ public class SeasonsManagement extends JPanel implements ActionListener, ListSel
 		}
 		System.out.println("my size is: " + seasons.size());
 		
+		seasonYearsComboBox.addItem(seasonYearsComboBox.getItemAt(seasons.size() - 1) + 1);
+		
 	}
 	
-	 private void addRowToTable(DefaultTableModel model) {
-	        Object[] newRowData = {};
-	        model.addRow(newRowData);
+	private void addRowToTable(DefaultTableModel model) {
+	    String[] newRowData = new String[columns.length]; // Assuming 'columns' is an array of column names
+
+	    for (int i = 0; i < seasons.size(); i++) {
+	        Season season = seasons.get(i);
+	        for (int j = 0; j < columns.length; i++) {
+	            // Set specific values for each column
+	            if (i == 0) {
+	                newRowData[j] = "1";
+	            } else if (i == 1) {
+	                newRowData[j] = "3";
+	            } else {
+	                // Handle additional columns if needed
+	                newRowData[j] = String.valueOf(season.getYear()) ;
+	            }
+	        }
 	    }
+
+	    model.addRow(newRowData);
+	}
+
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-				
-		
-	}
 
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

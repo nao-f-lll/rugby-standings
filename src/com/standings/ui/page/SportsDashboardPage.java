@@ -59,13 +59,6 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private boolean isNewSeason;
 
 	
-	
-	
-	
-
-	
-	////
-	
 	   public SportsDashboardPage() {
 		   initializeFrameGraphics();	
 	    	
@@ -79,16 +72,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 			initializePanelGraphics();	
 		   
 	  }
-/*
-    public SportsDashboardPage(String selectedSeason, ArrayList<Season>seasons) {
-    	
-    	
-    	initializeFrameGraphics();	
-    	//initializeStandingsData();
-    	initializeStandingsNewSeason();
-		initializePanelGraphics();	
-    }
-     */
+
     
     private void initializeFrameGraphics() {
     	setTitle("Panel administrativo");
