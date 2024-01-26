@@ -30,7 +30,7 @@ public class StandingsCalculation {
 		this.season = season;
 		this.seasons = seasons;
 		initializeTheCalculation(this.season.getTeams(),this.season.getGames(), this.season);
-		//saveSeasonData();
+		
 	}
 	
 
@@ -49,11 +49,11 @@ public class StandingsCalculation {
 		}
 		
 		
-		private  void saveSeasonData() {
+		public static  void saveSeasonData(ArrayList<Season> seasons) {
 			try {
-				FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
+				FileOutputStream fileOut = new FileOutputStream("data/objects/seasons.ser");
 				ObjectOutputStream streamOut = new ObjectOutputStream(fileOut);
-				streamOut.writeObject(this.seasons);
+				streamOut.writeObject(seasons);
 				streamOut.close();
 				fileOut.close();
 				

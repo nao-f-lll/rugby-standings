@@ -236,6 +236,23 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	}
 	
 	
+	public void renderAllWeeksScores(Season season) {
+		weekOnePanel.addGameInfo(season.getTeams(), season.getGames());
+		weekTwoPanel.addGameInfo(season.getTeams(), season.getGames());
+		weekThreePanel.addGameInfo(season.getTeams(), season.getGames());
+		weekFourPanel.addGameInfo(season.getTeams(), season.getGames());
+		weekFivePanel.addGameInfo(season.getTeams(), season.getGames());
+		weekSixPanel.addGameInfo(season.getTeams(), season.getGames());
+		weekSevenPanel.addGameInfo(season.getTeams(), season.getGames());
+		weekEighthPanel.addGameInfo(season.getTeams(), season.getGames());
+		weekNinePanel.addGameInfo(season.getTeams(), season.getGames());
+		weekTenPanel.addGameInfo(season.getTeams(), season.getGames());
+
+	}
+	
+	
+	
+	
 	//MODIFIES: week [One...Ten] Panel
 	//EFFECTS:  based on the selected week passed call the appropriate week's panel
 	

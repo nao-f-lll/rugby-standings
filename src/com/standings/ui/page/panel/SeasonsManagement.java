@@ -18,13 +18,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import com.standings.model.Game;
 import com.standings.model.Season;
 import com.standings.model.Team;
+import com.standings.model.Week;
+import com.standings.ui.page.SportsDashboardPage;
+import com.standings.util.StandingsCalculation;
+
+import javax.swing.ListSelectionModel;
 
 public class SeasonsManagement extends JPanel implements ActionListener{
  
@@ -44,18 +52,21 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private JTable table;
     private JTableHeader tableHeader;
     private Dimension headerSize;
-    private JButton addRowButton;
     private JPanel modifySeasonPanel;
     private JScrollPane scrollPane;
     private JLabel modifySeasonTitle;
     private ArrayList<Season> seasons;
     private ArrayList<Team> allTeams;
+	private StandingsPanel standingsPanel;
+	private ScoresPanel scoresPanel;
     
     private static final long serialVersionUID = 413951360879373732L;
 
-	public SeasonsManagement(ArrayList<Team> allTeams, ArrayList<Season> seasons) {
+	public SeasonsManagement(JButton goToUpdateDataButton, ArrayList<Team> allTeams, ArrayList<Season> seasons, StandingsPanel standingsPanel, ScoresPanel scoresPanel) {
     	
 		
+			this.standingsPanel = standingsPanel;
+			this.scoresPanel = scoresPanel;
 			this.seasons = seasons;
 			this.allTeams = allTeams;
 		
@@ -121,11 +132,46 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        creatSeasonButton.setFocusable(false);
 	        creatSeasonButton.setBackground(Color.LIGHT_GRAY);
 	        creatSeasonButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	        creatSeasonButton.addActionListener(this);
 	        
-	        model = new DefaultTableModel();
+	        
+	        
+	        
+	        columns =	new String[] {
+	         		"ID", "Año", "Estado"};	
+	        model = new DefaultTableModel(columns, 0) {
+	        	private static final long serialVersionUID = -7029166140539557670L;
+
+				@Override
+	        	public boolean isCellEditable(int row, int column) {
+	        		return false;
+	        	}
+	        };
+	        
 	        table = new JTable(model);
+	        table.setRowSelectionAllowed(true);
+	        table.setEnabled(true);
 	        
+	        ListSelectionModel selectionModel = table.getSelectionModel();
+	        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	        
+	        selectionModel.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (!e.getValueIsAdjusting()) {
+                        int selectedRow = table.getSelectedRow();
+                        Season season =  seasons.get(selectedRow);
+                        standingsPanel.renderUpdatedStandings(season.getTeams());
+                        scoresPanel.renderAllWeeksScores(season);
+                       if (season.getState().equals("finalizada")) {
+                    	   goToUpdateDataButton.setVisible(false);
+                       } else {
+                    	   goToUpdateDataButton.setVisible(true);
+                       }
+                    }
+                }
+            });
+	           
 	        
 	        tableHeader = table.getTableHeader();
 	        table.getTableHeader().setFont(new Font(null, 20, 20));
@@ -137,6 +183,11 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 			tableHeader.setPreferredSize(headerSize);
 			tableHeader.setReorderingAllowed(false);
 
+			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+			table.setDefaultRenderer(Object.class, centerRenderer);
+			table.setRowHeight(40);
+			table.setFont(new Font(null, 20, 20));
 	       
 	       
 	        
@@ -152,18 +203,13 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        scrollPane.setBounds(113, 125, 695, 498);
 	        modifySeasonPanel.add(scrollPane);
 	        
-	        modifySeasonTitle = new JLabel("Modifica una temporada ");
+	        modifySeasonTitle = new JLabel("Lista de temporadas");
 	        modifySeasonTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
-	        modifySeasonTitle.setBounds(300, 10, 316, 68);
+	        modifySeasonTitle.setBounds(350, 10, 316, 68);
 	        modifySeasonPanel.add(modifySeasonTitle);
 	        
-	    	columns =	new String[] {
-	         		"Temporada", "ID", "Año"};	
-	    	for (String column : columns) {
-	    	    model.addColumn(column);
-	    	}
 	    	
-	    	addRowToTable( model);
+	    	addRowToTable();
 	
 	
 	}
@@ -177,33 +223,41 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		System.out.println("my size is: " + seasons.size());
 		
 		seasonYearsComboBox.addItem(seasonYearsComboBox.getItemAt(seasons.size() - 1) + 1);
-		
+		int lastIndex = seasonYearsComboBox.getItemCount() - 1;
+		seasonYearsComboBox.setSelectedIndex(lastIndex);
 	}
 	
-	private void addRowToTable(DefaultTableModel model) {
-	    String[] newRowData = new String[columns.length]; // Assuming 'columns' is an array of column names
-
-	    for (int i = 0; i < seasons.size(); i++) {
-	        Season season = seasons.get(i);
-	        for (int j = 0; j < columns.length; i++) {
-	            // Set specific values for each column
-	            if (i == 0) {
-	                newRowData[j] = "1";
-	            } else if (i == 1) {
-	                newRowData[j] = "3";
-	            } else {
-	                // Handle additional columns if needed
-	                newRowData[j] = String.valueOf(season.getYear()) ;
-	            }
-	        }
-	    }
-
-	    model.addRow(newRowData);
+	private void addRowToTable() {
+	    
+		for (int i = 0; i < seasons.size(); i++) {
+			Season season = seasons.get(i);
+			this.model.addRow(
+	                new Object[]{
+	                	season.getId(),
+	                	season.getYear(),
+	                	season.getState()
+	                }
+	           );
+		}
+		int lastRowIndex = table.getRowCount() - 1;
+		table.changeSelection(lastRowIndex, 0, false, false);
 	}
 
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if (e.getSource() == creatSeasonButton) {
+			ArrayList<Team> teams = new ArrayList<>();
+			ArrayList<Game>  games = new ArrayList<>();
+			ArrayList<Week>  weeks = new ArrayList<>();
+			Season lastSeason = seasons.get(seasons.size() - 1);
+      	   lastSeason.setState("finalizada");
+            Season  newSeason = new Season(lastSeason.getId() + 1,lastSeason.getYear() + 1, "actual", weeks, teams, games);
+            seasons.add(newSeason);
+            SportsDashboardPage.setHasSeasonDataChanged(true);
+           // boolean isNewSeason = true;
+            standingsPanel = new StandingsPanel(newSeason, this.seasons, teams);
+            addRowToTable();
+		}
 	}
 }

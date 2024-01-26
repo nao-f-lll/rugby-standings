@@ -204,13 +204,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
  
 				    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 				    add(scrollPane);
-				       
-				     
-			        
-					
-					
-					
-					
+
 					JTableHeader tableHeader = table.getTableHeader();
 					Dimension headerSize = tableHeader.getPreferredSize();
 					headerSize.height = 100; 
@@ -261,6 +255,29 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		
 	  
 		}
+		
+		
+		public void renderUpdatedStandings(ArrayList<Team> teams) {		
+			
+			int teamIndex = 0;
+			for (int i = 0; i < rows.length; i++) {
+	       
+	            rows[i][0] = teams.get(teamIndex).getName();
+	            rows[i][1] = teams.get(teamIndex).getGamesPlayed();
+	          	rows[i][2] = teams.get(teamIndex).getWins();
+	          	rows[i][3] = teams.get(teamIndex).getLosses();
+	          	rows[i][4] = teams.get(teamIndex).getTies();
+	          	rows[i][5] = teams.get(teamIndex).getPoints();	            	 
+	           	teamIndex++;
+	     
+	        }
+			
+	          table.setModel(new DefaultTableModel(rows, columns));
+
+		
+	  
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == printPdfButton) {

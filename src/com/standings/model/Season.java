@@ -10,6 +10,8 @@ public class Season implements Serializable{
 	
 
 	private static final long serialVersionUID = -2800306066578213671L;
+	private int id;
+	private String state;
 	private int year;
 	private ArrayList<Week>  weeks;
 	private ArrayList<Team> teams;
@@ -19,7 +21,9 @@ public class Season implements Serializable{
 	public  transient FileWriter fileWriter; 
 	
 	
-	public Season( int year, ArrayList<Week>  weeks,  ArrayList<Team> teams, ArrayList<Game> games) {
+	public Season( int id, int year, String state, ArrayList<Week>  weeks,  ArrayList<Team> teams, ArrayList<Game> games) {
+		this.state = state;
+		this.id = id;
 		this.year = year;
 		this.weeks = weeks;
 		this.teams = teams;
@@ -28,6 +32,36 @@ public class Season implements Serializable{
 	}
 	
 	
+	
+	
+	public String getState() {
+		return state;
+	}
+
+
+
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+
 	public boolean isActive() {
 		return active;
 	}
