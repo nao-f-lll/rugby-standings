@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import com.standings.model.design.CustomBorder;
 import com.standings.model.design.CustomButton;
@@ -55,19 +57,8 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private FileIO<Season> fileIo;
 	private static boolean hasSeasondataCHanged;
 	private boolean isNewSeason;
+
 	
-	/////
-	
-	/*
-	private JTextField textField;
-	private JLabel teamsLabel;	
-	private DefaultListModel<Team> listModel;
-	
-    private JList<Team> teamList;
-    private JLabel sectionTitle;
-    private JLabel yearLabel;
-    private JButton creatSeasonButton;
-	*/
 	
 	
 	
@@ -126,11 +117,15 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     
     private void initializeStandingsNewSeason() {
     	   fileIo = new FileIO<>();
+    	   seasons = new ArrayList<>();
+    	   seasons = fileIo.readObject(FILE_PATH, seasons);
+    	   fileIo = new FileIO<>();
     	   teams = new ArrayList<>();
            games = new ArrayList<>();
            weeks = new ArrayList<>();
-           seasons = new ArrayList<>();
-          season = new Season(2023, weeks, teams, games);
+         Season lastSeason = seasons.get(seasons.size() - 1);
+         
+          season = new Season(lastSeason.getYear() + 1, weeks, teams, games);
           seasons.add(season);
           hasSeasondataCHanged = true;
       
@@ -168,7 +163,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     	scoresPanel = new ScoresPanel(panelButton, season);
     	teamsPanel = new TeamsPanel(panelButton);          
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);
-        seasonsManagement = new SeasonsManagement(allTeams);
+        seasonsManagement = new SeasonsManagement(allTeams, seasons);
         
 
         scoresPanel.setLayout(null);
@@ -176,70 +171,13 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         teamsPanel.setLayout(null);
         updateDataPanel.setLayout(null);
         seasonsManagement.setLayout(null);
-      
+     
     
        mainPanel.add(scoresPanel, BorderLayout.CENTER);
        scoresPanel.add(panelButton);
-          
-    	
-		///////////////////////////////////7
-		/*
-		 * 
-		 *      
-        mainPanel.add(seasonsManagement, BorderLayout.CENTER);
-        seasonsManagement.add(panelButton); 
-        
-        sectionTitle = new JLabel("Crear una temporada");
-        sectionTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        sectionTitle.setBounds(232, 80, 264, 68);
-        getContentPane().add(sectionTitle);
-        
-        textField = new JTextField();
-        textField.setBounds(422, 190, 115, 45);
-        getContentPane().add(textField);
-        textField.setColumns(10);
-        
-        yearLabel = new JLabel("Año");
-        yearLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        yearLabel.setBounds(192, 174, 75, 68);
-        getContentPane().add(yearLabel);
-        
-        teamsLabel = new JLabel("Equipos");
-        teamsLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        teamsLabel.setBounds(192, 287, 75, 68);
-        getContentPane().add(teamsLabel);
-        
-        
-        
-        listModel = new DefaultListModel<Team>();
-        
-        teamList = new JList<Team>();
-        teamList.setBounds(422, 287, 115, 169);
-        teamList.setModel(listModel);
-        teamList.addListSelectionListener(this);
-        getContentPane().add(teamList);
-        
-        creatSeasonButton = new JButton("Crear Temporada");
-        creatSeasonButton.setBounds(301, 545, 139, 28);
-        getContentPane().add(creatSeasonButton);
 
-        
-        
-        addTeamsToList();
- */
-  
     }
-   /*
-	
-	private void addTeamsToList() {
-		for (Team team : allTeams) {
-			listModel.addElement(team);
-		}
-		
-	}*/
-	
-	///////////////////////////////
-    
+   
 
 
     
