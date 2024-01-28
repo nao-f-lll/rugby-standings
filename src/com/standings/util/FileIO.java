@@ -12,8 +12,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-
 import com.standings.model.Game;
 import com.standings.model.Team;
 import com.standings.model.Week;

@@ -9,8 +9,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -47,9 +56,8 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	private String feathersLogoPath;
 	
 	private boolean isNewSeason;
+	private String[] newSeasonTeamsNames; 
 	
-
-
 		public StandingsPanel( Season season, ArrayList<Season> seasons, ArrayList<Team> allTeams) {
 			
 			initializeFrameGraphics();
@@ -57,7 +65,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
             this.seasons = seasons;		
             this.allTeams = allTeams;
 			initializeTeams();
-			initializeAllTeams(this.allTeams);
+			//initializeAllTeams(this.allTeams);
 			initializeTabel();
 	}
 		
@@ -69,10 +77,22 @@ public class StandingsPanel extends JPanel implements ActionListener {
             this.allTeams = allTeams;
             this.isNewSeason = isNewSeason;
 			initializeTeams();
-			initializeAllTeams(this.allTeams);
+			//initializeAllTeams(this.allTeams);
 			initializeTabel();
 	}
 		
+	
+	
+	public StandingsPanel( Season season, ArrayList<Season> seasons, ArrayList<Team> allTeams, boolean isNewSeason, String[] newSeasonTeamsNames) {
+		this.newSeasonTeamsNames = newSeasonTeamsNames;
+		initializeFrameGraphics();
+        this.season = season;
+        this.seasons = seasons;		
+        this.allTeams = allTeams;
+        this.isNewSeason = isNewSeason;
+		initializeAllTeams();
+		initializeTabel();
+}
 		
 		private void initializeFrameGraphics() {
 			
@@ -135,24 +155,39 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		//MODIFIES: Team
 		//EFFECTS:  assign to every team, it's icon
 		
-		private void initializeAllTeams(ArrayList<Team> teams) {
+		private void initializeAllTeams() {
 			
-	
-				this.teams = season.getTeams(); 
 				
-				if (true) {
+			this.teams = season.getTeams(); 
+		
+
 					initializeIcons();
 					String[] iconsPath = {allblacksLogoPath,springboksLogoPath,sakurasLogoPath,  redRoseLogoPath, shamrockLogoPath, wallabiesLogoPath, thistleLogoPath, feathersLogoPath};	
 				
+					this.allTeams = new ArrayList<>();
 						rugbyTeamsNames = RugbyTeamsNames.values();
 						int index = 0;
 				
 							for (int i = 0; i < rugbyTeamsNames.length ; i++) {	
 								Team team = new Team(rugbyTeamsNames[i].name(), iconsPath[index]);
-								teams.add(team);		
+								allTeams.add(team);		
 								index++;					
 					}
-				}	
+							
+							
+							ArrayList<Team> filteredTeams = new ArrayList<>();
+				
+								for (Team team : allTeams) {
+								    if (Arrays.asList(newSeasonTeamsNames).contains(team.getName())) {
+								    	filteredTeams.add(team);
+								        if (filteredTeams.size() > 5) {
+								            break;
+								        }
+								    }
+								
+							}
+							
+							this.teams.addAll(filteredTeams);		
 		}
 		
 		
@@ -247,13 +282,9 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	          	rows[i][4] = this.teams.get(teamIndex).getTies();
 	          	rows[i][5] = this.teams.get(teamIndex).getPoints();	            	 
 	           	teamIndex++;
-	     
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));
-
-		
-	  
 		}
 		
 		

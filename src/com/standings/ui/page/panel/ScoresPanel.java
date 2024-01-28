@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.standings.model.Season;
+
 //import com.standings.ui.page.panel.subpanel.*;
 
 import com.standings.model.design.CustomBorder;
@@ -26,7 +28,6 @@ import com.standings.ui.page.panel.scores.WeekSixPanel;
 import com.standings.ui.page.panel.scores.WeekTenPanel;
 import com.standings.ui.page.panel.scores.WeekThreePanel;
 import com.standings.ui.page.panel.scores.WeekTwoPanel;
-import com.standings.model.Season;
 
 public class ScoresPanel extends JPanel implements ActionListener {
 

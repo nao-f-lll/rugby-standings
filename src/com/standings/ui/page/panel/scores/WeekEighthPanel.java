@@ -1,5 +1,7 @@
 package com.standings.ui.page.panel.scores;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,9 +17,6 @@ import com.standings.model.Team;
 import com.standings.model.Week;
 import com.standings.model.design.CustomBorder;
 import com.standings.util.FileIO;
-
-import java.awt.Color;
-import java.awt.Cursor;
 
 public class WeekEighthPanel extends JPanel implements ActionListener{
 

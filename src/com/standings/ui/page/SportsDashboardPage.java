@@ -1,19 +1,32 @@
 package com.standings.ui.page;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
+import com.standings.model.Game;
+import com.standings.model.ParentFrame;
+import com.standings.model.Season;
+import com.standings.model.Team;
+import com.standings.model.Week;
 import com.standings.model.design.CustomBorder;
 import com.standings.model.design.CustomButton;
 import com.standings.ui.page.panel.ScoresPanel;
@@ -22,11 +35,6 @@ import com.standings.ui.page.panel.StandingsPanel;
 import com.standings.ui.page.panel.TeamsPanel;
 import com.standings.ui.page.panel.UpdateDataPanel;
 import com.standings.util.FileIO;
-import com.standings.model.ParentFrame;
-import com.standings.model.Season;
-import com.standings.model.Team;
-import com.standings.model.Week;
-import com.standings.model.Game;
 
 
 public class SportsDashboardPage extends ParentFrame implements ActionListener, WindowListener, ListSelectionListener {
@@ -59,11 +67,35 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private boolean isNewSeason;
 
 	
+	
+	/////
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	/////////
+	
 	   public SportsDashboardPage() {
 		   initializeFrameGraphics();	
 	    	
 	        allTeams = new ArrayList<>();
-	        isNewSeason = false;
+	        File file = new File(FILE_PATH);
+	        if (!file.exists() || file.length() == 0) {
+	        	 isNewSeason = true;
+	        } else {
+	        	  isNewSeason = false;
+	        }
+	      
 	        if (isNewSeason) {
 	        	initializeStandingsNewSeason();
 	        } else {
@@ -151,7 +183,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     	scoresPanel = new ScoresPanel(panelButton, season);
     	teamsPanel = new TeamsPanel(panelButton);          
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);
-        seasonsManagement = new SeasonsManagement(goToUpdateDataButton, allTeams, seasons, standingsPanel, scoresPanel);
+        seasonsManagement = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, allTeams, seasons, standingsPanel, scoresPanel);
         
 
         scoresPanel.setLayout(null);

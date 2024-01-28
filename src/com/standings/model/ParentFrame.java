@@ -1,8 +1,10 @@
 package com.standings.model;
 
 import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
 import com.standings.ui.page.LoginPage;
 
 public class ParentFrame extends JFrame {

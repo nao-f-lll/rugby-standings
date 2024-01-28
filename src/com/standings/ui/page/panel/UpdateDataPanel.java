@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,12 +22,18 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import com.standings.model.design.CustomCheckBox;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import com.standings.model.Game;
 import com.standings.model.ParentFrame;
+import com.standings.model.Season;
 import com.standings.model.Team;
+import com.standings.model.design.CustomCheckBox;
 import com.standings.ui.page.SportsDashboardPage;
 //import com.standings.util.AddGameUtil;
 import com.standings.util.StandingsCalculation;
@@ -80,6 +87,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
     
     private List<Game> games;
 	private ArrayList<Team> teams;
+	private Season season;
 	private StandingsPanel standingsPanel;
 	private ScoresPanel scoresPanel;
 
@@ -123,6 +131,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	public boolean isFirstBoxSelected;
 	public boolean isSecondBoxSelected;
 	public boolean isThirdBoxSelected;
+	private boolean newSeason;
 	
 	
 	public UpdateDataPanel( ArrayList<Team> teams, List<Game> games, StandingsPanel standingsPanel, ScoresPanel scoresPanel) {
@@ -140,7 +149,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
     	
 		localClubField = new JTextField();
 		visitorClubField = new JTextField();
-					
+		newSeason = false;
 		
 		initializeGraphics();
     	
@@ -148,6 +157,16 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	
 	
 	
+	public void updateData(ArrayList<Team> teams, ArrayList<Game> games, Season season) {
+    	this.games = games;
+    	this.teams = teams;
+    	this.season = season;
+    	changeGames();
+    	repaint();
+    	newSeason = true;
+    }
+	
+
 	
 	private void initializeGraphics() {
 		initializegameOneGraphics();
@@ -461,8 +480,15 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
                     }
 
                     StandingsCalculation.sortStandings(this.teams);
-                    standingsPanel.renderUpdatedStandings();
-                    scoresPanel.renderWeeksScores(whichWeekIsSelected());
+                    if (newSeason) {
+                    	standingsPanel.renderUpdatedStandings(this.teams);
+                        scoresPanel.renderAllWeeksScores(season);
+                    } else {
+                        standingsPanel.renderUpdatedStandings();
+                        scoresPanel.renderWeeksScores(whichWeekIsSelected());
+                    }
+               
+                    
                     resetFieldsAndWeek();
                     userDialog("Su partido se ha actualizado correctamente", "Actualizar entrada", INFORMATION_MESSAGE_TYPE);
                     SportsDashboardPage.setHasSeasonDataChanged(true);
@@ -518,17 +544,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	            		
 	            		if (firstLocalTeamPointField.getText().equals("?")) {
 	        	    		
-	        	    		updateButton.setEnabled(false);
-	        	    	
-	        	    		
-	        	    	} else if (secondLocalTeamPointField.getText().equals("?")) {
-	        	    		
-	        	    		
-	        	    	
-	        	    	
-	        	    	} else if (thirdLocalTeamPointField.getText().equals("?")) {
-	        	    		
-	        	    		
+	        	    		updateButton.setEnabled(false);	
 	        	    	
 	        	    	} else {
 	        	    		 
@@ -703,6 +719,9 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		    isThirdBoxSelected = false;
 
 	}
+	
+	
+	
 	
 
 	//EFFECTS: pass the arguments based on the week. 

@@ -7,8 +7,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import com.standings.model.Season;
+
 import com.standings.model.Game;
+import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.model.Week;
 
