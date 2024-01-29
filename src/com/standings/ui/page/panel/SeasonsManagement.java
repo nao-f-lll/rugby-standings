@@ -37,8 +37,6 @@ public class SeasonsManagement extends JPanel implements ActionListener{
  
     private DefaultTableModel model;
     private JTable table;
-	private final int WARRNING_MESSAGE_TYPE = 2;
-	private final int INFORMATION_MESSAGE_TYPE = 1;
     private JTableHeader tableHeader;
     private Dimension headerSize;
     private JPanel modifySeasonPanel;
@@ -46,8 +44,6 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private JLabel modifySeasonTitle;
     private ArrayList<Season> seasons;
     private ArrayList<Team> allTeams;
-	private StandingsPanel standingsPanel;
-	private ScoresPanel scoresPanel;
 	private JLabel allTeamsLabel;	
     private JLabel AddSeasonTitle;
     private JLabel seasonLabel;
@@ -61,12 +57,13 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private static final long serialVersionUID = 413951360879373732L;
     private DefaultListModel<String> listTwoModel;
     private JButton addOneTeamButton;
-    private  JButton addMoreThanOneTeamButton;
     private  JButton removeOneTeamButton;
-    private JButton removeMoreThanOneTeamButton;
+    private JButton removeSeasonButton;
+    private JButton changeSeasonStateButton;
     private JLabel newSeasonteams;
     private String[] newSeasonTeamsNames;
     private UpdateDataPanel updateDataPanel;
+    private StandingsPanel standingsPanel;
     private final String[] allTeamsNames = {"AllBlacks", "Shamrock", "Wallabies", "RedRose", "Feathers", "Thistle", "Springboks", "Sakuras"};       
 ;
     
@@ -74,11 +71,10 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	public SeasonsManagement(UpdateDataPanel updateDataPanel, JButton goToUpdateDataButton, ArrayList<Team> allTeams, ArrayList<Season> seasons, StandingsPanel standingsPanel, ScoresPanel scoresPanel) {
     	
 		
-			this.standingsPanel = standingsPanel;
-			this.scoresPanel = scoresPanel;
 			this.updateDataPanel = updateDataPanel;
 			this.seasons = seasons;
 			this.allTeams = allTeams;
+			this.standingsPanel = standingsPanel;
 		
 
 			
@@ -105,7 +101,8 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		       listOne.setBorder(new LineBorder(new Color(0, 0, 0)));
 		       listOne.setBounds(67, 218, 187, 220);
 		       addSeasonPanel.add(listOne);
-		       
+		       listOne.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 		       
 		       listTwoModel = new DefaultListModel<>();
 		       listTwo = new JList<String>();
@@ -114,38 +111,36 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		       listTwo.setBounds(417, 218, 187, 220);
 		       addSeasonPanel.add(listTwo);
 		       listTwo.setModel(listTwoModel);
+		       listTwo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 		       
 		       fillListOne();		       
 		       
 		       listOne.setModel(listOneModel);
 		       
 		       addOneTeamButton = new JButton(">");
-		       addOneTeamButton.setFont(new Font("Dialog", Font.BOLD, 15));
-		       addOneTeamButton.setBounds(276, 236, 117, 25);
+		       addOneTeamButton.setFont(new Font("Dialog", Font.BOLD, 20));
+		       addOneTeamButton.setBounds(276, 270, 117, 30);
+		       addOneTeamButton.setBackground(Color.LIGHT_GRAY);
 		       addSeasonPanel.add(addOneTeamButton);
 		       addOneTeamButton.addActionListener(this);
+		       addOneTeamButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		       
-		       addMoreThanOneTeamButton = new JButton(">>");
-		       addMoreThanOneTeamButton.setFont(new Font("Dialog", Font.BOLD, 15));
-		       addMoreThanOneTeamButton.setBounds(276, 287, 117, 25);
-		       addSeasonPanel.add(addMoreThanOneTeamButton);
-		       addMoreThanOneTeamButton.addActionListener(this);
+
 		       
 		       removeOneTeamButton = new JButton("<");
-		       removeOneTeamButton.setFont(new Font("Dialog", Font.BOLD, 15));
-		       removeOneTeamButton.setBounds(276, 346, 117, 25);
+		       removeOneTeamButton.setFont(new Font("Dialog", Font.BOLD, 20));
+		       removeOneTeamButton.setBounds(276, 346, 117, 30);
 		       addSeasonPanel.add(removeOneTeamButton);
+		       removeOneTeamButton.setBackground(Color.LIGHT_GRAY);
 		       removeOneTeamButton.addActionListener(this);
+		       removeOneTeamButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		       
-		       removeMoreThanOneTeamButton = new JButton("<<");
-		       removeMoreThanOneTeamButton.setFont(new Font("Dialog", Font.BOLD, 15));
-		       removeMoreThanOneTeamButton.setBounds(276, 395, 117, 25);
-		       addSeasonPanel.add(removeMoreThanOneTeamButton);
-		       removeMoreThanOneTeamButton.addActionListener(this);
+
 		       
-		       newSeasonteams = new JLabel("Equipos de la nueva temporada");
+		       newSeasonteams = new JLabel("Equipos selecionados");
 		       newSeasonteams.setFont(new Font("Dialog", Font.PLAIN, 17));
-		       newSeasonteams.setBounds(389, 142, 233, 68);
+		       newSeasonteams.setBounds(425, 142, 233, 68);
 		       addSeasonPanel.add(newSeasonteams);
 	        
 	        AddSeasonTitle = new JLabel("Crear una temporada nueva");
@@ -175,7 +170,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        
 	        creatSeasonButton = new JButton("Crear Temporada");
 	        creatSeasonButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-	        creatSeasonButton.setBounds(245, 595, 168, 49);
+	        creatSeasonButton.setBounds(245, 470, 168, 49);
 	        addSeasonPanel.add(creatSeasonButton);
 	        creatSeasonButton.setFocusable(false);
 	        creatSeasonButton.setBackground(Color.LIGHT_GRAY);
@@ -201,8 +196,8 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        table.setEnabled(true);
 	        
 	        ListSelectionModel selectionModel = table.getSelectionModel();
-	        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	        
+	        selectionModel.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+	        table.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	        
 	        
 	        
@@ -214,8 +209,9 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	                if (!e.getValueIsAdjusting() && !selectionModel.isSelectionEmpty()) {
 	                    int selectedRow = table.getSelectedRow();
 	                    Season season = seasons.get(selectedRow);
-	                    standingsPanel.renderUpdatedStandings(season.getTeams());
+	                    standingsPanel.renderUpdatedStandings(season.getTeams(), season);
 	                    scoresPanel.renderAllWeeksScores(season);
+	        	        updateDataPanel.updateData(season.getTeams(), season.getGames(), season);
 	                    if (season.getState().equals("finalizada")) {
 	                        goToUpdateDataButton.setVisible(false);
 	                    } else {
@@ -262,8 +258,28 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        modifySeasonTitle.setBounds(350, 10, 316, 68);
 	        modifySeasonPanel.add(modifySeasonTitle);
 	        
+	        
+	        removeSeasonButton = new JButton("Borrar Temporada");
+	        removeSeasonButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	        removeSeasonButton.setBounds(550, 650, 168, 49);
+	        removeSeasonButton.setFocusable(false);
+	        removeSeasonButton.setBackground(Color.LIGHT_GRAY);
+	        removeSeasonButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	        removeSeasonButton.addActionListener(this);
+	        modifySeasonPanel.add(removeSeasonButton);
+	        
+
+	        
+	        changeSeasonStateButton = new JButton("Cambiar estado");
+	        changeSeasonStateButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	        changeSeasonStateButton.setBounds(250, 650, 168, 49);
+	        changeSeasonStateButton.setFocusable(false);
+	        changeSeasonStateButton.setBackground(Color.LIGHT_GRAY);
+	        changeSeasonStateButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	        changeSeasonStateButton.addActionListener(this);
+	        modifySeasonPanel.add(changeSeasonStateButton);
 	    	
-	    	addRowToTable();
+	    	addRowToTable(true);
 	
 	
 	}
@@ -275,7 +291,9 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	
 	
 	
-	private void addRowToTable() {
+	
+	private void addRowToTable(boolean selectLastOne) {
+		int selectedRow = table.getSelectedRow();
 		model.setRowCount(0);
 		for (int i = 0; i < seasons.size(); i++) {
 			Season season = seasons.get(i);
@@ -287,8 +305,13 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	                }
 	           );
 		}
-		int lastRowIndex = table.getRowCount() - 1;
-		table.changeSelection(lastRowIndex, 0, false, false);
+		if (selectLastOne) {
+			int lastRowIndex = table.getRowCount() - 1;
+			table.changeSelection(lastRowIndex, 0, false, false);
+		} else {	
+			table.changeSelection(selectedRow, 0, false, false);
+		}
+		
 	}
 
 	
@@ -298,24 +321,63 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 			 creatNewSeason();
 		} else if (e.getSource() == addOneTeamButton) {
 			addTeam(listOne, listOneModel, listTwoModel);
-		}else if (e.getSource() == addMoreThanOneTeamButton) {
-			
 		} else if (e.getSource() == removeOneTeamButton) {
-			
 			addTeam(listTwo, listTwoModel, listOneModel);
-			
-		} else if (e.getSource() == removeMoreThanOneTeamButton) {
-			
+		} else if (e.getSource() == removeSeasonButton) {
+			removeSeason();
+		} else if (e.getSource() ==  changeSeasonStateButton) {
+			changeSeasonState();
 		}
 	}
 	
+	private void removeSeason() {
+		  int selectedRow = table.getSelectedRow();
+		  if (seasons.size() > 1) {
+			  seasons.remove(selectedRow);     
+	          addRowToTable(true);
+	          SportsDashboardPage.setHasSeasonDataChanged(true);
+		  } else {
+			  userDialog("No se puede borrar todas las temporadas", "Borra temporada", JOptionPane.WARNING_MESSAGE);
+		  }
+          
+	}
+	
+	private void changeSeasonState() {
+		 int selectedRow = table.getSelectedRow();
+         Season season = seasons.get(selectedRow);
+         if (season.getState().equals("actual")) {
+         	season.setState("finalizada");
+         	addRowToTable(false);
+ 	        SportsDashboardPage.setHasSeasonDataChanged(true);
+
+         } else {
+         	
+         	boolean isSomeSeasonActive = true;
+         	
+         	for (int i = 0; i < seasons.size(); i++) {
+         		if (seasons.get(i).getState().equals("actual")) {
+             		userDialog("Solo se permite activar una temporada", "Estado de temporada", JOptionPane.WARNING_MESSAGE);
+             		isSomeSeasonActive = true;
+             		break;
+         		} else {
+         			isSomeSeasonActive = false;
+         		}
+         	}
+         	
+         	if (!isSomeSeasonActive) {
+         		season.setState("actual");
+         		addRowToTable(false);
+     	        SportsDashboardPage.setHasSeasonDataChanged(true);
+         	}
+         }
+	}
 	
 	private void addTeam(JList<String> moveFromThisList, DefaultListModel<String> moveFromThisListModel, DefaultListModel<String> moveToThisListModel) {
 		if (moveFromThisList.getSelectedIndex() == -1) {
-			userDialog("Ningun Equipo esta selecionado, seleciona uno", "Error Al añadir equipo", WARRNING_MESSAGE_TYPE);
+			userDialog("Ningun Equipo esta selecionado, seleciona uno", "Error Al añadir equipo", JOptionPane.WARNING_MESSAGE);
 		} else {
 			if (listTwoModel.size() > 5 && moveToThisListModel == listTwoModel) {
-				userDialog("No se puede añadir mas que seis equipos", "Error Al añadir equipo", WARRNING_MESSAGE_TYPE);
+				userDialog("No se puede añadir mas que seis equipos", "Error Al añadir equipo", JOptionPane.WARNING_MESSAGE);
 
 			} else {
 				String value = moveFromThisList.getSelectedValue();
@@ -340,6 +402,17 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	
 	private void creatNewSeason() {
 		
+
+		
+		for (int i = 0; i < seasons.size() - 1; i++) {
+    		if (seasons.get(i).getState().equals("actual")) {
+    			seasons.get(i).setState("finalizada");
+        		break;
+    		} else {
+    			
+    		}
+    	}
+		
 		if (listTwoModel.size() == 6) {
 			newSeasonTeamsNames = new String[6];
 			for (int i = 0; i < listTwoModel.size(); i++) {
@@ -357,13 +430,12 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        boolean isNewSeason = true;
 	        standingsPanel = new StandingsPanel(newSeason, seasons, allTeams, isNewSeason, newSeasonTeamsNames);
 	        SportsDashboardPage.setHasSeasonDataChanged(true);
-	        addRowToTable();  
+	        addRowToTable(true);  
 	        addSeasonYearsToComboBox();
-	        updateDataPanel.updateData(newSeason.getTeams(), newSeason.getGames(), newSeason);
 	        fillListOne();
-	        listTwoModel.removeAllElements(); 
+	        listTwoModel.removeAllElements();
 		} else {
-			userDialog("Tienes que selecionar seis equipos para crear una nueva temporada", "Creacion de temporada", WARRNING_MESSAGE_TYPE);
+			userDialog("Tienes que selecionar seis equipos para crear una nueva temporada", "Creacion de temporada", JOptionPane.WARNING_MESSAGE);
 		}
 		
         
@@ -381,6 +453,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        accepetButton.setText("Aceptar");
 	        accepetButton.setFocusable(false);
 	        accepetButton.setBackground(Color.LIGHT_GRAY);
+	        accepetButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	        
 	        JDialog passwordRequirementdialog = fieldRequirementPane.createDialog(this, dialogTitle);
 	        passwordRequirementdialog.setVisible(true);

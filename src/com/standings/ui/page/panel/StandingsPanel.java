@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -65,7 +63,6 @@ public class StandingsPanel extends JPanel implements ActionListener {
             this.seasons = seasons;		
             this.allTeams = allTeams;
 			initializeTeams();
-			//initializeAllTeams(this.allTeams);
 			initializeTabel();
 	}
 		
@@ -77,7 +74,6 @@ public class StandingsPanel extends JPanel implements ActionListener {
             this.allTeams = allTeams;
             this.isNewSeason = isNewSeason;
 			initializeTeams();
-			//initializeAllTeams(this.allTeams);
 			initializeTabel();
 	}
 		
@@ -285,6 +281,28 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));
+		}
+		
+		
+		public void renderUpdatedStandings(ArrayList<Team> teams, Season season) {		
+			this.season = season;
+			int teamIndex = 0;
+			for (int i = 0; i < rows.length; i++) {
+	       
+	            rows[i][0] = teams.get(teamIndex).getName();
+	            rows[i][1] = teams.get(teamIndex).getGamesPlayed();
+	          	rows[i][2] = teams.get(teamIndex).getWins();
+	          	rows[i][3] = teams.get(teamIndex).getLosses();
+	          	rows[i][4] = teams.get(teamIndex).getTies();
+	          	rows[i][5] = teams.get(teamIndex).getPoints();	            	 
+	           	teamIndex++;
+	     
+	        }
+			
+	          table.setModel(new DefaultTableModel(rows, columns));
+
+		
+	  
 		}
 		
 		

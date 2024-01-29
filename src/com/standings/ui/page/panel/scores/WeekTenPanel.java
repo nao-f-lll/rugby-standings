@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.standings.model.Game;
@@ -17,6 +18,7 @@ import com.standings.model.Team;
 import com.standings.model.Week;
 import com.standings.model.design.CustomBorder;
 import com.standings.util.FileIO;
+import com.standings.util.UserDialogUtil;
 
 public class WeekTenPanel extends JPanel implements ActionListener{
 
@@ -44,7 +46,7 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 	private JLabel thirdVisitorTeamName;
 	private JLabel thirdVisitorTeamPoint;
 	
-	private ArrayList<Team> teams;
+	private Season season;
 	private ArrayList<Game> games;
 	
 	final int  GAME_ONE = 27;
@@ -58,13 +60,13 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 	private  JButton exoportXMLButton;
 	
 
-	public WeekTenPanel(ArrayList<Team> teams, ArrayList<Game> games, ArrayList<Week> weeks) {
+	public WeekTenPanel(Season season) {
 		
 		   	this.setBounds(0, 115, 1525, 845);
 		   	this.setLayout(null);
-		   	this.games = games;
-		   	this.teams = teams;
-		   	this.weeks = weeks;
+			this.season = season;
+		   	this.games  = season.getGames();
+		   	this.weeks = season.getWeeks();
 		       
 		    gameOnePanel = new JPanel();
 		       gameOnePanel.setBackground(Color.LIGHT_GRAY);
@@ -173,7 +175,7 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 				   add(exoportXMLButton);
 				   exoportXMLButton.addActionListener(this);
 
-		       addGameInfo(this.teams, this.games);
+				   addGameInfo(this.season);
 	       
 	}
 	
@@ -184,8 +186,10 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 	//MODIFIES: this
 	//EFFECTS: set the team information each in its appropriate game.
 	
-	public void addGameInfo(ArrayList<Team> teams,  ArrayList<Game> games) {
+	public void addGameInfo(Season season) {
         
+	   	this.games  = season.getGames();
+	   	this.weeks =  season.getWeeks();
 		
 		firstLocalTeamName.setText(games.get(GAME_ONE).getLocalTeam().getName());
         firstLocalTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getLocalScore()));
@@ -218,10 +222,15 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 
 
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == exoportXMLButton) {
 			fileIO = new FileIO<>();
 			fileIO.convertToXML(weeks);	
+			UserDialogUtil.userDialog("Se ha exportado el archivo XML", "Exportar XML", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			UserDialogUtil.userDialog("Se ha producido un error, comprueba los archivos de logs", "Exportar XML", JOptionPane.ERROR_MESSAGE);
+
 		}
 		
 	}

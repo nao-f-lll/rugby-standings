@@ -19,8 +19,6 @@ public class StandingsCalculation {
 	private final static String EXISTING_STANDINGS_TYPE = "Exisitng entry";
 	private final static int defaultLocalScore = 0;
 	private final static int  defaultVisitorScore = 0;
-	 private final String FILE_PATH = "data/objects/seasons.ser";
-	
 	private Season season;
 	private  ArrayList<Season> seasons;
 

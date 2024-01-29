@@ -221,16 +221,16 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	
 	public void initializeWeekPanels() {
 		
-		 weekOnePanel    = new WeekOnePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());	 
-		 weekTwoPanel    = new WeekTwoPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());	 
-		 weekThreePanel  = new WeekThreePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
-		 weekFourPanel   = new WeekFourPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
-		 weekFivePanel   = new WeekFivePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
-		 weekSixPanel    = new WeekSixPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
-		 weekSevenPanel  = new WeekSevenPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
-		 weekEighthPanel = new WeekEighthPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
-		 weekNinePanel   = new WeekNinePanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
-		 weekTenPanel   = new WeekTenPanel(this.season.getTeams(),this.season.getGames(), this.season.getWeeks());
+		 weekOnePanel    = new WeekOnePanel(this.season);	 
+		 weekTwoPanel    = new WeekTwoPanel(this.season);	 
+		 weekThreePanel  = new WeekThreePanel(this.season);
+		 weekFourPanel   = new WeekFourPanel(this.season);
+		 weekFivePanel   = new WeekFivePanel(this.season);
+		 weekSixPanel    = new WeekSixPanel(this.season);
+		 weekSevenPanel  = new WeekSevenPanel(this.season);
+		 weekEighthPanel = new WeekEighthPanel(this.season);
+		 weekNinePanel   = new WeekNinePanel(this.season);
+		 weekTenPanel   = new WeekTenPanel(this.season);
 
 		
 		 this.add(weekOnePanel);
@@ -238,17 +238,16 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	
 	
 	public void renderAllWeeksScores(Season season) {
-		weekOnePanel.addGameInfo(season.getTeams(), season.getGames());
-		weekTwoPanel.addGameInfo(season.getTeams(), season.getGames());
-		weekThreePanel.addGameInfo(season.getTeams(), season.getGames());
-		weekFourPanel.addGameInfo(season.getTeams(), season.getGames());
-		weekFivePanel.addGameInfo(season.getTeams(), season.getGames());
-		weekSixPanel.addGameInfo(season.getTeams(), season.getGames());
-		weekSevenPanel.addGameInfo(season.getTeams(), season.getGames());
-		weekEighthPanel.addGameInfo(season.getTeams(), season.getGames());
-		weekNinePanel.addGameInfo(season.getTeams(), season.getGames());
-		weekTenPanel.addGameInfo(season.getTeams(), season.getGames());
-
+		weekOnePanel.addGameInfo(season);
+		weekTwoPanel.addGameInfo(season);
+		weekThreePanel.addGameInfo(season);
+		weekFourPanel.addGameInfo(season);
+		weekFivePanel.addGameInfo(season);
+		weekSixPanel.addGameInfo(season);
+		weekSevenPanel.addGameInfo(season);
+		weekEighthPanel.addGameInfo(season);
+		weekNinePanel.addGameInfo(season);
+		weekTenPanel.addGameInfo(season);
 	}
 	
 	
@@ -263,37 +262,35 @@ public class ScoresPanel extends JPanel implements ActionListener {
 		
 		switch (selectedWeek) {
 		case 1:
-			weekOnePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekOnePanel.addGameInfo(this.season);
 			break;
 			
 		case 2:
-			weekTwoPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
-			break;
-			
+			weekTwoPanel.addGameInfo(this.season);
+			break;	
 		case 3:
-			weekThreePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekThreePanel.addGameInfo(this.season);
 			break;
 		case 4:
-			weekFourPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekFourPanel.addGameInfo(this.season);
 			break;
 		case 5:
-			weekFivePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekFivePanel.addGameInfo(this.season);
 			break;	
 		case 6:
-			weekSixPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekSixPanel.addGameInfo(this.season);
 			break;
 		case 7:
-			weekSevenPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekSevenPanel.addGameInfo(this.season);
 			break;
 		case 8:
-			weekEighthPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekEighthPanel.addGameInfo(this.season);
 			break;
 		case 9:
-			weekNinePanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekNinePanel.addGameInfo(this.season);
 			break;
 		case 10:	
-			
-		weekTenPanel.addGameInfo(this.season.getTeams(), this.season.getGames());
+			weekTenPanel.addGameInfo(this.season);
 
 			break;
 			

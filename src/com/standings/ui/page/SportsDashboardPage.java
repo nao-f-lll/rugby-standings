@@ -67,24 +67,6 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private boolean isNewSeason;
 
 	
-	
-	/////
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	/////////
-	
 	   public SportsDashboardPage() {
 		   initializeFrameGraphics();	
 	    	
@@ -126,9 +108,6 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     	seasons = new ArrayList<>();
     	seasons = fileIo.readObject(FILE_PATH, seasons);
     	season = seasons.get(seasons.size() - 1);
-    	
-    	
-
     }
     
     public void initializeStandingsNewSeason() {
@@ -193,8 +172,9 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         seasonsManagement.setLayout(null);
      
     
-       mainPanel.add(scoresPanel, BorderLayout.CENTER);
-       scoresPanel.add(panelButton);
+      mainPanel.add(scoresPanel, BorderLayout.CENTER);
+      scoresPanel.add(panelButton);
+
 
     }
    

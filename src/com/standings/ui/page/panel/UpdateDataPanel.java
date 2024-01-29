@@ -2,6 +2,7 @@ package com.standings.ui.page.panel;
 
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,13 +23,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import com.standings.model.Game;
 import com.standings.model.ParentFrame;
 import com.standings.model.Season;
@@ -359,6 +355,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
         updateButton.setFocusable(false);
         updateButton.setBackground(Color.lightGray);
         updateButton.addActionListener(this);
+        updateButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.add(updateButton);
         
         createWeekComboBox();
@@ -413,8 +410,10 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		termsOfUse = new JLabel("<html><p style='text-indent: 10px; white-space: nowrap;'><a href=\"https://nao-f-lll.github.io/terminos.html\">Términos de uso</a></p></html>");
 		termsOfUse.setBounds(235, 630, 250, 40);
 		termsOfUse.setFont(new Font("Dialog", Font.PLAIN, 13));
+		termsOfUse.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		instructionPanel.add(termsOfUse);
 
+		
 		
 		termsOfUse.addMouseListener(new MouseAdapter() {
             @Override
@@ -523,6 +522,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 	    weekComboBox = new JComboBox<>(comboWeekModel);
 	    weekComboBox.setBackground(Color.LIGHT_GRAY);
+	    weekComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    weekComboBox.setBounds(1033, 90, 114, 45);
 	    this.add(weekComboBox);
 	    showGameInfo(0, 1, 2);
