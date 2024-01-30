@@ -50,7 +50,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private JButton creatSeasonButton;
     private String[] columns;
     private JPanel addSeasonPanel;
-    private JComboBox<Integer> seasonYearsComboBox;
+    private JLabel seasonYearsLabel;
     private JList<String> listOne;
     private JList<String> listTwo;
     private DefaultListModel<String> listOneModel;
@@ -59,7 +59,6 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private JButton addOneTeamButton;
     private  JButton removeOneTeamButton;
     private JButton removeSeasonButton;
-    private JButton changeSeasonStateButton;
     private JLabel newSeasonteams;
     private String[] newSeasonTeamsNames;
     private UpdateDataPanel updateDataPanel;
@@ -153,21 +152,15 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        addSeasonPanel.add(seasonLabel);
 	        seasonLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 	        
-	        seasonYearsComboBox = new JComboBox<Integer>();
-	        seasonYearsComboBox.setBounds(412, 96, 115, 29);
-	        addSeasonPanel.add(seasonYearsComboBox);
-	        seasonYearsComboBox.setBackground(Color.LIGHT_GRAY);
-	        seasonYearsComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-	        
-	        
+	        seasonYearsLabel = new JLabel();
+	        seasonYearsLabel.setBounds(450, 96, 115, 29);
+	        addSeasonPanel.add(seasonYearsLabel);
+	        seasonYearsLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+	        	        
 	        addSeasonYearsToComboBox();
 	        
 
-	        
-	 
-	        
-	      
-	        
 	        creatSeasonButton = new JButton("Crear Temporada");
 	        creatSeasonButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	        creatSeasonButton.setBounds(245, 470, 168, 49);
@@ -261,23 +254,13 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        
 	        removeSeasonButton = new JButton("Borrar Temporada");
 	        removeSeasonButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-	        removeSeasonButton.setBounds(550, 650, 168, 49);
+	        removeSeasonButton.setBounds(380, 650, 168, 49);
 	        removeSeasonButton.setFocusable(false);
 	        removeSeasonButton.setBackground(Color.LIGHT_GRAY);
 	        removeSeasonButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	        removeSeasonButton.addActionListener(this);
 	        modifySeasonPanel.add(removeSeasonButton);
 	        
-
-	        
-	        changeSeasonStateButton = new JButton("Cambiar estado");
-	        changeSeasonStateButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-	        changeSeasonStateButton.setBounds(250, 650, 168, 49);
-	        changeSeasonStateButton.setFocusable(false);
-	        changeSeasonStateButton.setBackground(Color.LIGHT_GRAY);
-	        changeSeasonStateButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-	        changeSeasonStateButton.addActionListener(this);
-	        modifySeasonPanel.add(changeSeasonStateButton);
 	    	
 	    	addRowToTable(true);
 	
@@ -285,8 +268,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	}
 	
 	private void addSeasonYearsToComboBox() {	
-		seasonYearsComboBox.removeAllItems();
-		seasonYearsComboBox.addItem(seasons.get((seasons.size() - 1)).getYear() + 1 );
+		seasonYearsLabel.setText(String.valueOf(seasons.get((seasons.size() - 1)).getYear() + 1 ));
 	}
 	
 	
@@ -325,8 +307,6 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 			addTeam(listTwo, listTwoModel, listOneModel);
 		} else if (e.getSource() == removeSeasonButton) {
 			removeSeason();
-		} else if (e.getSource() ==  changeSeasonStateButton) {
-			changeSeasonState();
 		}
 	}
 	
@@ -337,40 +317,11 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	          addRowToTable(true);
 	          SportsDashboardPage.setHasSeasonDataChanged(true);
 		  } else {
-			  userDialog("No se puede borrar todas las temporadas", "Borra temporada", JOptionPane.WARNING_MESSAGE);
+			  userDialog("No se pueden borrar todas las temporadas", "Borra temporada", JOptionPane.WARNING_MESSAGE);
 		  }
           
 	}
 	
-	private void changeSeasonState() {
-		 int selectedRow = table.getSelectedRow();
-         Season season = seasons.get(selectedRow);
-         if (season.getState().equals("actual")) {
-         	season.setState("finalizada");
-         	addRowToTable(false);
- 	        SportsDashboardPage.setHasSeasonDataChanged(true);
-
-         } else {
-         	
-         	boolean isSomeSeasonActive = true;
-         	
-         	for (int i = 0; i < seasons.size(); i++) {
-         		if (seasons.get(i).getState().equals("actual")) {
-             		userDialog("Solo se permite activar una temporada", "Estado de temporada", JOptionPane.WARNING_MESSAGE);
-             		isSomeSeasonActive = true;
-             		break;
-         		} else {
-         			isSomeSeasonActive = false;
-         		}
-         	}
-         	
-         	if (!isSomeSeasonActive) {
-         		season.setState("actual");
-         		addRowToTable(false);
-     	        SportsDashboardPage.setHasSeasonDataChanged(true);
-         	}
-         }
-	}
 	
 	private void addTeam(JList<String> moveFromThisList, DefaultListModel<String> moveFromThisListModel, DefaultListModel<String> moveToThisListModel) {
 		if (moveFromThisList.getSelectedIndex() == -1) {

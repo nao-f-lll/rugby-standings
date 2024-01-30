@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 
 import com.standings.model.Game;
 import com.standings.model.Season;
-import com.standings.model.Team;
 import com.standings.model.Week;
 import com.standings.model.design.CustomBorder;
 import com.standings.util.FileIO;
@@ -167,7 +166,7 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 		           gameTwoPanel.add(secondVisitorTeamPoint);
 		           secondVisitorTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		           
-		           exoportXMLButton = new JButton("Export XML");
+		           exoportXMLButton = new JButton("Exportar XML");
 		           exoportXMLButton.setBounds(1338, 296, 150, 40);
 		           exoportXMLButton.setBackground(Color.lightGray);
 		           exoportXMLButton.setFocusable(false);

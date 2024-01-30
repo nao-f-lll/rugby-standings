@@ -57,26 +57,26 @@ public class SakurasPanel extends JPanel{
 	    this.add(stadiumLabel);
 	           
 	    
-	    stadiumNameLabel = new JLabel("Eden Park"); 
+	    stadiumNameLabel = new JLabel("Chichibunomiya"); 
 	    stadiumNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    stadiumNameLabel.setBounds(161, 542, 300, 54);
 	    this.add(stadiumNameLabel);
 	           
 	    
-	    cityNameLabel = new JLabel("Auckland");
+	    cityNameLabel = new JLabel("Tokyo");
 	    cityNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    cityNameLabel.setBounds(706, 542, 148, 54);
 	    this.add(cityNameLabel);
 	          
-	    fundiationYearLabel = new JLabel("1960");
+	    fundiationYearLabel = new JLabel("1932");
 	    fundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    fundiationYearLabel.setBounds(1223, 542, 148, 54);
 	    this.add(fundiationYearLabel);  
 
 	       
-	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks."
-	           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-	                                                   + "como uno de los equipos deportivos más exitosos de la historia.</html>");
+	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Japón a menudo \"Sakura\", es tradicionalmente la unión de rugby más fuerte de Asia y"
+	    		+ " ha disfrutado y soportado resultados mixtos contra equipos no asiáticos a lo largo de los años."
+	    		+ " Rugby unión en Japón fue fundada en 1932. También han participado en cada Copa del Mundo de Rugby desde que el torneo comenzó en 1987. </html>");
 	    
 	    descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    descriptionLabel.setBounds(433, 284, 699, 205);

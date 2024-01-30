@@ -30,9 +30,10 @@ public class Season implements Serializable{
 		this.games = games;
 		this.active = true;
 	}
-	
-	
-	
+
+	public Season() {
+		
+	}
 	
 	public String getState() {
 		return state;

@@ -57,18 +57,18 @@ public class WallabiesPanel extends JPanel{
 	    this.add(stadiumLabel);
 	           
 	    
-	    stadiumNameLabel = new JLabel("Eden Park"); 
+	    stadiumNameLabel = new JLabel("ANZ Stadium"); 
 	    stadiumNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    stadiumNameLabel.setBounds(161, 542, 300, 54);
 	    this.add(stadiumNameLabel);
 	           
 	    
-	    cityNameLabel = new JLabel("Auckland");
+	    cityNameLabel = new JLabel("Sydney");
 	    cityNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    cityNameLabel.setBounds(706, 542, 148, 54);
 	    this.add(cityNameLabel);
 	          
-	    fundiationYearLabel = new JLabel("1960");
+	    fundiationYearLabel = new JLabel("1899");
 	    fundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    fundiationYearLabel.setBounds(1223, 542, 148, 54);
 	    this.add(fundiationYearLabel);  
@@ -76,7 +76,11 @@ public class WallabiesPanel extends JPanel{
 	       
 	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks."
 	           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-	                                                   + "como uno de los equipos deportivos más exitosos de la historia.</html>");
+	                                                   + "como uno de los equipos deportivos más exitosos de la historiaAustralia ha"
+	                                                   + "competido en las nueve Copas del Mundo de Rugby, ganando la final en dos ocasiones y"
+	                                                   + "también terminando como subcampeón dos veces. Australia venció a Inglaterra en Twickenham en "
+	                                                   + "la final de la Copa Mundial de Rugby de 1991 y ganó de nuevo en 1999 en el Millennium Stadium de Cardiff"
+	                                                   + "cuando sus oponentes en la final fueron Francia.</html>");
 	    
 	    descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    descriptionLabel.setBounds(433, 284, 699, 205);

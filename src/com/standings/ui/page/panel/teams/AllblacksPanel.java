@@ -66,7 +66,7 @@ public class AllblacksPanel extends JPanel{
 	    cityNameLabel.setBounds(706, 542, 148, 54);
 	    this.add(cityNameLabel);
 	          
-	    fundiationYearLabel = new JLabel("1960");
+	    fundiationYearLabel = new JLabel("1903");
 	    fundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    fundiationYearLabel.setBounds(1223, 542, 148, 54);
 	    this.add(fundiationYearLabel);  

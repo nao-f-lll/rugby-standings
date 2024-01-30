@@ -56,26 +56,26 @@ public class FeathersPanel extends JPanel{
 	    this.add(stadiumLabel);
 	           
 	    
-	    stadiumNameLabel = new JLabel("Eden Park"); 
+	    stadiumNameLabel = new JLabel("Millennium Stadium "); 
 	    stadiumNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    stadiumNameLabel.setBounds(161, 542, 300, 54);
 	    this.add(stadiumNameLabel);
 	           
 	    
-	    cityNameLabel = new JLabel("Auckland");
+	    cityNameLabel = new JLabel("Cardiff");
 	    cityNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    cityNameLabel.setBounds(706, 542, 148, 54);
 	    this.add(cityNameLabel);
 	          
-	    fundiationYearLabel = new JLabel("1960");
+	    fundiationYearLabel = new JLabel("1881");
 	    fundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    fundiationYearLabel.setBounds(1223, 542, 148, 54);
 	    this.add(fundiationYearLabel);  
 
 	       
-	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks."
-	           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-	                                                   + "como uno de los equipos deportivos más exitosos de la historia.</html>");
+	    descriptionLabel = new JLabel("<html> La selección nacional de rugby de Gales, representa a la Unión de Rugby de Gales."
+	    					+ " Se estableció en 1881, el mismo año en que Gales jugó su primera internacional <br>"
+	    					+ " contra Inglaterra. El equipo juega sus partidos de local en el Millennium Stadium en Cardiff.</html>");
 	    
 	    descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    descriptionLabel.setBounds(433, 284, 699, 205);

@@ -57,26 +57,26 @@ public class RedRosePanel extends JPanel{
 	    this.add(stadiumLabel);
 	           
 	    
-	    stadiumNameLabel = new JLabel("Eden Park"); 
+	    stadiumNameLabel = new JLabel("Twickenham Stadium"); 
 	    stadiumNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    stadiumNameLabel.setBounds(161, 542, 300, 54);
 	    this.add(stadiumNameLabel);
 	           
 	    
-	    cityNameLabel = new JLabel("Auckland");
+	    cityNameLabel = new JLabel("London");
 	    cityNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    cityNameLabel.setBounds(706, 542, 148, 54);
 	    this.add(cityNameLabel);
 	          
-	    fundiationYearLabel = new JLabel("1960");
+	    fundiationYearLabel = new JLabel("1871");
 	    fundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    fundiationYearLabel.setBounds(1223, 542, 148, 54);
 	    this.add(fundiationYearLabel);  
 
 	       
-	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks."
-	           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-	                                                   + "como uno de los equipos deportivos más exitosos de la historia.</html>");
+	    descriptionLabel = new JLabel("<html>La expansión del rugby en la primera mitad del siglo XIX fue impulsada por antiguos alumnos de muchas escuelas públicas de Inglaterra que, al terminar la escuela,"
+	    		+ " llevaron el juego con ellos a universidades, a Londres y a los condados."
+	    		+ " El primer partido internacional de Inglaterra fue contra Escocia el 27 de marzo de 1871; no solo fue el primer partido de Inglaterra, sino que también se señaló como el primer partido internacional de rugby.</html>");
 	    
 	    descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    descriptionLabel.setBounds(433, 284, 699, 205);

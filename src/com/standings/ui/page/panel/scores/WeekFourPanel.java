@@ -165,7 +165,7 @@ public class WeekFourPanel extends JPanel implements ActionListener{
 		           gameTwoPanel.add(secondVisitorTeamPoint);
 		           secondVisitorTeamPoint.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		           
-		           exoportXMLButton = new JButton("Export XML");
+		           exoportXMLButton = new JButton("Exportar XML");
 		           exoportXMLButton.setBounds(1338, 296, 150, 40);
 		           exoportXMLButton.setBackground(Color.lightGray);
 		           exoportXMLButton.setFocusable(false);

@@ -57,26 +57,28 @@ public class ShamrockPanel extends JPanel{
 	    this.add(stadiumLabel);
 	           
 	    
-	    stadiumNameLabel = new JLabel("Eden Park"); 
+	    stadiumNameLabel = new JLabel("Croke Park"); 
 	    stadiumNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    stadiumNameLabel.setBounds(161, 542, 300, 54);
 	    this.add(stadiumNameLabel);
 	           
 	    
-	    cityNameLabel = new JLabel("Auckland");
+	    cityNameLabel = new JLabel("Dublin");
 	    cityNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    cityNameLabel.setBounds(706, 542, 148, 54);
 	    this.add(cityNameLabel);
 	          
-	    fundiationYearLabel = new JLabel("1960");
+	    fundiationYearLabel = new JLabel("1875");
 	    fundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    fundiationYearLabel.setBounds(1223, 542, 148, 54);
 	    this.add(fundiationYearLabel);  
 
 	       
-	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks."
-	           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-	                                                   + "como uno de los equipos deportivos más exitosos de la historia.</html>");
+	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Irlanda es el equipo nacional representativo masculino"
+	    		+ " de la isla de Irlanda en la unión de rugby. El equipo representa tanto a la República de Irlanda como a Irlanda del Norte."
+	    		+ " Irlanda compite en el Campeonato Anual de las Seis Naciones y en la Copa Mundial de Rugby."
+	    		+ " shamrock es uno de los cuatro equipos que forman los Leones Británico e "
+	    		+ "Irlandés - los jugadores elegibles para jugar en shamrock también son elegibles para los Leones. </html>");
 	    
 	    descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    descriptionLabel.setBounds(433, 284, 699, 205);

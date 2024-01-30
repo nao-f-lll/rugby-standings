@@ -57,26 +57,27 @@ public class ThistlePanel extends JPanel{
 	    this.add(stadiumLabel);
 	           
 	    
-	    stadiumNameLabel = new JLabel("Eden Park"); 
+	    stadiumNameLabel = new JLabel("Murrayfield Stadium"); 
 	    stadiumNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    stadiumNameLabel.setBounds(161, 542, 300, 54);
 	    this.add(stadiumNameLabel);
 	           
 	    
-	    cityNameLabel = new JLabel("Auckland");
+	    cityNameLabel = new JLabel("Edinburgh");
 	    cityNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    cityNameLabel.setBounds(706, 542, 148, 54);
 	    this.add(cityNameLabel);
 	          
-	    fundiationYearLabel = new JLabel("1960");
+	    fundiationYearLabel = new JLabel("1871");
 	    fundiationYearLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    fundiationYearLabel.setBounds(1223, 542, 148, 54);
 	    this.add(fundiationYearLabel);  
 
 	       
-	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks."
-	           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-	                                                   + "como uno de los equipos deportivos más exitosos de la historia.</html>");
+	    descriptionLabel = new JLabel("<html>En 1882 se fundó el Campeonato de las Naciones Locales, el precursor del moderno Campeonato de las Seis Naciones, con la participación de Escocia, Inglaterra, Gales e Irlanda."
+	    		+ "  Los escoceses disfrutaron de un éxito ocasional en los primeros años,"
+	    		+ " ganando su primera Triple Corona en 1891 y repitiendo la hazaña en 1895, Sin embargo, el triunfo de Escocia en 1907 sería el último en dieciocho años, ya que la Primera Guerra Mundial (1914-1918) y"
+	    		+ " el dominio de Inglaterra después les negarían la gloria.</html>");
 	    
 	    descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    descriptionLabel.setBounds(433, 284, 699, 205);
