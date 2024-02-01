@@ -31,9 +31,6 @@ public class Season implements Serializable{
 		this.active = true;
 	}
 
-	public Season() {
-		
-	}
 	
 	public String getState() {
 		return state;

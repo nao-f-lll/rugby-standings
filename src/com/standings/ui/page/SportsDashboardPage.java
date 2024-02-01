@@ -107,7 +107,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     	fileIo = new FileIO<>();
     	seasons = new ArrayList<>();
     	seasons = fileIo.readObject(FILE_PATH, seasons);
-    	season = seasons.get(seasons.size() - 1);
+    	season = seasons.get(seasons.size() - 2);
     }
     
     public void initializeStandingsNewSeason() {
@@ -118,7 +118,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
            games = new ArrayList<>();
            weeks = new ArrayList<>();
            if (seasons.size() > 0) {
-        	   Season lastSeason = seasons.get(seasons.size() - 1);
+        	   Season lastSeason = seasons.get(seasons.size() - 2);
         	   lastSeason.setState("finalizada");
                season = new Season(lastSeason.getId() + 1,lastSeason.getYear() + 1, "actual", weeks, teams, games);
            } else {
@@ -162,7 +162,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     	scoresPanel = new ScoresPanel(panelButton, season);
     	teamsPanel = new TeamsPanel(panelButton);          
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);
-        seasonsManagement = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, allTeams, seasons, standingsPanel, scoresPanel);
+        seasonsManagement = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, goToScoresButton, goToStandingButton, allTeams, seasons, standingsPanel, scoresPanel);
         
 
         scoresPanel.setLayout(null);
@@ -375,6 +375,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	        accepetButton.setText("Aceptar");
 	        accepetButton.setFocusable(false);
 	        accepetButton.setBackground(Color.LIGHT_GRAY);
+	        
 	        
 	        JDialog passwordRequirementdialog = fieldRequirementPane.createDialog(this, dialogTitle);
 	        passwordRequirementdialog.setVisible(true);
