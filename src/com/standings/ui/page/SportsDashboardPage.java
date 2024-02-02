@@ -65,6 +65,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private FileIO<Season> fileIo;
 	private static boolean hasSeasondataCHanged;
 	private boolean isNewSeason;
+	private  Season futureSeason;
 
 	
 	   public SportsDashboardPage() {
@@ -123,9 +124,16 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
                season = new Season(lastSeason.getId() + 1,lastSeason.getYear() + 1, "actual", weeks, teams, games);
            } else {
                season = new Season(1, 2024, "actual", weeks, teams, games);
+              
+       		ArrayList<Team> futureTeams = new ArrayList<>();
+			ArrayList<Game>  futureGames = new ArrayList<>();
+			ArrayList<Week>  futureweeks = new ArrayList<>();
+               
+            futureSeason = new Season(season.getId() + 1, season.getYear()+ 1,  "proximamente", futureweeks, futureTeams, futureGames);
            }
         
           seasons.add(season);
+          seasons.add(futureSeason);
           hasSeasondataCHanged = true;
       
     }

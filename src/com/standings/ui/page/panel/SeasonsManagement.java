@@ -240,6 +240,10 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		                    	
 		                    	addOneTeamButton.setEnabled(false);
 		                    	removeOneTeamButton.setEnabled(false);
+		                    	newSeasonTeamsNames = new String[6];
+		 	        	        for (int i = 0; i < season.getTeams().size(); i++) {
+		 	        	        	newSeasonTeamsNames[i] = seasons.get(seasons.size() - 2).getTeams().get(i).getName();
+		 	        	        }
 		                    }
 		        	        
 		        	        if (season.getState().equals("actual")){

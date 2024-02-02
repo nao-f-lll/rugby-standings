@@ -385,13 +385,13 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
                 "<ul>" +
                 "<li>Seleccione la jornada del partido desde 'Jornada 1' hasta 'Jornada 10' en el <br> desplegable.</li> <br>" +
                 "<li>Haga click en el icono de editar, para poder insertar los puntos o actualizarlos</li> <br> " +
-                "<li> Haga click en 'Actualizar' para guardar los resultados del partido  <br> para modificar los puntos</li> <br>"+             
+                "<li>Ingrese los puntos del club local y visitante.</li> <br>" +
+                "<li> Haga click en 'Guardar' para guardar los resultados del partido o 'Actualizar' <br> para  actualizar los puntos</li> <br>"+             
                 "<li>Recuerde guardar su entrada. Gracias por ayudar a mantener los resultados <br> de los partidos</li>" +     
                 "</ul>" +
                 "</body>" +
                 "</html>"
             );
-        
         
  
         instructionsLabel.setFont(new Font("Arial", Font.PLAIN, 15));
