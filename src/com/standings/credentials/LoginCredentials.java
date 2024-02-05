@@ -50,10 +50,5 @@ public class LoginCredentials implements Serializable{
          	user = users.get(i);
          	 loginInfo.put(user.getEmail(), user.getPassword());
          }
-    	
-    	/// remove that later
-    	for (int i = 0; i < users.size(); i++) {
-    		System.out.println(users.get(i).toString());
-    	}
     }    
 }

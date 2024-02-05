@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -63,22 +65,15 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private Season season;
 	private ArrayList<Season> seasons;
 	private FileIO<Season> fileIo;
-	private static boolean hasSeasondataCHanged;
+	private static boolean hasSeasondataChanged;
 	private boolean isNewSeason;
 	private  Season futureSeason;
 
 	
 	   public SportsDashboardPage() {
-		   initializeFrameGraphics();	
-	    	
+		   initializeFrameGraphics();		    	
 	        allTeams = new ArrayList<>();
-	        File file = new File(FILE_PATH);
-	        if (!file.exists() || file.length() == 0) {
-	        	 isNewSeason = true;
-	        } else {
-	        	  isNewSeason = false;
-	        }
-	      
+	        checkIfFileExists();
 	        if (isNewSeason) {
 	        	initializeStandingsNewSeason();
 	        } else {
@@ -88,6 +83,15 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		   
 	  }
 
+	   
+	private void checkIfFileExists() {
+		  File file = new File(FILE_PATH);
+	        if (!file.exists() || file.length() == 0) {
+	        	 isNewSeason = true;
+	        } else {
+	        	  isNewSeason = false;
+	        } 
+	}
     
     private void initializeFrameGraphics() {
     	setTitle("Panel administrativo");
@@ -104,7 +108,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
   
     
     private void initializeStandingsData() {
-    	hasSeasondataCHanged = false;
+    	hasSeasondataChanged = false;
     	fileIo = new FileIO<>();
     	seasons = new ArrayList<>();
     	seasons = fileIo.readObject(FILE_PATH, seasons);
@@ -134,7 +138,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         
           seasons.add(season);
           seasons.add(futureSeason);
-          hasSeasondataCHanged = true;
+          hasSeasondataChanged = true;
       
     }
     
@@ -291,11 +295,11 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     
 
 	public boolean hasSeasondataCHanged() {
-		return hasSeasondataCHanged;
+		return hasSeasondataChanged;
 	}
 
 	public static  void setHasSeasonDataChanged(boolean hasSeasondataCHanged) {
-		SportsDashboardPage.hasSeasondataCHanged = hasSeasondataCHanged;
+		SportsDashboardPage.hasSeasondataChanged = hasSeasondataCHanged;
 	}
 
 	public static void main(String[] args) {
@@ -322,24 +326,58 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		
-		if (hasSeasondataCHanged) {
-		
-			fileIo.writeObject(FILE_PATH, seasons);
-			
-			userDialog("Guardando...", "Datos Modificados", JOptionPane.INFORMATION_MESSAGE);
-			
-			
-			
-			
-			
-			
-			
-		}
-		
-		System.exit(0);
-		
+	    if (hasSeasondataChanged) {
+	       int result = userDialogOkCancel("Desea guardar?", "Cambios detectados", JOptionPane.INFORMATION_MESSAGE);
+	        if (result == 0) {
+	            fileIo.writeObject(FILE_PATH, seasons);
+	        } 
+	    }
+	    System.exit(0);
 	}
 
+	
+	private int userDialogOkCancel(String dialogText, String dialogTitle, int messageType) {
+		
+		  JDialog dialog = new JDialog(this, dialogTitle, true);
+	        dialog.setLayout(new BorderLayout());
+	        dialog.setSize(300, 150);
+
+	        JLabel label = new JLabel(dialogText);
+	        label.setHorizontalAlignment(JLabel.CENTER);
+	        dialog.add(label, BorderLayout.CENTER);
+
+	        JButton acceptButton = new JButton("Guardar y salir");
+	        JButton cancelButton = new JButton("Salir sin guardar");
+
+	        acceptButton.setFocusable(false);
+	        acceptButton.setBackground(Color.LIGHT_GRAY);
+	        cancelButton.setFocusable(false);
+	        cancelButton.setBackground(Color.LIGHT_GRAY);
+
+	        final int[] result = {-2};
+	        
+	        acceptButton.addActionListener(e -> {
+	            dialog.dispose();
+	            result[0] = 0;
+	        });
+
+	        cancelButton.addActionListener(e -> {
+	            dialog.dispose();
+	            result[0] = -1;
+	            
+	        });
+
+	        JPanel buttonPanel = new JPanel(new FlowLayout());
+	        buttonPanel.add(acceptButton);
+	        buttonPanel.add(cancelButton);
+	        dialog.add(buttonPanel, BorderLayout.SOUTH);
+	        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	        dialog.setLocationRelativeTo(this);
+	        dialog.setVisible(true);
+	    
+	        return result[0];
+	}
+	
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
@@ -369,26 +407,6 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	private void userDialog(String dialogText, String dialogTitle, int meesageType) {
-		
-		 JOptionPane fieldRequirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);
-
-		 fieldRequirementPane.setMessageType(meesageType);
-
-	        JPanel buttonPanel = (JPanel)fieldRequirementPane.getComponent(1);
-	        
-	        JButton accepetButton = (JButton)buttonPanel.getComponent(0);
-	        accepetButton.setText("Aceptar");
-	        accepetButton.setFocusable(false);
-	        accepetButton.setBackground(Color.LIGHT_GRAY);
-	        
-	        
-	        JDialog passwordRequirementdialog = fieldRequirementPane.createDialog(this, dialogTitle);
-	        passwordRequirementdialog.setVisible(true);
-	}
-
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		// TODO Auto-generated method stub

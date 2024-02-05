@@ -220,9 +220,6 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		             		"Equipo", "Partidos Jugados", "Victorias", "Derrotas", "Empates", "Puntos"
 		             	};										
 
-
-					 
-					/// use this only when creating anew season ////
 					if (isNewSeason) {
 						new StandingsCalculation(this.season, this.seasons);
 					}

@@ -12,18 +12,18 @@ public class UserDialogUtil {
 	
 	public static void userDialog(String dialogText, String dialogTitle, int meesageType) {
 		
-		 JOptionPane fieldRequirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);
+		 JOptionPane requirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);
 
-		 fieldRequirementPane.setMessageType(meesageType);
+		 requirementPane.setMessageType(meesageType);
 
-	        JPanel buttonPanel = (JPanel)fieldRequirementPane.getComponent(1);
+	        JPanel buttonPanel = (JPanel)requirementPane.getComponent(1);
 	        
 	        JButton accepetButton = (JButton)buttonPanel.getComponent(0);
 	        accepetButton.setText("Aceptar");
 	        accepetButton.setFocusable(false);
 	        accepetButton.setBackground(Color.LIGHT_GRAY);
 	        
-	        JDialog passwordRequirementdialog = fieldRequirementPane.createDialog(null, dialogTitle);
-	        passwordRequirementdialog.setVisible(true);
+	        JDialog requirementdialog = requirementPane.createDialog(null, dialogTitle);
+	        requirementdialog.setVisible(true);
 	}
 }

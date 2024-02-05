@@ -44,7 +44,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 	private final int SOME_OR_ALL_FIELDS_ARE_EMPTY = 1;
 	private final int NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE = 4;
-	private final int MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE = 5;
+	private final int MULTIPLE_CHECK_BOXES_ARE_SELECTED_UPDATE_CASE = 5;
 	private final int ALL_POINTS_ARE_INVALID = 6;
 	private final int LOCAL_POINTS_ARE_INVALID = 7;
 	private final int VISITOR_POINTS_ARE_INVALID = 8; 
@@ -385,8 +385,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
                 "<ul>" +
                 "<li>Seleccione la jornada del partido desde 'Jornada 1' hasta 'Jornada 10' en el <br> desplegable.</li> <br>" +
                 "<li>Haga click en el icono de editar, para poder insertar los puntos o actualizarlos</li> <br> " +
-                "<li>Ingrese los puntos del club local y visitante.</li> <br>" +
-                "<li> Haga click en 'Guardar' para guardar los resultados del partido o 'Actualizar' <br> para  actualizar los puntos</li> <br>"+             
+                "<li> Haga click en 'Actualizar' para guardar los resultados del partido  <br> para modificar los puntos</li> <br>"+     
                 "<li>Recuerde guardar su entrada. Gracias por ayudar a mantener los resultados <br> de los partidos</li>" +     
                 "</ul>" +
                 "</body>" +
@@ -445,7 +444,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
             if (StandingsDataUtil.checkIfNoBoxIsSelected(this) == 0) {
                 handleValidationNumber(NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE);
             } else if (StandingsDataUtil.areMultipleBoxesSelected(this)) {
-                handleValidationNumber(MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE);
+                handleValidationNumber(MULTIPLE_CHECK_BOXES_ARE_SELECTED_UPDATE_CASE);
             } else {
                 if (isFirstBoxSelected) {
                     choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
@@ -933,7 +932,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		case NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE:
 			userDialog("Tienes que selecionar un partido para actualizar", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
 			break;
-		case MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE:
+		case MULTIPLE_CHECK_BOXES_ARE_SELECTED_UPDATE_CASE:
 			userDialog("Se permite actualizar solo un partido", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
 			break;
 		case WEEK_NUMBER_IS_INCORRECT:
