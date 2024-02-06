@@ -288,8 +288,7 @@ public class StandingsCalculation {
 
 	        return games;
 	    }
-	    
-	    
+	    	    
 	    private static void initializeWeeks(Season season) {
 	    	ArrayList<Week> weeks = new ArrayList<Week>();
 	    	int indexFrom = 0;

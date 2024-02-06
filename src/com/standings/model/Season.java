@@ -1,10 +1,16 @@
 package com.standings.model;
 
 import java.io.BufferedWriter;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.standings.util.UserDialogUtil;
 
 public class Season implements Serializable{
 	
@@ -173,8 +179,14 @@ public class Season implements Serializable{
 			bufferWriter.close();
 			fileWriter.close();
 		
-		} catch (IOException e) {
+		
+		} catch (EOFException e) {
+        	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (FileNotFoundException e) {
+        	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
 			e.printStackTrace();
-		}
-	}	
+        }
+	}
 }

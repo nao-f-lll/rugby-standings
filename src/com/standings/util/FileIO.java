@@ -12,6 +12,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.standings.model.Game;
 import com.standings.model.Team;
 import com.standings.model.Week;
@@ -59,10 +61,12 @@ public class FileIO <T>   implements Serializable{
 			streamOut.close();
 			fileOut.close();
 			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			
-		} catch (IOException e) {
+    	  }catch (EOFException e) {
+          	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
+          } 
+          catch (FileNotFoundException e) {
+          	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
+          }  catch (IOException e) {
 			
 			e.printStackTrace();
 		}
@@ -86,19 +90,18 @@ public class FileIO <T>   implements Serializable{
             streamIn.close();
             fileIn.close();
         }catch (EOFException e) {
-        	System.out.println("Archivo vacio");
+        	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
         } 
         catch (FileNotFoundException e) {
-        	System.out.println("no existe el archivo");
+        	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-        	System.out.println("no existe la clase");
-            
+        	System.out.println("no existe la clase");  
         } catch (ClassCastException e) {
         	System.out.println("el objeto no es el mismo");
-        }
-        
+        }  
         return object;
 	}
 	
@@ -234,11 +237,12 @@ public class FileIO <T>   implements Serializable{
 			bufferWriter.close();
 			fileWriter.close();
 			
-		} catch (EOFException e) {
-			System.out.println("Archivo vacio");
-		} catch (FileNotFoundException e) {
-			System.out.println("no existe el archivo");
-		}  catch (IOException e) {
+		  }catch (EOFException e) {
+	        	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
+	        } 
+	        catch (FileNotFoundException e) {
+	        	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
+	        }  catch (IOException e) {
 		    e.printStackTrace();
 		} catch (ClassCastException e)  {
 			System.out.println("el objeto no es el mismo");
