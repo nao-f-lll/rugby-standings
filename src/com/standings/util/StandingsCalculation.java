@@ -118,48 +118,30 @@ public class StandingsCalculation {
 		         
 	    private static void updateStandingsBasedOnMatch(Team team, Game game, String type) {
 	    	
-	    	if (type.equals(NEW_STANDINGS_TYPE)) { 
+	    	if (type.equals(NEW_STANDINGS_TYPE)) {
+	    		
 	    		if (team.getName().equals(game.getLocalTeam().getName())) {
 	    			if (game.getLocalScore() > game.getVisitorScore()) {
-	    				
-	    				if (!(game.getLocalScore() == -1)) {
-	    					team.incrementWins();
-	    				}
-	    				
-	    				
+	    				team.incrementWins();
 	    			} else if (game.getLocalScore() < game.getVisitorScore()) {
-	    				if (!(game.getLocalScore() == -1)) {
 	    				team.incrementLosses();
-	    				}
 	    			} else {
-	    				if (!(game.getLocalScore() == -1)) {
 	    				team.incrementTies();
-	    				}
 	    			}
-	    			if (!(game.getLocalScore() == -1)) {
 	    			team.setPoints(team.getPoints() + game.getLocalScore());
 	    			team.incrementGamesPlayed();
-	    			}
 	            
 	    		} else if (team.getName().equals(game.getVisitorTeam().getName())) {
 	    				if (game.getVisitorScore() > game.getLocalScore()) {
-	    					if (!(game.getVisitorScore() == -1)) {
 	    					team.incrementWins();
-	    					}
 	    				} else if (game.getVisitorScore() < game.getLocalScore()) {
-	    					if (!(game.getVisitorScore() == -1)) {
 	    					team.incrementLosses();
-	    					}
 	    				} else {
-	    					if (!(game.getVisitorScore() == -1)) {
 	    					team.incrementTies();
-	    					}
 	    				}
-	    				if (!(game.getVisitorScore() == -1)) {
 	    				team.setPoints(team.getPoints() + game.getVisitorScore());
 	    				team.incrementGamesPlayed();
-	    				}
-	    			}
+	    		}
 	    		
     		
 	    		
@@ -269,8 +251,9 @@ public class StandingsCalculation {
 	                Team team1 = teams.get(i);
 	                Team team2 = teams.get(teams.size() - 1 - i);
 
-	                int localScore = -1;
-	                int visitorScore = -1;
+	                int localScore = (int) (Math.random() * 99);
+	                int visitorScore = (int) (Math.random() * 99);
+
 	                Game game = new Game(team1, team2, localScore, visitorScore ,defaultLocalScore, defaultVisitorScore, weekNumber);
 	               
 	              
@@ -292,14 +275,12 @@ public class StandingsCalculation {
 	            for (int i = 0; i < gamesPerWeek; i++) {
 	                Team team1 = teams.get(i);
 	                Team team2 = teams.get(teams.size() - 1 - i);
-	                
-	                int localScore = -1;
-	                int visitorScore = -1;
 
-	                	Game game = new Game(team2, team1, localScore, visitorScore,defaultLocalScore, defaultVisitorScore, weekNumber);
-		                games.add(game);
-	                
-	                
+	                int localScore = (int) (Math.random() * 99);
+	                int visitorScore = (int) (Math.random() * 99);
+
+	                Game game = new Game(team2, team1, localScore, visitorScore,defaultLocalScore, defaultVisitorScore, weekNumber);
+	                games.add(game);
 	            }
 
 	            rotateTeamsList(teams);
@@ -307,15 +288,16 @@ public class StandingsCalculation {
 
 	        return games;
 	    }
-	    	    
+	    
+	    
 	    private static void initializeWeeks(Season season) {
 	    	ArrayList<Week> weeks = new ArrayList<Week>();
 	    	int indexFrom = 0;
 	    	int indexTo = 3;
 	    	int weeksSize = 10;
 	    	for (int i = 1; i <= weeksSize; i++) {
-	    		ArrayList<Game> weekGames = new ArrayList<>(season.getGames().subList(indexFrom, indexTo));
-	    		Week week = new Week(i, weekGames);
+	    			ArrayList<Game> weekGames = new ArrayList<>(season.getGames().subList(indexFrom, indexTo));
+	    			Week week = new Week(i, weekGames);
 		    		weeks.add(week);
 		    		indexFrom+= 3;
 		    		indexTo+= 3;

@@ -13,7 +13,6 @@ public class UserDialogUtil {
 	public static void userDialog(String dialogText, String dialogTitle, int meesageType) {
 		
 		 JOptionPane requirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);
-
 		 requirementPane.setMessageType(meesageType);
 
 	        JPanel buttonPanel = (JPanel)requirementPane.getComponent(1);
@@ -23,7 +22,7 @@ public class UserDialogUtil {
 	        accepetButton.setFocusable(false);
 	        accepetButton.setBackground(Color.LIGHT_GRAY);
 	        
-	        JDialog requirementdialog = requirementPane.createDialog(null, dialogTitle);
-	        requirementdialog.setVisible(true);
+	        JDialog requirementdialog  = requirementPane.createDialog(null, dialogTitle);
+	        requirementdialog .setVisible(true);
 	}
 }

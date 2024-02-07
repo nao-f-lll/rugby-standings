@@ -44,7 +44,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 	private final int SOME_OR_ALL_FIELDS_ARE_EMPTY = 1;
 	private final int NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE = 4;
-	private final int MULTIPLE_CHECK_BOXES_ARE_SELECTED_UPDATE_CASE = 5;
+	private final int MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE = 5;
 	private final int ALL_POINTS_ARE_INVALID = 6;
 	private final int LOCAL_POINTS_ARE_INVALID = 7;
 	private final int VISITOR_POINTS_ARE_INVALID = 8; 
@@ -385,7 +385,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
                 "<ul>" +
                 "<li>Seleccione la jornada del partido desde 'Jornada 1' hasta 'Jornada 10' en el <br> desplegable.</li> <br>" +
                 "<li>Haga click en el icono de editar, para poder insertar los puntos o actualizarlos</li> <br> " +
-                "<li> Haga click en 'Actualizar' para guardar los resultados del partido  <br> para modificar los puntos</li> <br>"+     
+                "<li>Haga click en 'Actualizar' para guardar los resultados del partido  <br> para modificar los puntos</li> <br>"+                     
                 "<li>Recuerde guardar su entrada. Gracias por ayudar a mantener los resultados <br> de los partidos</li>" +     
                 "</ul>" +
                 "</body>" +
@@ -444,7 +444,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
             if (StandingsDataUtil.checkIfNoBoxIsSelected(this) == 0) {
                 handleValidationNumber(NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE);
             } else if (StandingsDataUtil.areMultipleBoxesSelected(this)) {
-                handleValidationNumber(MULTIPLE_CHECK_BOXES_ARE_SELECTED_UPDATE_CASE);
+                handleValidationNumber(MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE);
             } else {
                 if (isFirstBoxSelected) {
                     choseGameToUpdate(isFirstBoxSelected, isSecondBoxSelected, isThirdBoxSelected);
@@ -773,94 +773,45 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		
 			firstLocalTeamName.setText(games.get(gameOne).getLocalTeam().getName());
 		
-			if (games.get(gameOne).getLocalScore() == -1) {
-				firstLocalTeamPointField.setText("");		
-				firstLocalTeamPointLabel.setText("");
-			} else {
-			
-			firstLocalTeamPointField.setText(String.valueOf(games.get(gameOne).getLocalScore()));		
+			firstLocalTeamPointField.setText(String.valueOf(games.get(gameOne).getLocalScore()));
+			firstLocalTeamPointField.setVisible(false);
 			firstLocalTeamPointLabel.setText(String.valueOf(games.get(gameOne).getLocalScore()));
-
-			}
+			firstLocalTeamPointLabel.setVisible(true);
 			
-	firstLocalTeamPointField.setVisible(false);
-	firstLocalTeamPointLabel.setVisible(true);
-			
-	
-	
 			firstVisitorTeamName.setText(games.get(gameOne).getVisitorTeam().getName());
 			
-			if (games.get(gameOne).getVisitorScore() == -1) {
-				firstVisitorTeamPointField.setText("");
-				firstVisitorTeamPointLabel.setText("");
-			} else {
 			firstVisitorTeamPointField.setText(String.valueOf(games.get(gameOne).getVisitorScore()));
-			firstVisitorTeamPointLabel.setText(String.valueOf(games.get(gameOne).getVisitorScore()));
-			}
-			
-			firstVisitorTeamPointLabel.setVisible(true);
 			firstVisitorTeamPointField.setVisible(false);
-			
-			
-			
-			
+			firstVisitorTeamPointLabel.setText(String.valueOf(games.get(gameOne).getVisitorScore()));
+			firstVisitorTeamPointLabel.setVisible(true);
+       
 			secondLocalTeamName.setText(games.get(gameTwo).getLocalTeam().getName());
-		
-			if (games.get(gameTwo).getLocalScore() == -1) {
-				secondLocalTeamPointField.setText("");
-				secondLocalTeamPointLabel.setText("");
-			} else {
-				secondLocalTeamPointField.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
-				secondLocalTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
-			}
-			
-			
-			secondLocalTeamPointLabel.setVisible(true);
+		;
+			secondLocalTeamPointField.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
 			secondLocalTeamPointField.setVisible(false);
-			
+			secondLocalTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
+			secondLocalTeamPointLabel.setVisible(true);
 			
 			secondVisitorTeamName.setText(games.get(gameTwo).getVisitorTeam().getName());
-			
-		if (games.get(gameTwo).getVisitorScore() == -1) {
-			secondVisitorTeamPointField.setText("");
-			secondVisitorTeamPointLabel.setText("");
-		} else {
+		
 			secondVisitorTeamPointField.setText(String.valueOf(games.get(gameTwo).getVisitorScore()));
-			secondVisitorTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getVisitorScore()));
-		}
-			
-			
-			secondVisitorTeamPointLabel.setVisible(true);
 			secondVisitorTeamPointField.setVisible(false);
-			
-			
+			secondVisitorTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getVisitorScore()));
+			secondVisitorTeamPointLabel.setVisible(true);
+    	  
 			thirdLocalTeamName.setText(games.get(gameThree).getLocalTeam().getName());
 		
-			if (games.get(gameThree).getLocalScore() == -1) {
-				thirdLocalTeamPointField.setText("");
-				thirdLocalTeamPointLabel.setText("");
-			} else {
-				thirdLocalTeamPointField.setText(String.valueOf(games.get(gameThree).getLocalScore()));
-				thirdLocalTeamPointLabel.setText(String.valueOf(games.get(gameThree).getLocalScore()));
-			}
-			
-			
-			thirdLocalTeamPointLabel.setVisible(true);
+			thirdLocalTeamPointField.setText(String.valueOf(games.get(gameThree).getLocalScore()));
 			thirdLocalTeamPointField.setVisible(false);
-			
+			thirdLocalTeamPointLabel.setText(String.valueOf(games.get(gameThree).getLocalScore()));
+			thirdLocalTeamPointLabel.setVisible(true);
+    	  
 			thirdVisitorTeamName.setText(games.get(gameThree).getVisitorTeam().getName());
 			
-			if (games.get(gameThree).getVisitorScore() == -1) {
-				thirdVisitorTeamPointField.setText("");
-				thirdVisitorTeamPointLabel.setText("");
-			} else {
-				thirdVisitorTeamPointField.setText(String.valueOf(games.get(gameThree).getVisitorScore()));
-				thirdVisitorTeamPointLabel.setText(String.valueOf(games.get(gameThree).getVisitorScore()));
-			}
-			
-			
-			thirdVisitorTeamPointLabel.setVisible(true);
+			thirdVisitorTeamPointField.setText(String.valueOf(games.get(gameThree).getVisitorScore()));
 			thirdVisitorTeamPointField.setVisible(false);
+			thirdVisitorTeamPointLabel.setText(String.valueOf(games.get(gameThree).getVisitorScore()));
+			thirdVisitorTeamPointLabel.setVisible(true);
     }
 
 
@@ -981,7 +932,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		case NO_CHECK_BOX_IS_SELECTED_UPDATE_CASE:
 			userDialog("Tienes que selecionar un partido para actualizar", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
 			break;
-		case MULTIPLE_CHECK_BOXES_ARE_SELECTED_UPDATE_CASE:
+		case MULTIPLE_CHEC_BOXES_ARE_SELECTED_UPDATE_CASE:
 			userDialog("Se permite actualizar solo un partido", "Requisitos de campos", WARRNING_MESSAGE_TYPE);
 			break;
 		case WEEK_NUMBER_IS_INCORRECT:

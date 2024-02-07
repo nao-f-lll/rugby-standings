@@ -1,16 +1,10 @@
 package com.standings.model;
 
 import java.io.BufferedWriter;
-import java.io.EOFException;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
-import com.standings.util.UserDialogUtil;
 
 public class Season implements Serializable{
 	
@@ -127,11 +121,12 @@ public class Season implements Serializable{
 	public void convertToXML() {
 		
 		try {
-			fileWriter = new FileWriter("C:\\Users\\ik_1DW3A\\Documents\\nao-f-lll.github.io/clasificacion.xml");
+			fileWriter = new FileWriter("C:\\Users\\ik_1DW3A\\Documents\\nao-f-lll.github.io/clasificacion/"+ this.getYear() + ".xml");
+			
 			String header = """
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="xml/clasificacion.xsl" type="text/xsl"?>
-<clasificacion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="xml/clasificacion.xsd">
+<?xml-stylesheet href="clasificacion.xsl" type="text/xsl"?>
+<clasificacion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="clasificacion.xsd">
 					        """;
 			String footer = """ 
 					</clasificacion>
@@ -153,7 +148,7 @@ public class Season implements Serializable{
 				bufferWriter.write("<equipo>"); 
 				bufferWriter.newLine();
 				String imagePath = teams.get(i).getIconPath();
-				bufferWriter.write("<logo>"+ imagePath + "</logo>");
+				bufferWriter.write("<logo>"+  "../" + imagePath + "</logo>");
 				bufferWriter.newLine();
 				bufferWriter.write("<nombre>"+ teams.get(i).getName() + "</nombre>"); 
 				bufferWriter.newLine();
@@ -179,14 +174,8 @@ public class Season implements Serializable{
 			bufferWriter.close();
 			fileWriter.close();
 		
-		
-		} catch (EOFException e) {
-        	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
-        } 
-        catch (FileNotFoundException e) {
-        	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-        }
-	}
+		}
+	}	
 }

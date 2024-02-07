@@ -10,7 +10,7 @@ public class Week implements Serializable{
 	private static final long serialVersionUID = -2277868385094501915L;
 	private int weekID;
 	private ArrayList<Game> games;
-	private final int GAMES_NUMBER = 30;
+	private final int GAMESNUMBER = 30;
 	
 	
 	public Week(int weekID, ArrayList<Game> games) {
@@ -40,7 +40,7 @@ public class Week implements Serializable{
 
 
 	public int getGAMESNUMBER() {
-		return GAMES_NUMBER;
+		return GAMESNUMBER;
 	}
 
 	

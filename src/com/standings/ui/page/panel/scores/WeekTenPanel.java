@@ -187,61 +187,38 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 	
 	public void addGameInfo(Season season) {
         
-		
 	   	this.games  = season.getGames();
 	   	this.weeks =  season.getWeeks();
+	   	this.season = season;
 		
 		firstLocalTeamName.setText(games.get(GAME_ONE).getLocalTeam().getName());
+        firstLocalTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getLocalScore()));
+        
+        
+        firstVisitorTeamName.setText(games.get(GAME_ONE).getVisitorTeam().getName());
+        firstVisitorTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getVisitorScore()));
 	
-		if (games.get(GAME_ONE).getLocalScore() == -1) {
-			 firstLocalTeamPoint.setText("");	
-		} else {
-			
-			 firstLocalTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getLocalScore()));
-		}
-		
-		 firstVisitorTeamName.setText(games.get(GAME_ONE).getVisitorTeam().getName());
-		 
-		if (games.get(GAME_ONE).getVisitorScore() == -1) {
-			   firstVisitorTeamPoint.setText("");
-		} else {
-			  firstVisitorTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getVisitorScore()));
-		}
-       
-        
-        
      
-         secondLocalTeamName.setText(games.get(GAME_TWO).getLocalTeam().getName());
-          
-      	if (games.get(GAME_TWO).getLocalScore() == -1) {
-      		secondLocalTeamPoint.setText("");
-		} else {
-	    	  secondLocalTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getLocalScore()));
-		}
-          
-    	secondVisitorTeamName.setText(games.get(GAME_TWO).getVisitorTeam().getName());  	
-    
-    	if (games.get(GAME_TWO).getVisitorScore() == -1) {
-    		secondVisitorTeamPoint.setText("");
-    	} else {
-    	secondVisitorTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getVisitorScore()));
-    	}
+          secondLocalTeamName.setText(games.get(GAME_TWO).getLocalTeam().getName());
+    	  secondLocalTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getLocalScore()));
+    	  
+    	
+    	  secondVisitorTeamName.setText(games.get(GAME_TWO).getVisitorTeam().getName());
+    	
+    	  secondVisitorTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getVisitorScore()));
+    	
     	  
     	  
     	  thirdLocalTeamName.setText(games.get(GAME_THREE).getLocalTeam().getName());
-    	  if (games.get(GAME_THREE).getLocalScore() == -1) {
-    		  thirdLocalTeamPoint.setText("");
-    	  } else {
+    
     	  thirdLocalTeamPoint.setText(String.valueOf(games.get(GAME_THREE).getLocalScore()));
-    	  }
+    	  
     	  
     	  thirdVisitorTeamName.setText(games.get(GAME_THREE).getVisitorTeam().getName());
-    	  if (games.get(GAME_THREE).getVisitorScore() == -1) {
-    		  thirdVisitorTeamPoint.setText("");
-    	  } else {
+    	  
     	  thirdVisitorTeamPoint.setText(String.valueOf(games.get(GAME_THREE).getVisitorScore()));
-    	  }
-    	}
+    }
+
 
 
 
@@ -249,7 +226,7 @@ public class WeekTenPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == exoportXMLButton) {
 			fileIO = new FileIO<>();
-			fileIO.convertToXML(weeks);	
+			fileIO.convertToXML(weeks, season);	
 			UserDialogUtil.userDialog("Se ha exportado el archivo XML", "Exportar XML", JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			UserDialogUtil.userDialog("Se ha producido un error, comprueba los archivos de logs", "Exportar XML", JOptionPane.ERROR_MESSAGE);

@@ -65,15 +65,18 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private Season season;
 	private ArrayList<Season> seasons;
 	private FileIO<Season> fileIo;
-	private static boolean hasSeasondataChanged;
+	private static boolean hasSeasondataCHanged;
 	private boolean isNewSeason;
 	private  Season futureSeason;
 
 	
 	   public SportsDashboardPage() {
-		   initializeFrameGraphics();		    	
+		   initializeFrameGraphics();	
+	    	
 	        allTeams = new ArrayList<>();
 	        checkIfFileExists();
+	        
+	        
 	        if (isNewSeason) {
 	        	initializeStandingsNewSeason();
 	        } else {
@@ -83,15 +86,14 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		   
 	  }
 
-	   
-	private void checkIfFileExists() {
-		  File file = new File(FILE_PATH);
-	        if (!file.exists() || file.length() == 0) {
-	        	 isNewSeason = true;
-	        } else {
-	        	  isNewSeason = false;
-	        } 
-	}
+	   private void checkIfFileExists() {
+			  File file = new File(FILE_PATH);
+		        if (!file.exists() || file.length() == 0) {
+		        	 isNewSeason = true;
+		        } else {
+		        	  isNewSeason = false;
+		        } 
+		}
     
     private void initializeFrameGraphics() {
     	setTitle("Panel administrativo");
@@ -108,7 +110,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
   
     
     private void initializeStandingsData() {
-    	hasSeasondataChanged = false;
+    	hasSeasondataCHanged = false;
     	fileIo = new FileIO<>();
     	seasons = new ArrayList<>();
     	seasons = fileIo.readObject(FILE_PATH, seasons);
@@ -127,7 +129,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         	   lastSeason.setState("finalizada");
                season = new Season(lastSeason.getId() + 1,lastSeason.getYear() + 1, "actual", weeks, teams, games);
            } else {
-               season = new Season(1, 2024, "actual", weeks, teams, games);
+               season = new Season(1, 2023, "actual", weeks, teams, games);
               
        		ArrayList<Team> futureTeams = new ArrayList<>();
 			ArrayList<Game>  futureGames = new ArrayList<>();
@@ -138,7 +140,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         
           seasons.add(season);
           seasons.add(futureSeason);
-          hasSeasondataChanged = true;
+          hasSeasondataCHanged = true;
       
     }
     
@@ -295,11 +297,11 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     
 
 	public boolean hasSeasondataCHanged() {
-		return hasSeasondataChanged;
+		return hasSeasondataCHanged;
 	}
 
 	public static  void setHasSeasonDataChanged(boolean hasSeasondataCHanged) {
-		SportsDashboardPage.hasSeasondataChanged = hasSeasondataCHanged;
+		SportsDashboardPage.hasSeasondataCHanged = hasSeasondataCHanged;
 	}
 
 	public static void main(String[] args) {
@@ -326,18 +328,18 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		
-	    if (hasSeasondataChanged) {
-	       int result = userDialogOkCancel("Desea guardar?", "Cambios detectados", JOptionPane.INFORMATION_MESSAGE);
-	        if (result == 0) {
-	            fileIo.writeObject(FILE_PATH, seasons);
-	        } 
-	    }
-	    System.exit(0);
+		  if (hasSeasondataCHanged) {
+		       int result = userDialogOkCancel("Desea guardar?", "Cambios detectados", JOptionPane.INFORMATION_MESSAGE);
+		        if (result == 0) {
+		            fileIo.writeObject(FILE_PATH, seasons);
+		        } 
+		    }
+		    System.exit(0);
+		
 	}
-
 	
 	private int userDialogOkCancel(String dialogText, String dialogTitle, int messageType) {
-		
+
 		  JDialog dialog = new JDialog(this, dialogTitle, true);
 	        dialog.setLayout(new BorderLayout());
 	        dialog.setSize(300, 150);
@@ -355,7 +357,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	        cancelButton.setBackground(Color.LIGHT_GRAY);
 
 	        final int[] result = {-2};
-	        
+
 	        acceptButton.addActionListener(e -> {
 	            dialog.dispose();
 	            result[0] = 0;
@@ -364,7 +366,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	        cancelButton.addActionListener(e -> {
 	            dialog.dispose();
 	            result[0] = -1;
-	            
+
 	        });
 
 	        JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -374,10 +376,12 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	        dialog.setLocationRelativeTo(this);
 	        dialog.setVisible(true);
-	    
+
 	        return result[0];
 	}
-	
+
+
+
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
@@ -407,6 +411,9 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		// TODO Auto-generated method stub

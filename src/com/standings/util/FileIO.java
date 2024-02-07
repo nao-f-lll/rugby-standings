@@ -12,9 +12,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import com.standings.model.Game;
+import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.model.Week;
 
@@ -61,16 +60,13 @@ public class FileIO <T>   implements Serializable{
 			streamOut.close();
 			fileOut.close();
 			
-    	  }catch (EOFException e) {
-          	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
-          } 
-          catch (FileNotFoundException e) {
-          	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
-          }  catch (IOException e) {
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			
+		} catch (IOException e) {
 			
 			e.printStackTrace();
-		}
-    	
+		}	
 	}
 	
 	
@@ -90,35 +86,38 @@ public class FileIO <T>   implements Serializable{
             streamIn.close();
             fileIn.close();
         }catch (EOFException e) {
-        	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
+        	System.out.println("Archivo vacio");
         } 
         catch (FileNotFoundException e) {
-        	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
-
+        	System.out.println("no existe el archivo");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-        	System.out.println("no existe la clase");  
+        	System.out.println("no existe la clase");
+            
         } catch (ClassCastException e) {
         	System.out.println("el objeto no es el mismo");
-        }  
+        }
+        
         return object;
 	}
 	
-	
-	
-	
-		public void convertToXML(ArrayList<Week> weeks) {
+		public void convertToXML(ArrayList<Week> weeks, Season season) {
 		
 		try {
-			fileWriter = new FileWriter("C:\\Users\\ik_1DW3A\\Documents\\nao-f-lll.github.io/resultados.xml");
+		
 			
+
+				fileWriter = new FileWriter("C:\\Users\\ik_1DW3A\\Documents\\nao-f-lll.github.io/resultados/"+ season.getYear() + ".xml");
+				String header = """
+						<?xml version="1.0" encoding="UTF-8"?>
+						<?xml-stylesheet href="resultados.xsl" type="text/xsl"?>
+						<resultados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="resultados.xsd">
+											        """;
+			
+	
 			bufferWriter = new BufferedWriter(fileWriter);
-			String header = """
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="xml/resultados.xsl" type="text/xsl"?>
-<resultados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="xml/resultados.xsd">
-					        """;
+			
 			String footer = """ 
 					</resultados>
 					""";
@@ -188,8 +187,15 @@ public class FileIO <T>   implements Serializable{
 				
 				 Team localTeam = weeks.get(i).getGames().get(j).getLocalTeam();
 				 Game game = weeks.get(i).getGames().get(j);
-				 String localTeamImage = "<image>" + localTeam.getIconPath() + "</image>";
-				 bufferWriter.write(localTeamImage); 
+				
+				 
+				
+				 String localTeamImage = "<image>" +  "../" + localTeam.getIconPath() + "</image>";
+				 
+					 bufferWriter.write(localTeamImage); 
+			
+				 
+				 
 				 bufferWriter.newLine();
 				 bufferWriter.write("</logo>"); 
 				 bufferWriter.newLine();
@@ -205,8 +211,14 @@ public class FileIO <T>   implements Serializable{
 				 bufferWriter.write(visitorTeamStarter); 
 				
 				 Team visitorTeam = weeks.get(i).getGames().get(j).getVisitorTeam();
-				 String visitorTeamImage = "<image>" + visitorTeam.getIconPath() + "</image>";
-				 bufferWriter.write(visitorTeamImage); 
+				 
+
+				 String visitorTeamImage  = "<image>" +  "../" + visitorTeam.getIconPath() + "</image>";;
+				 
+					 bufferWriter.write(visitorTeamImage); 
+				 
+				 
+				 
 				 bufferWriter.newLine();
 				 bufferWriter.write("</logo>"); 
 				 bufferWriter.newLine();
@@ -237,12 +249,11 @@ public class FileIO <T>   implements Serializable{
 			bufferWriter.close();
 			fileWriter.close();
 			
-		  }catch (EOFException e) {
-	        	UserDialogUtil.userDialog("El archivo no contiene ningun dato", "Expecion de escritura", JOptionPane.INFORMATION_MESSAGE);
-	        } 
-	        catch (FileNotFoundException e) {
-	        	UserDialogUtil.userDialog("Expecion de escritura", "El archivo no existe, se va crea uno nuevo", JOptionPane.INFORMATION_MESSAGE);
-	        }  catch (IOException e) {
+		} catch (EOFException e) {
+			System.out.println("Archivo vacio");
+		} catch (FileNotFoundException e) {
+			System.out.println("no existe el archivo");
+		}  catch (IOException e) {
 		    e.printStackTrace();
 		} catch (ClassCastException e)  {
 			System.out.println("el objeto no es el mismo");

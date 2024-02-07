@@ -1,0 +1,9 @@
+com.standings.credentials
+com.standings.model
+com.standings.model.design
+com.standings.ui
+com.standings.ui.page
+com.standings.ui.page.panel
+com.standings.ui.page.panel.scores
+com.standings.ui.page.panel.teams
+com.standings.util
