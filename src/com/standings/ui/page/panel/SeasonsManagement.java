@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -450,7 +449,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		
 		if (moveFromThisList.getSelectedIndex() == -1) {
 			userDialog("Ningun Equipo esta selecionado, seleciona uno", "Error Al añadir equipo", JOptionPane.WARNING_MESSAGE);
-		} else if ((listTwoModel.size() > 5 || selectedvalues.size() > 4) && moveToThisListModel == listTwoModel) {
+		} else if (selectedvalues.size() + listTwoModel.size() > 6 && moveToThisListModel == listTwoModel) {
 			userDialog("No pueden jugar más que seis equipos", "Error Al añadir equipo", JOptionPane.WARNING_MESSAGE);
 		} else {		
 			String[] selectedValuesArray = selectedvalues.toArray(new String[0]);
