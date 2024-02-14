@@ -38,9 +38,13 @@ import com.standings.ui.page.panel.TeamsPanel;
 import com.standings.ui.page.panel.UpdateDataPanel;
 import com.standings.util.FileIO;
 
-
+/**
+ * La clase SportsDashboardPage representa la página principal del panel de control de la aplicación,
+ * que permite a los usuarios gestionar datos deportivos, incluyendo equipos, partidos, clasificaciones y temporadas.
+ */
 public class SportsDashboardPage extends ParentFrame implements ActionListener, WindowListener, ListSelectionListener {
-
+	
+	// Variables de clase y constantes
     private static final long serialVersionUID = 1L;
     private final String FILE_PATH = "data/objects/seasons.ser";
     
@@ -69,7 +73,12 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private boolean isNewSeason;
 	private  Season futureSeason;
 
-	
+	/**
+	 * Constructor de la página del tablero deportivo.
+	 * Inicializa los gráficos del marco, los datos de todos los equipos y verifica si es una nueva temporada.
+	 * Si es una nueva temporada, inicializa los datos de la nueva temporada; de lo contrario, carga los datos de la temporada existente.
+	 * Inicializa los gráficos del panel.
+	 */
 	   public SportsDashboardPage() {
 		   initializeFrameGraphics();	
 	    	
@@ -95,6 +104,10 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		        } 
 		}
     
+	   /**
+	    * Inicializa los gráficos del panel.
+	    * Establece el título, la operación de cierre, el tamaño y la ubicación del panel
+	    */
     private void initializeFrameGraphics() {
     	setTitle("Panel administrativo");
     	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -103,12 +116,19 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         setSizeAndCenter();
     }
 
+    /**
+     * Establece el tamaño del marco y lo centra en la pantalla.
+     */
     private void setSizeAndCenter() {
         setSize(1538, 850);
         setLocationRelativeTo(null);
     }
   
     
+    /**
+     * Inicializa los datos de la clasificación para una temporada existente.
+     * Lee los datos de la temporada desde el archivo y establece la última temporada como la actual.
+     */
     private void initializeStandingsData() {
     	hasSeasondataCHanged = false;
     	fileIo = new FileIO<>();
@@ -117,6 +137,10 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     	season = seasons.get(seasons.size() - 2);
     }
     
+    /**
+     * Inicializa los datos de la clasificación para una nueva temporada.
+     * Lee los datos de las temporadas anteriores desde el archivo, crea una nueva temporada y la establece como la actual.
+     */
     public void initializeStandingsNewSeason() {
     	   fileIo = new FileIO<>();
     	   seasons = new ArrayList<>();
@@ -144,6 +168,10 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
       
     }
     
+    /**
+     * Inicializa los gráficos de los paneles.
+     * Inicializa el panel principal, los botones del panel y otros componentes necesarios.
+     */
     private void initializePanelGraphics() {
     	initializeMainPanel();
     	initializePanelButton();
@@ -152,12 +180,18 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     	lastPaint();
     }
     
+    /**
+     * Inicializa el panel principal con un diseño de borde.
+     */
     private void initializeMainPanel() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout()); 	
     }
    
     
+    /**
+     * Inicializa el panel de botones con un diseño nulo y un fondo blanco.
+     */
     private void initializePanelButton() {
         panelButton = new JPanel();
         panelButton.setBounds(0, 0, 1522, 60);
@@ -165,6 +199,12 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         panelButton.setLayout(null);
     }
     
+    /**
+     * Inicializa los paneles de botones en función de si es una nueva temporada o no.
+     * Si es una nueva temporada, inicializa el panel de clasificación con la temporada actual y los equipos disponibles.
+     * Si no es una nueva temporada, inicializa el panel de clasificación con la temporada anterior y los equipos disponibles.
+     * Además, inicializa los paneles de puntuaciones, equipos, actualización de datos y gestión de temporadas.
+     */
     private void initializeButtonPanels() {
     	
     	if (isNewSeason) {
@@ -194,7 +234,12 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
    
 
 
-    
+    /**
+     * Inicializa los botones de la interfaz de usuario.
+     * Los botones incluyen opciones para acceder a los partidos, la clasificación, los equipos,
+     * la actualización de datos y la gestión de temporadas.
+     * Configura las propiedades de estilo y comportamiento de los botones.
+     */
     private void initializeButtons() {
         goToScoresButton = new JButton("Partidos");
         goToScoresButton.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -256,11 +301,23 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         panelButton.add(goToSeasonsMangement);
     }
     
+    /**
+     * Configura el diseño final de la ventana principal.
+     * Añade el panel principal al centro de la ventana y el panel de botones en la parte superior.
+     */
+    
     private void lastPaint() {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(mainPanel, BorderLayout.CENTER);
     }
    
+    /**
+     * Muestra el panel especificado en la ventana principal.
+     * Limpia el contenido anterior del panel principal y agrega el panel de botones en la parte superior.
+     * Luego, agrega el panel especificado en el centro del panel principal.
+     * Finalmente, refresca y actualiza el panel principal.
+     * @param panelToShow El panel que se va a mostrar en la ventana principal.
+     */
     private void showPanel(JPanel panelToShow) {
         mainPanel.removeAll();
         mainPanel.add(panelButton);
@@ -270,8 +327,12 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     }
 
     
-	//MODIFIES: this
-    //EFFECTS:  displays the appropriate panel based on the clicked button by the user
+    /**
+     * Maneja las acciones realizadas por el usuario en la interfaz de usuario.
+     * Asocia cada botón con el panel correspondiente y muestra el panel asociado cuando se hace clic en el botón.
+     * Además, actualiza el borde de los botones para resaltar el botón seleccionado.
+     * @param e El evento de acción generado por el usuario.
+     */
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -296,10 +357,18 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     }
     
 
+    /**
+     * Devuelve un valor booleano que indica si los datos de la temporada han cambiado.
+     * @return true si los datos de la temporada han cambiado, false de lo contrario.
+     */
 	public boolean hasSeasondataCHanged() {
 		return hasSeasondataCHanged;
 	}
 
+	/**
+	 * Establece el estado de cambio de los datos de la temporada.
+	 * @param hasSeasondataCHanged true si los datos de la temporada han cambiado, false de lo contrario.
+	 */
 	public static  void setHasSeasonDataChanged(boolean hasSeasondataCHanged) {
 		SportsDashboardPage.hasSeasondataCHanged = hasSeasondataCHanged;
 	}
@@ -325,6 +394,11 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		
 	}
 
+
+    /** Verifica si los datos de la temporada han cambiado
+     * Si han cambiado, guarda los datos en el archivo
+     * Muestra un mensaje al usuario indicando que los datos se están guardando
+     */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		
@@ -338,6 +412,13 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 		
 	}
 	
+	/**
+	 * Muestra un diálogo de mensaje con un botón "Aceptar".
+	 *
+	 * @param dialogText   El texto que se mostrará en el diálogo.
+	 * @param dialogTitle  El título del diálogo.
+	 * @param messageType  El tipo de mensaje (por ejemplo, JOptionPane.INFORMATION_MESSAGE).
+	 */
 	private int userDialogOkCancel(String dialogText, String dialogTitle, int messageType) {
 
 		  JDialog dialog = new JDialog(this, dialogTitle, true);

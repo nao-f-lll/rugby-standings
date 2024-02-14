@@ -38,6 +38,9 @@ import com.standings.util.Time;
 public class SignUpPage extends ParentFrame implements ActionListener, KeyListener {
 
 	
+	/*
+	 *declaracion de variables y constantes
+	 */
 	private static final long serialVersionUID = -4747175902106077767L;
 	 
     private ImageIcon nflIcon;
@@ -76,8 +79,11 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
    
     
 	
+    
     /**
+     * Constructor de la clase SignUpPage.
      * 
+     * @param credentials Las credenciales de inicio de sesión.
      */
 	public SignUpPage(LoginCredentials credentials) {
 		
@@ -88,7 +94,9 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 	}
 	
 	/**
+	 * Inicializa los gráficos del marco de la página de registro.
 	 * 
+	 * @param credentials Las credenciales de inicio de sesión.
 	 */
 	private void initializFrameGraphics( LoginCredentials credentials) {
 		this.credentials = credentials;
@@ -99,8 +107,9 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 		this.setSize(650,479);
 		setSizeAndCenter();
 	}
+	
 	/**
-	 * 
+	 * Establece el tamaño y centra el marco en la pantalla.
 	 */
     private void setSizeAndCenter() {
 	    Toolkit tool = getToolkit();
@@ -109,7 +118,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
     }
 	
     /**
-     * 
+     * Inicializa los gráficos de los paneles principales.
      */
     private void initializePanelsGraphics() {
     	initializeMainPanel();
@@ -118,7 +127,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
     }
     
     /**
-     * 
+     * inicializa el panel principal
      */
     private void initializeMainPanel() {
 		mainPanel = new JPanel();
@@ -128,7 +137,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
     }
     
     /**
-     * 
+     * Inicializa el panel derecho interno.
      */
     private void initializeRightInnerPanel() {
 	    rightInnerPanel = new JPanel();
@@ -145,7 +154,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
     }
     
     /**
-     * 
+     *  Inicializa la etiqueta de inicio de sesión.
      */
    private void initializeLoginLabel() {
 		loginLabel = new JLabel("Registrarse");
@@ -157,7 +166,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
    
    
    /**
-    * 
+    * Inicializa la etiqueta y el campo de entrada de correo electrónico.
     */
    private void initializeEmail() {
        emailLabel = new JLabel("Email");
@@ -172,7 +181,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
    }
    
    /**
-    * 
+    * Inicializa las etiquetas y campos de entrada de contraseña y confirmación de contraseña.
     */
    private void initializePassword() {
 	    passwordLabel = new JLabel("Clave");
@@ -197,7 +206,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 
    
    /**
-    * 
+    *Inicializa la etiqueta y el campo de entrada de nombre completo.
     */
    private void initializeFullName() {
 		fullNameLabel = new JLabel("Nombre");
@@ -222,7 +231,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
    }
    
    /**
-    * 
+    * Inicializa los botones de "Iniciar sesión" y "Registrar".
     */
    private void initializeButtons() {
 	   initializeLoginButton();
@@ -288,7 +297,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
    }
    
    /**
-    * 
+    * Inicializa el mensaje de error para el campo de nombre completo del usuario.
     */
    private void initializeFullNameErrorMessage() {
 	    errorMessageForFullName = new JLabel();
@@ -333,11 +342,23 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 	    copyRights.setFont(new Font(null, Font.PLAIN,10));
     }
     
+    /**
+     * Maneja la lógica cuando se realiza una acción, como hacer clic en un botón.
+     * Llama al método userClickLoginLogic para procesar la acción del evento.
+     * 
+     * @param e El evento de acción que desencadena la llamada al método.
+     */
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		userClickLoginLogic(e);
 	}
 	
+	/**
+	 * Maneja el evento de tecla tipeada. Si la tecla tipeada no es Enter, limpia los mensajes de error en los campos.
+	 * 
+	 * @param e El evento de tecla tipeada.
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		char keyChar = e.getKeyChar();
@@ -364,8 +385,11 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 		
 	}
 	
+	
 	/**
+	 * Maneja la lógica cuando se presiona la tecla Enter. Valida el inicio de sesión si se presiona la tecla Enter.
 	 * 
+	 * @param e El evento de tecla presionada.
 	 */
 	private void userKeyboardLoginLogic(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {  
@@ -375,7 +399,9 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 	}
 	
 	/**
+	 * Maneja la lógica cuando se hace clic en los botones de inicio de sesión o registro.
 	 * 
+	 * @param e El evento de acción que desencadena la llamada al método.
 	 */
 	private void userClickLoginLogic(ActionEvent e) {
 		
@@ -391,10 +417,14 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 	
 	
 	
-	//EFFECTS:  if the handleEmptyFields returns true; call handleCredentialvalidation passing to it all the fields.
-	
 	/**
+	 * Valida los campos de entrada del usuario y maneja la lógica de inicio de sesión.
+	 * Si los campos están completos, llama al método handleCredentialvalidation para validar las credenciales.
 	 * 
+	 * @param userFullName             Nombre completo proporcionado por el usuario.
+	 * @param userEmail                Correo electrónico proporcionado por el usuario.
+	 * @param userPassword             Contraseña proporcionada por el usuario.
+	 * @param userConfirmationPassword Confirmación de la contraseña proporcionada por el usuario.
 	 */
 	private void validateLogin(String userFullName, String userEmail, String userPassword, String userConfirmationPassword) {
 		
@@ -404,11 +434,15 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 	}
 	
 
-	//EFFECTS:  checks if any field is empty, if any call the promptErrorMessage with appropriate arguments and return false;
-	//			otherwise return true.
-	
 	/**
+	 * Verifica si algún campo de entrada está vacío.
+	 * Si hay campos vacíos, muestra un mensaje de error correspondiente.
 	 * 
+	 * @param userFullName             Nombre completo proporcionado por el usuario.
+	 * @param userEmail                Correo electrónico proporcionado por el usuario.
+	 * @param userPassword             Contraseña proporcionada por el usuario.
+	 * @param userConfirmationPassword Confirmación de la contraseña proporcionada por el usuario.
+	 * @return true si todos los campos están completos, de lo contrario, false.
 	 */
 	private boolean handleEmptyFields(String userFullName, String userEmail, String userPassword, String userConfirmationPassword) {
 
@@ -441,12 +475,14 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 			}		
 	}
 
-	//MODIFIES: this
-	//EFFECTS:  if the credentials pass all the validations, open the main frame; otherwise prompt 
-	//          the user with appropriate message.
-	
-	/** 
+	/**
+	 * Valida los campos de entrada del usuario y maneja las credenciales.
+	 * Si algún campo no cumple con los requisitos de validación, muestra un mensaje de error correspondiente.
 	 * 
+	 * @param userFullName             Nombre completo proporcionado por el usuario.
+	 * @param userEmail                Correo electrónico proporcionado por el usuario.
+	 * @param userPassword             Contraseña proporcionada por el usuario.
+	 * @param userConfirmationPassword Confirmación de la contraseña proporcionada por el usuario.
 	 */
 	private void handleCredentialvalidation(String userFullName, String userEmail, String userPassword, String userConfirmationPassword) {
 		

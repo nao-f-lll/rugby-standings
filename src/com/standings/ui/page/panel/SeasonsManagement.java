@@ -34,8 +34,19 @@ import com.standings.model.Team;
 import com.standings.model.Week;
 import com.standings.ui.page.SportsDashboardPage;
 
+/**
+ * Clase que gestiona las temporadas.
+ * 
+ * @author SomeOne 
+ * @version 1.0
+ * @since 2024
+ */
 public class SeasonsManagement extends JPanel implements ActionListener{
  
+	/*
+	 *  delcaracion de variables y constantes
+	 */
+	
     private DefaultTableModel model;
     private JTable table;
     private JTableHeader tableHeader;
@@ -69,6 +80,18 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 ;
     
     
+/**
+ * Constructor de la clase SeasonsManagement.
+ *
+ * @param updateDataPanel   Panel para actualizar datos.
+ * @param goToUpdateDataButton Botón para ir a la actualización de datos.
+ * @param goToScoresButton Botón para ir a las puntuaciones.
+ * @param goToStandingButton Botón para ir a las clasificaciones.
+ * @param allTeams          Lista de todos los equipos.
+ * @param seasons           Lista de temporadas.
+ * @param standingsPanel    Panel de clasificaciones.
+ * @param scoresPanel       Panel de puntuaciones.
+     */
 	public SeasonsManagement(UpdateDataPanel updateDataPanel, JButton goToUpdateDataButton,JButton goToScoresButton  ,JButton goToStandingButton, ArrayList<Team> allTeams, ArrayList<Season> seasons, StandingsPanel standingsPanel, ScoresPanel scoresPanel) {
     	
 		
@@ -162,7 +185,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        seasonYearsLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 
 	        	        
-	        addSeasonYearsToComboBox();
+	      
 	        
 
 	        creatSeasonButton = new JButton("Crear Temporada");
@@ -182,6 +205,12 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        model = new DefaultTableModel(columns, 0) {
 	        	private static final long serialVersionUID = -7029166140539557670L;
 
+	        	 /**
+	             * Determina si una celda específica en la tabla es editable.
+	             * @param row indice de fila de la celda.
+	             * @param column indice de columna de la celda.
+	             * @return false para indicar que la celda no es editable.
+	             */
 				@Override
 	        	public boolean isCellEditable(int row, int column) {
 	        		return false;
@@ -197,7 +226,9 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        table.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	        
 	        
-	        
+	        /**
+	         * Listener para detectar cambios en la selección de filas en la tabla de temporadas.
+	         */
 	        selectionModel.addListSelectionListener(new ListSelectionListener() {
 	            
 				
@@ -355,13 +386,15 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	
 	}
 	
-	private void addSeasonYearsToComboBox() {	
-		//seasonYearsLabel.setText(String.valueOf(seasons.get((seasons.size() - 1)).getYear() + 1 ));
-	}
+
 	
 	
 	
-	
+	/**
+	 * Agrega filas a la tabla con información sobre cada temporada.
+	 * 
+	 * @param selectLastOne Indica si se debe seleccionar la última fila después de agregar las filas.
+	 */
 	private void addRowToTable(boolean selectLastOne) {
 		int selectedRow = table.getSelectedRow();
 		model.setRowCount(0);
@@ -385,6 +418,11 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	}
 
 	
+	/**
+	 * Maneja los eventos de acción generados por los botones en la interfaz.
+	 * 
+	 * @param e El evento de acción generado.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == creatSeasonButton) {
@@ -401,6 +439,9 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	}
 	
 	
+	/**
+	 * Borra la temporada seleccionada si está en estado "actual".
+	 */
 	private void removeSeason(){
 		
 		  int selectedRow = table.getSelectedRow();
@@ -414,6 +455,9 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	}
 	
 	
+	/**
+	 * Finaliza la temporada seleccionada si está en estado "actual".
+	 */
 	private void endSeason() {
 
 	    int selectedRow = table.getSelectedRow();
@@ -443,6 +487,14 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	}
 
 	
+	
+	/**
+	 * Agrega equipos de una lista a otra.
+	 *
+	 * @param moveFromThisList       La lista desde la cual se moverán los equipos.
+	 * @param moveFromThisListModel El modelo de lista desde el cual se moverán los equipos.
+	 * @param moveToThisListModel   El modelo de lista al cual se moverán los equipos.
+	 */
 	private void addTeam(JList<String> moveFromThisList, DefaultListModel<String> moveFromThisListModel, DefaultListModel<String> moveToThisListModel) {
 		
 		List<String> selectedvalues = moveFromThisList.getSelectedValuesList();
@@ -461,6 +513,9 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		}
 	}
 
+	/**
+	 * Llena el primer JList con los nombres de todos los equipos disponibles.
+	 */
 	private void fillListOne() {
 		listOneModel.removeAllElements(); 
 		 for (int i = 0; i < allTeamsNames.length; i++) {
@@ -469,6 +524,11 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	}
 	
 	
+	/**
+	 * Crea una nueva temporada si se han seleccionado seis equipos.
+	 * Si se crea una nueva temporada, la temporada anterior se marca como finalizada.
+	 * Se actualizan los paneles de clasificación y se añade la nueva temporada a la tabla.
+	 */
 	private void creatNewSeason() {
 	
 		if (listTwoModel.size() == 6) {
@@ -501,10 +561,9 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        standingsPanel = new StandingsPanel(newSeason, seasons, allTeams, isNewSeason, newSeasonTeamsNames);
 	        SportsDashboardPage.setHasSeasonDataChanged(true);
 	        addRowToTable(true);  
-	        addSeasonYearsToComboBox();
+	     
 	        fillListOne();
 	        listTwoModel.removeAllElements();
-
 	        
 			ArrayList<Team> futureTeams = new ArrayList<>();
 			ArrayList<Game>  futureGames = new ArrayList<>();
@@ -518,6 +577,13 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		}  
 	}
 
+	/**
+	 * Muestra un cuadro de diálogo con el texto y título especificados.
+	 * 
+	 * @param dialogText   Texto a mostrar en el cuadro de diálogo.
+	 * @param dialogTitle  Título del cuadro de diálogo.
+	 * @param messageType  Tipo de mensaje del cuadro de diálogo.
+	 */
 	private void userDialog(String dialogText, String dialogTitle, int meesageType) {
 		
 		 JOptionPane fieldRequirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);

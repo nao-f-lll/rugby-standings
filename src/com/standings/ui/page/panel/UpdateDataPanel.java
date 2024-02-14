@@ -1,9 +1,11 @@
 package com.standings.ui.page.panel;
 
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,8 +26,14 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+
 import com.standings.model.Game;
 import com.standings.model.ParentFrame;
 import com.standings.model.Season;
@@ -36,6 +45,12 @@ import com.standings.util.StandingsCalculation;
 //import com.standings.util.StandingsDataUtil;
 import com.standings.util.StandingsDataUtil;
 
+
+/**
+ * Panel para actualizar datos de juegos
+ * @author SomeOne
+ * @version 1
+ */
 public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 	private static final long serialVersionUID = -3261993617585437616L;
@@ -130,6 +145,14 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	private boolean newSeason;
 	
 	
+	 /**
+     * Constructor de la clase UpdateDataPanel.
+     * 
+     * @param teams           Lista de equipos.
+     * @param games           Lista de juegos.
+     * @param standingsPanel  Panel de clasificación.
+     * @param scoresPanel     Panel de puntuaciones.
+     */
 	public UpdateDataPanel( ArrayList<Team> teams, List<Game> games, StandingsPanel standingsPanel, ScoresPanel scoresPanel) {
  
     	this.games = games;
@@ -152,7 +175,13 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
     }
 	
 	
-	
+	/**
+	 * Actualiza los datos del panel.
+	 * 
+	 * @param teams   Lista de equipos.
+	 * @param games   Lista de juegos.
+	 * @param season  Temporada actual.
+	 */
 	public void updateData(ArrayList<Team> teams, ArrayList<Game> games, Season season) {
     	this.games = games;
     	this.teams = teams;
@@ -163,7 +192,9 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
     }
 	
 
-	
+	/**
+	 * Inicializa los gráficos del panel.
+	 */
 	private void initializeGraphics() {
 		initializegameOneGraphics();
 		initializeGameTwoGraphics();
@@ -171,17 +202,15 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		initializeMainGraphics();
 	}
 	
+	/**
+	 * Inicializa los gráficos del primer partido.
+	 */
 	private void initializegameOneGraphics() {
 		firstLocalTeamName = new JLabel(); 	
         firstLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
         firstLocalTeamName.setBounds(900, 200, 100, 37);
         this.add(firstLocalTeamName);
-        
 
-        
-        
-       
-      
         firstLocalTeamPointField = new JTextField();
         firstLocalTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
         firstLocalTeamPointField.setBounds(1110, 203, 33, 27);
@@ -200,11 +229,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
   	    firstVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
   	    firstVisitorTeamName.setBounds(900, 240, 100, 37);
   	    this.add(firstVisitorTeamName);
-  	       
-  	       
-  	     
-  	 
-  	    
+  	         
   	    firstVisitorTeamPointField = new JTextField();
   	    firstVisitorTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
   	    firstVisitorTeamPointField.setBounds(1110, 242, 33, 27);
@@ -219,6 +244,9 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
   	    
 	}
 	
+	/**
+	 * Inicializa los gráficos del segundo partido.
+	 */
 	private void initializeGameTwoGraphics() {
 		 secondLocalTeamName = new JLabel();
 		    secondLocalTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -266,6 +294,9 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		    
 	}
 	
+	/**
+	 * Inicializa los gráficos del tercer partido.
+	 */
 	private void initiailizeGameThreeGraphics() {
 	     
 		    thirdLocalTeamName = new JLabel();
@@ -311,6 +342,12 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		    
 		    
 	}
+	
+	/**
+	 * Inicializa los gráficos principales de la interfaz de usuario para la actualización de datos.
+	 * Esto incluye la creación de casillas de verificación para cada juego, la configuración de campos para los puntos de los equipos locales y visitantes,
+	 * la creación de un botón de actualización, la configuración de una lista desplegable para seleccionar la jornada del partido, y la configuración de instrucciones.
+	 */
 	private void initializeMainGraphics() {
 		firstGameBox = new CustomCheckBox();
 		firstGameBox.setBounds(1300, 210 ,50 , 45);  
@@ -434,7 +471,13 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		userClickLoginLogic(e);
 	}
     
-
+    
+    /**
+     * Lógica para manejar la acción del usuario al hacer clic en el botón de actualización.
+     * Verifica qué casilla de verificación está seleccionada y realiza la actualización de los datos del juego seleccionado.
+     * Además, realiza validaciones de los datos ingresados antes de actualizar los puntajes y actualiza las tablas de clasificación y puntuaciones.
+     * @param e El evento de acción que desencadenó esta función.
+     */
     private void userClickLoginLogic(ActionEvent e) {
 
         if (e.getSource() == updateButton) {
@@ -489,6 +532,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
                     
                     resetFieldsAndWeek();
                     userDialog("Su partido se ha actualizado correctamente", "Actualizar entrada", INFORMATION_MESSAGE_TYPE);
+                    initializeTable();            
                     SportsDashboardPage.setHasSeasonDataChanged(true);
                 }
             }
@@ -497,13 +541,67 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 
 
+    private void initializeTable() {
+        Object[][] rows = new Object[][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+        };
+
+        String[] columns = new String[] {
+                "Equipo", "Partidos Jugados", "Victorias", "Derrotas", "Empates", "Puntos"
+        };
+        
+        standingsPanel.renderUpdatedStandings(rows, columns);
+
+        JTable table = new JTable(rows, columns);
+        table.setEnabled(false);
+        table.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        table.setBackground(new Color(255, 255, 255));
+
+        table.getTableHeader().setFont(new Font(null, 20, 20));
+        table.getTableHeader().setBackground(Color.LIGHT_GRAY);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.setDefaultRenderer(Object.class, centerRenderer);
+
+        table.setRowHeight(60);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+     
+        table.setPreferredScrollableViewportSize(new Dimension(650, 360));
+        
+        JButton customButton = new JButton("OK");
+        customButton.setBackground(Color.LIGHT_GRAY);
+        customButton.setFocusable(false);
+        customButton.addActionListener((ActionEvent e) -> {
+            JOptionPane.getRootFrame().dispose();
+        });
+
+        Object[] options = {customButton};
+
+       
+        JOptionPane.showOptionDialog(
+                null,
+                new JScrollPane(table),
+                "Tabla de clasificacion",
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+    
+    }
 	
 
 	
-	//MODIFIES: this
-	//EFFECTS: create a comboBox and store the selectedWeekNumber
-	//		   the action listener turns the selected boxes to false when every change happens.	 
-	
+    /**
+     * Crea un JComboBox para seleccionar la semana de los partidos.
+     */
 	public void createWeekComboBox() {
 	    comboWeekModel = new DefaultComboBoxModel<>();
 	    for (int i = 1; i < 11; i++) {
@@ -511,14 +609,8 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	    }
 	    
 	    selectedWeekNumber = 1;
-	    
-	    
-	    
 
 	    updateButton.setEnabled(true);
-	    	   	
-	   
-
 	    weekComboBox = new JComboBox<>(comboWeekModel);
 	    weekComboBox.setBackground(Color.LIGHT_GRAY);
 	    weekComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -559,8 +651,13 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		
 	
 
-	//EFFECTS: retrieve game data before updating it based on the selected checkBox.
-	
+	/**
+	 * Método para seleccionar el partido que se va a actualizar según la semana y la casilla de selección.
+	 * 
+	 * @param firstBox   Verdadero si la primera casilla está seleccionada, falso de lo contrario.
+	 * @param secondBox  Verdadero si la segunda casilla está seleccionada, falso de lo contrario.
+	 * @param thirdBox   Verdadero si la tercera casilla está seleccionada, falso de lo contrario.
+	 */	
 	private void choseGameToUpdate(boolean firstBox, boolean secondBox, boolean thirdBox) {
 		if (firstBox) {
 			switch (selectedWeekNumber) {
@@ -669,9 +766,12 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	}
 	
 	
-	//REQUIRES: argument must be between the bound of the games array.
-	//MODIFIES: this
-	//EFFECTS: retrieve game data from games array based on the game index.
+	/**
+	 * Método para establecer los campos de puntos del club local y visitante, así como los nombres de los clubes,
+	 * cuando se selecciona la primera casilla de juego para actualizar.
+	 * 
+	 * @param gameNumber El número de juego seleccionado.
+	 */
 	
 	private void handleStepGameOne(int gameNumber){
 		
@@ -685,9 +785,10 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 	}
 	
-	//REQUIRES: argument must be between the bound of the games array.
-	//MODIFIES: this
-	//EFFECTS: retrieve game data from games array based on the game index.
+	/**
+	 * Maneja la selección del segundo juego en el paso de actualización.
+	 * @param gameNumber El número del juego seleccionado.
+	 */
 	
 	private void handleStepGameTwo(int gameNumber){
 		
@@ -703,9 +804,10 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	}
 	
 
-	//REQUIRES: argument must be between the bound of the games array.
-	//MODIFIES: this
-	//EFFECTS: retrieve game data from games array based on the game index.
+	/**
+	 * Maneja la selección del tercer juego en el paso de actualización.
+	 * @param gameNumber El número del juego seleccionado.
+	 */
 	
 	private void handleStepGameThree(int gameNumber){
 		
@@ -723,7 +825,9 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	
 	
 
-	//EFFECTS: pass the arguments based on the week. 
+	/**
+	 * Cambia los juegos mostrados en función de la semana seleccionada.
+	 */
 	
 	private void changeGames() {
 		
@@ -764,10 +868,13 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	}
 	
 	
-	//REQUIRES: argument must be between the bound of the games array.
-	//MODIFIES: this
-	//EFFECTS: set the appropriate data for a team fields and label based on the game index.
-	
+	/**
+	 * Muestra la información de los juegos en los campos correspondientes.
+	 *
+	 * @param gameOne   indice del primer juego en la lista de juegos.
+	 * @param gameTwo   indice del segundo juego en la lista de juegos.
+	 * @param gameThree indice del tercer juego en la lista de juegos.
+	 */
 	public void showGameInfo(int gameOne, int gameTwo, int gameThree) {
         
 		
@@ -786,7 +893,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 			firstVisitorTeamPointLabel.setVisible(true);
        
 			secondLocalTeamName.setText(games.get(gameTwo).getLocalTeam().getName());
-		;
+		
 			secondLocalTeamPointField.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
 			secondLocalTeamPointField.setVisible(false);
 			secondLocalTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
@@ -817,7 +924,11 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 
 
 
-	
+	/**
+	 * Obtiene el número de la semana seleccionada.
+	 *
+	 * @return Número de la semana seleccionada.
+	 */
 	private int whichWeekIsSelected() {
 		 return selectedWeekNumber;
 	}
@@ -827,10 +938,15 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	
 	
 	
-	//MODIFIES: this
-	//EFFECTS:  change the visibility of the given label and field based on the mouse actions
-	
-	
+	/**
+	 * Permite modificar los campos de texto de los equipos locales y visitantes en función del estado del CustomCheckBox.
+	 *
+	 * @param box           CustomCheckBox que controla el estado de modificación.
+	 * @param localLabel    JLabel que muestra el nombre del equipo local.
+	 * @param localField    JTextField que permite editar el puntaje del equipo local.
+	 * @param visitorLabel  JLabel que muestra el nombre del equipo visitante.
+	 * @param visitorField  JTextField que permite editar el puntaje del equipo visitante.
+	 */
 	private void allowToModifyField(CustomCheckBox box, JLabel localLabel, JTextField localField,  JLabel visitorLabel, JTextField visitorField) {
 	
 		
@@ -862,7 +978,9 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	
 	
 	
-	
+	/**
+	 * Deshabilita la modificación de los puntajes y restaura los JLabel con los valores actuales de los puntajes.
+	 */
 	private void desiablePointsModification() {
 		
 		
@@ -907,9 +1025,10 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		
 	
 
-	//EFFECTS:  based on the validationNumber it calls the userDialog passing to it the 
-	//			appropriate arguments.
-	
+	/**
+	 * Maneja el número de validación proporcionado y muestra el mensaje de diálogo correspondiente.
+	 * @param validationNumber el número de validación que indica el tipo de error
+	 */
 	public void handleValidationNumber(int validationNumber) {  
 		
 		switch (validationNumber) {
@@ -944,9 +1063,12 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	}	
 	
 
-
-	//EFFECTS:  prompt the user with a message that has the given text and title.
-	
+	/**
+	 * Muestra un diálogo con el texto y el título especificados.
+	 * @param dialogText el texto del diálogo
+	 * @param dialogTitle el título del diálogo
+	 * @param messageType el tipo de mensaje del diálogo (por ejemplo, JOptionPane.WARNING_MESSAGE)
+	 */
 	private void userDialog(String dialogText, String dialogTitle, int meesageType) {
 		
 		 JOptionPane fieldRequirementPane = new JOptionPane(dialogText,JOptionPane.YES_OPTION);

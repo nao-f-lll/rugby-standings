@@ -13,6 +13,15 @@ import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.model.Week;
 
+/**
+ * Clase para calcular las clasificaciones de la temporada.
+ * 
+ * <p>Esta clase realiza cálculos y actualizaciones en los datos de clasificación
+ * de una temporada dada.</p>
+ * 
+ * @author SomeOne
+ * @version 1
+ */
 public class StandingsCalculation {
 
 	private final static String NEW_STANDINGS_TYPE = "New entry";
@@ -25,6 +34,15 @@ public class StandingsCalculation {
 
 
 	
+	/**
+     * Constructor de la clase StandingsCalculation.
+     * 
+     * <p>Inicializa una instancia de StandingsCalculation con la temporada y 
+     * la lista de temporadas dadas, y realiza los cálculos iniciales.</p>
+     * 
+     * @param season La temporada para la cual se calcularán las clasificaciones
+     * @param seasons La lista de temporadas que contiene la temporada actual
+     */
 	public StandingsCalculation(Season season, ArrayList<Season> seasons) {
 		this.season = season;
 		this.seasons = seasons;
@@ -33,8 +51,16 @@ public class StandingsCalculation {
 	}
 	
 
-		  //MODIFIES : teams, games
-		  //EFFECTS  : generate and update the standings table data.
+	/**
+	 * Inicializa el cálculo de las clasificaciones.
+	 * 
+	 * <p>Este método inicializa el cálculo de las clasificaciones con los equipos y
+	 * los juegos dados de una temporada específica.</p>
+	 * 
+	 * @param teams La lista de equipos para la temporada
+	 * @param games La lista de juegos para la temporada
+	 * @param season La temporada para la cual se están calculando las clasificaciones
+	 */
 		
 		private static void initializeTheCalculation( ArrayList<Team> teams,  ArrayList<Game> games, Season season) {
 			
@@ -48,6 +74,12 @@ public class StandingsCalculation {
 		}
 		
 		
+
+		/**
+		 * Guarda los datos de la temporada en un archivo.
+		 * 
+		 * @param seasons La lista de temporadas a guardar.
+		 */
 		public static  void saveSeasonData(ArrayList<Season> seasons) {
 			try {
 				FileOutputStream fileOut = new FileOutputStream("data/objects/seasons.ser");
@@ -65,10 +97,11 @@ public class StandingsCalculation {
 			}
 		}
 		
-		  //REQUIRES : list musn't be empty.
-		  //MODIFIES : Team
-		  //EFFECTS  : sort the teams based on theirs fields in this order,
-		  //          (e.g wins, ties, losses, points)
+		/**
+		 * Ordena la tabla de posiciones de los equipos.
+		 * 
+		 * @param teams La lista de equipos a ordenar.
+		 */
 		
 		 public static void sortStandings(List<Team> teams) {
 
@@ -93,16 +126,25 @@ public class StandingsCalculation {
 	        }
 		 
 		 	 
-		  //MODIFIES : Team
-		  //EFFECTS  : update the fields of a team based on the given game.
+		 /**
+		  * Actualiza la tabla de posiciones de un equipo basándose en un partido dado.
+		  * 
+		  * @param team El equipo cuya tabla de posiciones se actualizará.
+		  * @param game El partido que afecta la tabla de posiciones del equipo.
+		  * @param type El tipo de actualización: "New entry" para nuevos partidos, "Existing entry" para partidos existentes.
+		  */
 		 
 		 public static void updateStandings(Team team, Game game, String type) {
 			 updateStandingsBasedOnMatch(team, game, type);
 		 }
 	    
-		  //REQUIRES : list of teams and list of games musn't be null.
-		  //MODIFIES : Team
-		  //EFFECTS  : update the fields of a team based on the given games.
+		 
+		 /**
+		  * Actualiza la tabla de posiciones de una liga basada en los partidos jugados.
+		  *
+		  * @param teams Lista de equipos en la liga.
+		  * @param games Lista de partidos jugados en la liga.
+		  */
 		 
 	    public static void updateStandings(List<Team> teams, List<Game> games) {
 	     	
@@ -113,8 +155,13 @@ public class StandingsCalculation {
 	    	}		    
 	    }
 	    
-		  //MODIFIES : Team
-		  //EFFECTS  : if a team is present in a game, update it's fields based on the game data.
+	    /**
+	     * Actualiza la tabla de posiciones de los equipos basándose en los resultados de un partido.
+	     *
+	     * @param team Equipo involucrado en el partido.
+	     * @param game Información del partido.
+	     * @param type Tipo de actualización (nueva entrada o entrada existente).
+	     */
 		         
 	    private static void updateStandingsBasedOnMatch(Team team, Game game, String type) {
 	    	
@@ -238,8 +285,12 @@ public class StandingsCalculation {
 	    	}
 
 	    
-		  //MODIFIES : games
-		  //EFFECTS  : returns the games list filled with random matches data.	
+	    /**
+	     * Genera los datos de los partidos para la primera mitad de la temporada.
+	     *
+	     * @param teams Lista de equipos.
+	     * @return Lista de partidos generados.
+	     */	
 	    
 	    private static List<Game> generateMatchesDataFirstHalfPart(ArrayList<Team> teams) {
 	        List<Game> games = new ArrayList<>();
@@ -266,6 +317,12 @@ public class StandingsCalculation {
 	        return games;
 	    }
 
+	    /**
+	     * Genera los datos de los partidos para la segunda mitad de la temporada.
+	     *
+	     * @param teams Lista de equipos.
+	     * @return Lista de partidos generados.
+	     */
 	    private static List<Game> generateMatchesDataSecondHalfPart(ArrayList<Team> teams) {
 	        List<Game> games = new ArrayList<>();
 	        int totalWeeks = 10;
@@ -290,6 +347,11 @@ public class StandingsCalculation {
 	    }
 	    
 	    
+	    /**
+	     * Inicializa las semanas de la temporada con los juegos correspondientes.
+	     *
+	     * @param season Temporada a la que se le inicializarán las semanas.
+	     */
 	    private static void initializeWeeks(Season season) {
 	    	ArrayList<Week> weeks = new ArrayList<Week>();
 	    	int indexFrom = 0;
@@ -310,6 +372,11 @@ public class StandingsCalculation {
 
 	    }
 
+	    /**
+	     * Rota la lista de equipos moviendo el último equipo a la segunda posición.
+	     *
+	     * @param teams Lista de equipos que se rotará.
+	     */
 	    private static void rotateTeamsList(ArrayList<Team> teams) {
 	        Team temp = teams.get(teams.size() - 1);
 	        teams.remove(teams.size() - 1);

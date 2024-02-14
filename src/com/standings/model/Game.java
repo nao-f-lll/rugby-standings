@@ -3,6 +3,18 @@ package com.standings.model;
 import java.io.FileWriter;
 import java.io.Serializable;
 
+/**
+ * Clase que representa un juego entre dos equipos.
+ * 
+ * <p>
+ * Esta clase almacena información sobre el juego, incluyendo los equipos locales y visitantes,
+ * los puntajes, el número de semana, y otros detalles relacionados.
+ * </p>
+ * 
+ * @author SomeOne 
+ * @version 1.0
+ * @since 2024-02-02
+ */
 public class Game implements Serializable{
 		
 	    
@@ -17,6 +29,17 @@ public class Game implements Serializable{
 	    private Fecha fecha;
 	    public  transient FileWriter fileWriter; 
 
+	    /**
+	     * Constructor de la clase Game.
+	     * 
+	     * @param localTeam       Equipo local.
+	     * @param visitorTeam     Equipo visitante.
+	     * @param localScore      Puntaje del equipo local.
+	     * @param visitorScore    Puntaje del equipo visitante.
+	     * @param oldLocalScore   Puntaje antiguo del equipo local.
+	     * @param oldVisitorScore Puntaje antiguo del equipo visitante.
+	     * @param week            Número de semana.
+	     */
 	    public Game(Team localTeam, Team visitorTeam, int localScore, int visitorScore, int oldLocalScore, int oldVisitorScore, int weekNumber) {
 	    	
 	        this.localTeam = localTeam;
@@ -32,24 +55,56 @@ public class Game implements Serializable{
 	    
 	    
 	    
-	    
+	    /**
+	     * Obtiene el equipo local.
+	     * 
+	     * @return Equipo local.
+	     */
 	    public Team getLocalTeam() { return localTeam; }
-
+	  
+	    /**
+	     * Obtiene el puntaje antiguo del equipo local.
+	     * 
+	     * @return Puntaje antiguo del equipo local.
+	     */
 	    public int getOldLocalScore() {return oldLocalScore;}
 
 	
-
+	    /**
+	     * Obtiene el puntaje antiguo del equipo visitante.
+	     * 
+	     * @return Puntaje antiguo del equipo visitante.
+	     */
 		public int getOldVisitorScore() {return oldVisitorScore;}
 
 		
-		
+		 /**
+	     * Obtiene el equipo visitante.
+	     * 
+	     * @return Equipo visitante.
+	     */
 		
 		public Team getVisitorTeam() { return visitorTeam; }
 
+		/**
+	     * Obtiene el puntaje del equipo local.
+	     * 
+	     * @return Puntaje del equipo local.
+	     */
 	    public int getLocalScore() { return localScore; }
 
+	    /**
+	     * Obtiene el puntaje del equipo local.
+	     * 
+	     * @return Puntaje del equipo local.
+	     */
 	    public int getVisitorScore() { return visitorScore; }
 	    
+	    /**
+	     * Obtiene el número de semana del juego.
+	     * 
+	     * @return Número de semana del juego.
+	     */
 	    public int getWeekNumber() { return weekNumber;}
 	    
 	    // setters
@@ -66,6 +121,11 @@ public class Game implements Serializable{
 			this.oldLocalScore = oldLocalScore;
 		}
 	    
+		  /**
+	     * Obtiene una representación en cadena del objeto Game.
+	     * 
+	     * @return Cadena que representa el objeto Game.
+	     */
 		@Override
 		public String toString() {
 			return "Game " + localTeam.getName() + ", " + visitorTeam.getName() + "," + localScore

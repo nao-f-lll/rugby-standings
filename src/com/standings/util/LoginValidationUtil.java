@@ -5,7 +5,9 @@ import java.util.HashMap;
 import com.standings.credentials.LoginCredentials;
 
 
-
+/**
+ * Clase utilizada para validar credenciales de inicio de sesión.
+ */
 public class LoginValidationUtil {
 	
 	public static final int ALL_FIELDS_ARE_EMPTY = 1;
@@ -16,9 +18,14 @@ public class LoginValidationUtil {
 	public static final int ALL_CHECKS_PASSED = 6;
 	
 	
-    
-	//REQUIRES: userEmail and userPassword musn't be a null value.
-	//EFFECTS : returns the appropriate number case based on the given case.
+	  /**
+     * Valida las credenciales de inicio de sesión.
+     *
+     * @param loginInfo    Mapa que contiene las credenciales de inicio de sesión.
+     * @param userEmail    Correo electrónico proporcionado por el usuario.
+     * @param userPassword Contraseña proporcionada por el usuario.
+     * @return El número de caso correspondiente al resultado de la validación.
+     */
 	
     public static int validateLogin(HashMap<String, String> loginInfo,  String userEmail, String userPassword) {
     	 if (userEmail.isEmpty() && userPassword.isEmpty()) {
@@ -41,6 +48,12 @@ public class LoginValidationUtil {
      }
     
     
+    /* Obtiene el ID de sesión del usuario.
+    *
+    * @param credentials Objeto que contiene las credenciales de los usuarios.
+    * @param userEmail   Correo electrónico del usuario.
+    * @return El ID de sesión del usuario.
+    */
     public static int getUserSessionId(LoginCredentials credentials, String userEmail) {
     	int sessionId = -1;
     	for (int i = 0; i < credentials.getUsers().size(); i++) {

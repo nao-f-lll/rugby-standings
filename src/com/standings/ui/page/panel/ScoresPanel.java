@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 
 import com.standings.model.Season;
 
-//import com.standings.ui.page.panel.subpanel.*;
-
 import com.standings.model.design.CustomBorder;
 import com.standings.model.design.CustomButton;
 import com.standings.ui.page.panel.scores.WeekEighthPanel;
@@ -29,11 +27,17 @@ import com.standings.ui.page.panel.scores.WeekTenPanel;
 import com.standings.ui.page.panel.scores.WeekThreePanel;
 import com.standings.ui.page.panel.scores.WeekTwoPanel;
 
+/**
+ * Panel para mostrar los resultados de los partidos por semana.
+ * @author SomeOne
+ * @version 1.0
+ * @since 2024-02-02
+ */
 public class ScoresPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 2653188263518760831L;
 
-	
+	// Paneles de cada semana
 	private WeekOnePanel weekOnePanel;
 	private WeekTwoPanel weekTwoPanel;
 	private WeekThreePanel weekThreePanel;
@@ -45,6 +49,7 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	private WeekNinePanel weekNinePanel;
 	private WeekTenPanel weekTenPanel;
 	
+	// Botones para seleccionar la semana
 	private JPanel weeksPanelButton;
 	private JPanel panelButton;
 	
@@ -62,6 +67,11 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	private Season season;
 
 	
+	  /**
+     * Constructor de ScoresPanel.
+     * @param panelButton Panel de botones.
+     * @param season Temporada actual.
+     */
 	public ScoresPanel(JPanel panelButton, Season season) {
 	       
 		
@@ -237,6 +247,11 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	}
 	
 	
+	/**
+	 * Renderiza los resultados de todos los partidos para cada semana de la temporada.
+	 * 
+	 * @param season La temporada para la cual se renderizan los resultados.
+	 */
 	public void renderAllWeeksScores(Season season) {
 		weekOnePanel.addGameInfo(season);
 		weekTwoPanel.addGameInfo(season);
@@ -253,8 +268,11 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	
 	
 	
-	//MODIFIES: week [One...Ten] Panel
-	//EFFECTS:  based on the selected week passed call the appropriate week's panel
+	/**
+	 * Renderiza los resultados de los partidos para la semana seleccionada.
+	 * 
+	 * @param selectedWeek El número de la semana para la cual se renderizan los resultados.
+	 */
 	
 	public void renderWeeksScores(int selectedWeek) {
 		
@@ -301,7 +319,11 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	
 	
     
-
+	/**
+	 * Muestra el panel especificado, reemplazando el contenido actual del panel principal.
+	 * 
+	 * @param panelToShow El panel que se mostrará en el panel principal.
+	 */
 	private void showPanel(JPanel panelToShow) {
         this.removeAll();
         this.add(panelButton);
@@ -314,8 +336,11 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	
 	
 	  
-	//MODIFIES: this
-	//EFFECTS:  displays the appropriate panel based on the clicked button by the user
+	/**
+	 * Realiza las acciones correspondientes cuando se produce un evento de acción, como hacer clic en un botón.
+	 * 
+	 * @param e El evento de acción que se ha producido.
+	 */
 	
     @Override
     public void actionPerformed(ActionEvent e) {

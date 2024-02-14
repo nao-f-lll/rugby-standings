@@ -29,8 +29,43 @@ import com.standings.util.LoginValidationUtil;
 import com.standings.util.Time;
 
 
+/**
+ * Clase que representa la página de inicio de sesión de la aplicación.
+ * 
+ * <p>
+ * Esta clase contiene la interfaz gráfica de la página de inicio de sesión,
+ * que incluye campos para ingresar el correo electrónico y la contraseña,
+ * botones para iniciar sesión y registrarse, y mensajes de error para manejar
+ * diferentes casos de validación.
+ * </p>
+ * 
+ * <p>
+ * La clase implementa ActionListener y KeyListener para manejar eventos de
+ * acción y teclado respectivamente.
+ * </p>
+ * 
+ * <p>
+ * Utiliza la clase LoginCredentials para acceder a la información de inicio de
+ * sesión y la clase LoginValidationUtil para validar las credenciales
+ * ingresadas por el usuario.
+ * </p>
+ * 
+ * <p>
+ * Esta clase extiende ParentFrame, que es una clase personalizada que
+ * encapsula las configuraciones básicas de la interfaz de usuario.
+ * </p>
+ * 
+ * @see com.standings.credentials.LoginCredentials
+ * @see com.standings.util.LoginValidationUtil
+ * @see com.standings.model.ParentFrame
+ * @see java.awt.event.ActionListener
+ * @see java.awt.event.KeyListener
+ * @author SomeOne
+ * @version 1.01.1
+ */
 public class LoginPage extends ParentFrame  implements ActionListener, KeyListener  {
 	
+	// delcaracion de las variables 
 	private static final long serialVersionUID = 6002789331622401022L;
 
 	private final int ALL_FIELDS_ARE_EMPTY = 1;
@@ -72,7 +107,12 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
    
     private FileIO<Season> fileIo;
    
-         
+    /**
+	 * Constructor de la página de inicio de sesión.
+	 * 
+	 * @param credentials Objeto LoginCredentials utilizado para manejar las
+	 *                    credenciales de inicio de sesión.
+	 */
 	public LoginPage(LoginCredentials credentials ) {	
 		
 		initializeFrameGraphics( credentials );	
@@ -96,6 +136,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 	}
 	
     
+	 /** 
+     * Establece el tamaño y centra la ventana en la pantalla.
+     */
     private void setSizeAndCenter() {
 	    Toolkit tool = getToolkit();
 	    Dimension screenSize = tool.getScreenSize();
@@ -104,13 +147,18 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
     }
 	
 
-	
+    /** 
+     * Inicializa los gráficos del panel principal y sus subpaneles.
+     */
 	 private void initializePanelGraphics() {
 		 initialMainPanel();
 		 initialLeftPanel();
 		 initialRightPanel();
 	 }
 	
+	 /** 
+	  * Inicializa el panel principal.
+	  */
 	 private void initialMainPanel() {
 			mainPanel = new JPanel();
 			mainPanel.setBackground(new Color(238, 238, 236));
@@ -118,6 +166,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 			mainPanel.setLayout(null);
 	 }
 	 
+	/** 
+	* Inicializa el subpanel izquierdo.
+	*/
 	 private void initialLeftPanel() {
 			leftIneerPanel = new JPanel();   
 			leftIneerPanel.setBounds(0, 0, 322, 376);		
@@ -128,6 +179,10 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 			initialCopyRights();
 	 }
 	 
+	 	/** 
+	     * Inicializa el icono del subpanel izquierdo.
+	     */
+	 
 	 private void initialNflIcon() {
 			nflIcon = new ImageIcon(ResizeIcon("/images/worldRugbyLogoBlack.png",150,200));
 			nflIconLabel = new JLabel("");
@@ -137,6 +192,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 			leftIneerPanel.add(nflIconLabel);
 	 }
 	 
+		/** 
+	     * Inicializa los derechos de autor en el subpanel izquierdo.
+	     */
 	 private void initialCopyRights() {
 			copyRights = new JLabel("<html> Copyright © 2024 World Rugby.<br> All rights reserved. </html>");
 			copyRights.setBounds(83,251,160,40);
@@ -145,6 +203,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 	 }
 	 
 	 
+	 	/** 
+	     * Inicializa el subpanel derecho.
+	     */
 	 private void initialRightPanel() {
 		 rightInnerPanel = new JPanel();
 		 rightInnerPanel.setBounds(323, 0, 317, 376); 
@@ -157,6 +218,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 	
 	 }
 	 
+	/** 
+	* Inicializa las etiquetas de la interfaz de usuario, como "Iniciar sesión" y "¿Crear una cuenta?".
+	*/
 	 private void initializeLabeles() {
 			loginLabel = new JLabel("Iniciar sesión");
 			loginLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -193,7 +257,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 		    fieldFocusListener(null,passwordField);
 	 }
 	 
-	 
+	 	/** 
+		 * Establece los controladores de eventos de foco para los campos de correo electrónico y contraseña.
+		 */
 	 public void fieldFocusListener(JTextField emailField, JPasswordField passwordField) {
 		 if (emailField != null) {
 			 emailField.addFocusListener(new FocusListener() {
@@ -222,6 +288,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 		 }
 	}
 	 
+	 	/** 
+		 * Inicializa los botones "Iniciar sesión" y "Registrarse".
+		 */
 	 private void initialzeButtons() {
 		    loginButton = new JButton("Iniciar sesión");
 			loginButton.setBounds(34, 215, 111, 25);
@@ -240,6 +309,9 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 			initializeErrorMessages();
 	 }
 	 
+	 	/** 
+		 * Inicializa los mensajes de error para el campo de correo electrónico y la contraseña.
+		 */
 	 
 	private void initializeErrorMessages() {
 		errorMessageForEmail = new JLabel();
@@ -284,8 +356,11 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 	}
 	
 	
-	//MODIFIES: change validationNumber to hold the number of the specific credentials case if the enter key is clicked.
-	//EFFECTS:  Call handleValidationNumber passing to it validationNumber.
+	/** 
+	 * Maneja la lógica cuando se presiona una tecla mientras se está en un campo de texto.
+	 * Si la tecla presionada es 'Enter', valida las credenciales y ejecuta la lógica correspondiente.
+	 * @param e El evento de tecla que desencadena la llamada al método.
+	 */
 	
 	private void userKeyboardLoginLogic(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {  
@@ -296,8 +371,10 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 	
 	
 	
-	//MODIFIES: change validationNumber to hold the number of the specific credentials case if the first case is true
-	//EFFECTS:  Call handleValidationNumber passing to it validationNumber or open SignUpPage frame.
+	/** 
+	 * Maneja la lógica cuando se hace clic en los botones de inicio de sesión o registro.
+	 * @param e El evento de acción que desencadena la llamada al método.
+	 */
 	
 	private void userClickLoginLogic(ActionEvent e) {
 		
@@ -314,9 +391,10 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 	}
 	
 
-	//MODIFIES: Change errorMessageForPassword bounds to handle different text.
-	//EFFECTS:  if the login credentials are valid let the user to log in by opening a new frame;
-	//          Otherwise prompt the error message.
+	/** 
+	 * Maneja los diferentes casos de validación de inicio de sesión y muestra mensajes de error apropiados o inicia sesión según corresponda.
+	 * @param validationNumber El número que representa el resultado de la validación del inicio de sesión.
+	 */
 	
 	private void handleValidationNumber(int validationNumber) {
 		switch (validationNumber) {

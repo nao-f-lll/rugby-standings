@@ -6,9 +6,25 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Clase que representa una temporada de rugby.
+ * 
+ * <p>
+ * Esta clase almacena información sobre una temporada de rugby,
+ * incluyendo el estado, el año, las semanas, los equipos, los juegos y si está activa.
+ * Proporciona métodos para acceder y modificar esta información, así como para convertir la información a XML.
+ * </p>
+ * 
+ * <p>
+ * La información de la temporada se puede convertir a un archivo XML con detalles sobre la clasificación de los equipos.
+ * </p>
+ * 
+ * @author SomeOne
+ * @version 1.0
+ * @since 2024-02-02
+ */
 public class Season implements Serializable{
 	
-
 	private static final long serialVersionUID = -2800306066578213671L;
 	private int id;
 	private String state;
@@ -20,7 +36,16 @@ public class Season implements Serializable{
 	private transient BufferedWriter bufferWriter;
 	public  transient FileWriter fileWriter; 
 	
-	
+	/**
+     * Constructor de la clase Season.
+     * 
+     * @param id     Identificador único de la temporada.
+     * @param year   Año de la temporada.
+     * @param state  Estado de la temporada.
+     * @param weeks  Lista de semanas en la temporada.
+     * @param teams  Lista de equipos en la temporada.
+     * @param games  Lista de juegos en la temporada.
+     */
 	public Season( int id, int year, String state, ArrayList<Week>  weeks,  ArrayList<Team> teams, ArrayList<Game> games) {
 		this.state = state;
 		this.id = id;
@@ -29,6 +54,19 @@ public class Season implements Serializable{
 		this.teams = teams;
 		this.games = games;
 		this.active = true;
+	}
+	
+    /**
+     * Constructor de la clase Season con código de temporada y año.
+     * 
+     * @param seasonCode Código de temporada.
+     * @param year       Año de la temporada.
+     */
+	
+	public Season(int seasonCode, int year) {
+		this.year = year;
+		this.weeks = new ArrayList<>();
+		this.teams = new ArrayList<>();
 	}
 
 	
@@ -73,11 +111,8 @@ public class Season implements Serializable{
 		this.games = games;
 	}
 
-	public Season(int seasonCode, int year) {
-		this.year = year;
-		this.weeks = new ArrayList<>();
-		this.teams = new ArrayList<>();
-	}
+	
+
 
 
 	public int getYear() {
@@ -118,11 +153,19 @@ public class Season implements Serializable{
 	}
 	
 	
+	 /**
+     * Convierte la información de la temporada a un archivo XML.
+     * 
+     * <p>
+     * La información incluye detalles sobre la clasificación de los equipos, juegos jugados, victorias, derrotas, empates y puntos.
+     * </p>
+      * @throws IOException Si ocurre un error durante la escritura del archivo.
+
+     */
 	public void convertToXML() {
 		
 		try {
 			fileWriter = new FileWriter("C:\\Users\\ik_1DW3A\\Documents\\nao-f-lll.github.io/clasificacion/"+ this.getYear() + ".xml");
-			
 			String header = """
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="clasificacion.xsl" type="text/xsl"?>

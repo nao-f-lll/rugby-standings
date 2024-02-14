@@ -74,12 +74,9 @@ public class WallabiesPanel extends JPanel{
 	    this.add(fundiationYearLabel);  
 
 	       
-	    descriptionLabel = new JLabel("<html>El equipo nacional de rugby de Nueva Zelanda, comúnmente conocido como All Blacks."
-	           		                                   + "Famosos por su éxito internacional, los All Blacks han sido considerados a menudo <br>"
-	                                                   + "como uno de los equipos deportivos más exitosos de la historiaAustralia ha"
-	                                                   + "competido en las nueve Copas del Mundo de Rugby, ganando la final en dos ocasiones y"
+	    descriptionLabel = new JLabel("<html>Los wallabies han competido en las nueve Copas del Mundo de Rugby, ganando la final en dos ocasiones y "
 	                                                   + "también terminando como subcampeón dos veces. Australia venció a Inglaterra en Twickenham en "
-	                                                   + "la final de la Copa Mundial de Rugby de 1991 y ganó de nuevo en 1999 en el Millennium Stadium de Cardiff"
+	                                                   + "la final de la Copa Mundial de Rugby de 1991 y ganó de nuevo en 1999 en el Millennium Stadium de Cardiff "
 	                                                   + "cuando sus oponentes en la final fueron Francia.</html>");
 	    
 	    descriptionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));

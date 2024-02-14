@@ -6,10 +6,13 @@ import java.util.regex.Pattern;
 import com.standings.model.RugbyTeamsNames;
 import com.standings.ui.page.panel.UpdateDataPanel;
 
+/**
+ * Clase de utilidad para validar y manipular datos de clasificaciones.
+ */
 
 public class StandingsDataUtil {
     
-
+    // delcaración de las variables
 	private static final int ALL_POINTS_ARE_INVALID = 6;
 	private static final int LOCAL_POINTS_ARE_INVALID = 7;
 	private static final int VISITOR_POINTS_ARE_INVALID = 8;
@@ -17,7 +20,15 @@ public class StandingsDataUtil {
 	
 	
 	
-	//EFFECTS : returns true if any field is empty; otherwise false.
+	/**
+     * Verifica si alguno de los campos está vacío.
+     *
+     * @param localClubField      Nombre del club local.
+     * @param visitorClubField    Nombre del club visitante.
+     * @param localClubPointsField Puntos del club local.
+     * @param visitorClubPointsField Puntos del club visitante.
+     * @return true si alguno de los campos está vacío; de lo contrario, false.
+     */
 	
     public static boolean validateStandingsDataForEmpties(String localClubField, String visitorClubField, String localClubPointsField, String visitorClubPointsField) {
        
@@ -26,8 +37,15 @@ public class StandingsDataUtil {
     }
     
        
-  //REQUIRES: fields musn't be a null value.
-  //EFFECTS : returns true if any field is empty; otherwise false.
+    /**
+     * Verifica si algún campo está vacío.
+     *
+     * @param localClubField      Nombre del club local.
+     * @param visitorClubField    Nombre del club visitante.
+     * @param localClubPointsField Puntos del club local.
+     * @param visitorClubPointsField Puntos del club visitante.
+     * @return true si algún campo está vacío; de lo contrario, false.
+     */
     
     public static boolean checkFordEmptyFields(String localClubField, String visitorClubField, String localClubPointsField, String visitorClubPointsField) {
     	 
@@ -45,7 +63,13 @@ public class StandingsDataUtil {
     
     
    
-    //EFFECTS : returns true if one of the teams has a wrong name; otherwise false.
+    /**
+     * Verifica si el nombre del equipo es incorrecto.
+     *
+     * @param localClubField   Nombre del club local.
+     * @param visitorClubField Nombre del club visitante.
+     * @return true si uno de los equipos tiene un nombre incorrecto; de lo contrario, false.
+     */
     
     public static boolean validateStandingsDataForWrongTeamName(String localClubField, String visitorClubField) {
         
@@ -53,9 +77,12 @@ public class StandingsDataUtil {
 
     }
     
-    
-    //REQUIRES: field musn't be a null value.
-    //EFFECTS : returns true if the given team has a wrong name; otherwise false.
+    /**
+     * Verifica si el nombre del equipo es incorrecto.
+     *
+     * @param teamName Nombre del equipo.
+     * @return true si el nombre del equipo no es válido; de lo contrario, false.
+     */
     
     private static boolean isNotValidTeamName(String teamName) {
     	
@@ -69,7 +96,13 @@ public class StandingsDataUtil {
     	    return true;    
     }
     
-    //EFFECTS : returns true if both teams has the same name; otherwise false.
+    /**
+     * Verifica si ambos equipos tienen el mismo nombre.
+     *
+     * @param localClubField   Nombre del club local.
+     * @param visitorClubField Nombre del club visitante.
+     * @return true si ambos equipos tienen el mismo nombre; de lo contrario, false.
+     */
     
     public static boolean validateStandingsDataForSameTeamNAme(String localClubField, String visitorClubField) {
         
@@ -77,8 +110,13 @@ public class StandingsDataUtil {
 
     }
     
-    //REQUIRES: fields musn't be a null value.
-    //EFFECTS : returns true if both teams has the same name; otherwise false.
+    /**
+     * Verifica si ambos equipos tienen el mismo nombre.
+     *
+     * @param localTeamName   Nombre del equipo local.
+     * @param visitorTeamName Nombre del equipo visitante.
+     * @return true si ambos equipos tienen el mismo nombre; de lo contrario, false.
+     */
     
     private static boolean isTheSameName(String localTeamName, String visitorTeamName) {
     	return localTeamName.equals(visitorTeamName);
@@ -87,7 +125,14 @@ public class StandingsDataUtil {
 
    
     
-    //EFFECTS : returns the number of the case based on if both fields has wrong data or just one of them.
+    /**
+     * Valida los puntos ingresados para ambos equipos.
+     *
+     * @param localClubPointsField   Puntos del club local.
+     * @param visitorClubPointsField Puntos del club visitante.
+     * @return El número del caso basado en si los puntos son inválidos para ambos
+     * 			equipos o solo para uno de ellos.
+     */
     
     public static int validateStandingsDataForPoints(String localClubPointsField, String visitorClubPointsField) {
         if (!areValidPoints(localClubPointsField) && !areValidPoints(visitorClubPointsField)) {
@@ -100,8 +145,13 @@ public class StandingsDataUtil {
 
         return 0;
     }                 
-    //EFFECTS : returns true if the string match the required format,
-    //         (e.g has only two digits from 0 to 99); otherwise false.
+   
+    /**
+     * Verifica si los puntos ingresados son válidos.
+     *
+     * @param points Puntos ingresados.
+     * @return true si los puntos son válidos; de lo contrario, false.
+     */
     
     private static boolean areValidPoints(String points) {
         String regex = "^[0-9]{1,2}$";
@@ -111,9 +161,11 @@ public class StandingsDataUtil {
     }
     
     
-    //REQUIRES: UpdateDataPanel musn't be a null value.
-    //MODIFIES: UpdateDataPanel
-    //EFFECTS : if any box is selected change it's boolean to true
+    /**
+     * Verifica qué casilla está seleccionada.
+     *
+     * @param UpdateData Panel de actualización de datos.
+     */
     
     public static void checkWhichBoxIsSelected(UpdateDataPanel UpdateData) {
         boolean firstSelected = UpdateData.firstGameBox.isSelected();

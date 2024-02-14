@@ -17,21 +17,35 @@ import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.model.Week;
 
-public class FileIO <T>   implements Serializable{
+/**
+ * Clase para manejar las operaciones de entrada/salida de archivos.
+ *
+ * @param <T> Tipo de objeto generico.
+ */
+public class FileIO <T> implements Serializable{
 
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -3718018196140010999L;
 	private static   BufferedWriter bufferWriter;
 	public static   FileWriter fileWriter; 
  
-	
+	 /**
+     * Constructor de la clase FileIO.
+     */
 	public FileIO() {
 		
 	}
 	
+	 /**
+     * Escribe datos en un archivo.
+     *
+     * @param timeStamps     Marca de tiempo para el registro.
+     * @param data           Datos a escribir.
+     * @param filePath       Ruta del archivo.
+     * @param additionalInfo Información adicional para el registro.
+     * @param sessionId      ID de sesión.
+     */
 	public void writeToFile(String timeStamps, String data, String filePath, String additionalInfo, int sessionId) {
 		
 		if (sessionId == -1) {
@@ -50,6 +64,16 @@ public class FileIO <T>   implements Serializable{
 		}
 	}
 
+
+	/**
+	 * Escribe los datos de on objeto en un archivo.
+	 *
+	 * @param timeStamps     Marca de tiempo para el registro.
+	 * @param data           Datos a escribir.
+	 * @param filePath       Ruta del archivo.
+	 * @param additionalInfo Información adicional para el registro.
+	 * @param sessionId      ID de sesión.
+	 */
 	
 	public void writeObject(String filePath, ArrayList<T> object) {
 
@@ -70,11 +94,27 @@ public class FileIO <T>   implements Serializable{
 	}
 	
 	
-	public String readFile(String filePath) {
-     
+	/// need revision /////
+	
+	/**
+     * Lee datos de un archivo.
+     *
+     * @param filePath Ruta del archivo.
+     * @return Datos leídos del archivo.
+     */
+	
+	public String readFile(String filePath) { 
         return null;
 	}
 	
+	
+	 /**
+     * Lee un objeto desde un archivo.
+     *
+     * @param filePath Ruta del archivo.
+     * @param object   Objeto a leer.
+     * @return Objeto leído desde el archivo.
+     */
 	@SuppressWarnings("unchecked")
 	public ArrayList<T> readObject(String filePath, ArrayList<T> object) {
 
@@ -102,6 +142,12 @@ public class FileIO <T>   implements Serializable{
         return object;
 	}
 	
+	
+	/**
+     * Convierte una lista de jornadas en formato XML y la escribe en un archivo.
+     *
+     * @param weeks Lista de jornadas a convertir.
+     */
 		public void convertToXML(ArrayList<Week> weeks, Season season) {
 		
 		try {
@@ -259,6 +305,60 @@ public class FileIO <T>   implements Serializable{
 			System.out.println("el objeto no es el mismo");
 		}
 			
-	}	
+	}
+		
+		
+		/**
+	     * Convierte los metadatos de las temporadas en formato XML y la escribe en un archivo.
+	     *
+	     * @param seasons Lista de temporadas.
+	     */
+		
+		public void writeMetaData(ArrayList<Season> seasons) {
+		
+			try {
+			fileWriter = new FileWriter("C:\\Users\\ik_1DW3A\\Documents\\nao-f-lll.github.io/clasificacion/temporadas.xml");
+			String header = """
+					<?xml version="1.0" encoding="UTF-8"?>
+					<?xml-stylesheet href="clasificacion.xsl" type="text/xsl"?>
+					<temporadas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="temporadas.xsd">
+										        """;
+		
+
+		bufferWriter = new BufferedWriter(fileWriter);
+		
+		String footer = """ 
+				</temporadas>
+				""";
+		
+		bufferWriter.write(header); 
+		bufferWriter.newLine();
+		System.out.println(seasons.size());
+		for (int i = 0; i < seasons.size(); i++) {
+			 bufferWriter.write("<temporada id=\"" + seasons.get(i).getId() + "\">"); 
+			 bufferWriter.newLine();			 
+			 bufferWriter.write("<año>" + seasons.get(i).getYear() + "</año>"); 
+			 bufferWriter.newLine();			 
+			 bufferWriter.write("<estado>" + seasons.get(i).getState() + "</estado>"); 
+			 bufferWriter.newLine();
+			 bufferWriter.write("</temporada>"); 
+			 bufferWriter.newLine();
+		}
+		 bufferWriter.write(footer); 
+		 bufferWriter.newLine();
+		 
+		 bufferWriter.close();
+		fileWriter.close();
+			
+		} catch (EOFException e) {
+			System.out.println("Archivo vacio");
+		} catch (FileNotFoundException e) {
+			System.out.println("No existe el archivo");
+		}  catch (IOException e) {
+		    e.printStackTrace();
+		} catch (ClassCastException e)  {
+			System.out.println("El objeto no es el mismo");
+		}
+	}
 }
 
