@@ -28,6 +28,8 @@ public class StandingsCalculation {
 	private final static String EXISTING_STANDINGS_TYPE = "Exisitng entry";
 	private final static int defaultLocalScore = 0;
 	private final static int  defaultVisitorScore = 0;
+	private final static String defaultLocalScoreString = "?";
+	private final static String  defaultVisitorScoreString ="?";
 	private Season season;
 	private  ArrayList<Season> seasons;
 
@@ -166,6 +168,7 @@ public class StandingsCalculation {
 	    private static void updateStandingsBasedOnMatch(Team team, Game game, String type) {
 	    	
 	    	if (type.equals(NEW_STANDINGS_TYPE)) {
+	    		if (!(game.getLocalScore() == 0 && game.getVisitorScore() == 0)) {
 	    		
 	    		if (team.getName().equals(game.getLocalTeam().getName())) {
 	    			if (game.getLocalScore() > game.getVisitorScore()) {
@@ -189,7 +192,7 @@ public class StandingsCalculation {
 	    				team.setPoints(team.getPoints() + game.getVisitorScore());
 	    				team.incrementGamesPlayed();
 	    		}
-	    		
+	    	}
     		
 	    		
 	    	} else if (type.equals(EXISTING_STANDINGS_TYPE)) {
@@ -203,38 +206,64 @@ public class StandingsCalculation {
 	    			if (team.getName().equals(game.getLocalTeam().getName())) {
 	    				
 	    				team.setPoints(team.getPoints() - game.getOldLocalScore() + game.getLocalScore());
+	    				game.setActiveForLocalTeam(true);
 	    			} 
 	    			if (team.getName().equals(game.getVisitorTeam().getName())) {
 	    				team.setPoints(team.getPoints() - game.getOldLocalScore() + game.getLocalScore());
+	    				game.setActiveForVisitorTeam(true);
 	    			}
 	    			
-	    		} else {
-	    			    		
-	    		
+	    			if (game.getOldLocalScore() == 0 && game.getOldVisitorScore() == 0 && game.getLocalScore() ==  game.getVisitorScore()) {
+    				
+    						team.incrementTies();
+    					
+    					
+	    				
+    				}	
+	    			
+	    		} else {	
 	    	    	if (game.getOldLocalScore() == game.getOldVisitorScore()) {
 	    	    		if (team.getName().equals(game.getLocalTeam().getName())) {
 	    	    			if (game.getLocalScore() > game.getVisitorScore()) {
 	    	    				team.incrementWins();
-	    	    				team.decrementTies();
+	    	    				
+	    	    				if (!(team.getTies() == 0) && game.isActive()) {
+	    	    					team.decrementTies();
+	    	    					
+	    	    				}			
 	    	    			} else if (game.getLocalScore() < game.getVisitorScore()) {
 	    	    				team.incrementLosses();
-	    	    				team.decrementTies();
+	    	    				if (!(team.getTies() == 0) && game.isActive()) {
+	    	    					team.decrementTies();
+	    	    					
+	    	    				}
 	    	    			} else {
 	    	    				team.incrementTies();
+	    	    				
 	    	    			}
+	    	    			game.setActiveForLocalTeam(true);
 	    	    			team.setPoints(team.getPoints() - game.getOldLocalScore() + game.getLocalScore());
 	    	    		}
 	    	        
 	    	    		if (team.getName().equals(game.getVisitorTeam().getName())) {
 	    	    			if (game.getVisitorScore() > game.getLocalScore()) {
 	    	    				team.incrementWins();
-	    	    				team.decrementTies();
+	    	    				if (!(team.getTies() == 0) && game.isActive()) {
+	    	    					team.decrementTies();
+	    	    				
+	    	    				}
 	    	    			} else if (game.getVisitorScore() < game.getLocalScore()) {
 	    	    				team.incrementLosses();
-	    	    				team.decrementTies();
+	    	    				if (!(team.getTies() == 0) && game.isActive()) {
+	    	    					team.decrementTies();
+	    	    					
+	    	    				}
 	    	    			} else {
 	    	    				team.incrementTies();
+	    	    				
 	    	    			}
+	    	    			
+	    	    			game.setActiveForVisitorTeam(true);
 	    	    			team.setPoints(team.getPoints() - game.getOldVisitorScore() + game.getVisitorScore());
 	    	    		}
 	    	    		
@@ -254,7 +283,9 @@ public class StandingsCalculation {
 	    	    				team.incrementTies();
 	    	    			} else {
 	    	    				team.incrementTies();
+	    	    		
 	    	    			}
+	    	    			game.setActiveForLocalTeam(true);
 	    	    			team.setPoints(team.getPoints() - game.getOldLocalScore() + game.getLocalScore());
 	    	    		}
 	    	        
@@ -275,14 +306,22 @@ public class StandingsCalculation {
 	    	    			} else {
 	    	    				team.incrementTies();
 	    	    			}
+	    	    			game.setActiveForVisitorTeam(true);
 	    	    			team.setPoints(team.getPoints() - game.getOldVisitorScore() + game.getVisitorScore());
 	    	    		}
 	    	    	}	
 	    	      
 	    			}
+	    		
+	    		int totalGamesPlayed = team.getTies() + team.getWins() + team.getLosses();
+	    		team.setGamesPlayed(totalGamesPlayed);
+	    		if (game.isActiveForLocalTeam() && game.isActiveForVisitorTeam()) {
+	    			game.setActive(true);
+	    		
 	    		}
-    
 	    	}
+	    	
+	    }
 
 	    
 	    /**
@@ -302,10 +341,13 @@ public class StandingsCalculation {
 	                Team team1 = teams.get(i);
 	                Team team2 = teams.get(teams.size() - 1 - i);
 
-	                int localScore = (int) (Math.random() * 99);
-	                int visitorScore = (int) (Math.random() * 99);
+	               // int localScore = (int) (Math.random() * 99);
+	                //int visitorScore = (int) (Math.random() * 99);
 
-	                Game game = new Game(team1, team2, localScore, visitorScore ,defaultLocalScore, defaultVisitorScore, weekNumber);
+	                String localScore = "?";
+	                String visitorScore = "?";
+	                
+	                Game game = new Game(team1, team2, localScore, visitorScore ,defaultLocalScoreString, defaultVisitorScoreString, weekNumber);
 	               
 	              
 	                games.add(game);
@@ -333,10 +375,13 @@ public class StandingsCalculation {
 	                Team team1 = teams.get(i);
 	                Team team2 = teams.get(teams.size() - 1 - i);
 
-	                int localScore = (int) (Math.random() * 99);
-	                int visitorScore = (int) (Math.random() * 99);
+	              //  int localScore = (int) (Math.random() * 99);
+	              //  int visitorScore = (int) (Math.random() * 99);
 
-	                Game game = new Game(team2, team1, localScore, visitorScore,defaultLocalScore, defaultVisitorScore, weekNumber);
+	                String localScore = "?";
+	                String visitorScore = "?";
+	                
+	                Game game = new Game(team2, team1, localScore, visitorScore,defaultLocalScoreString, defaultVisitorScoreString, weekNumber);
 	                games.add(game);
 	            }
 

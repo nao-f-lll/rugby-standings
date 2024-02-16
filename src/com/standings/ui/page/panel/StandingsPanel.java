@@ -326,6 +326,8 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	     */
 		public void renderUpdatedStandings() {		
 			
+			
+			 
 			int teamIndex = 0;
 			for (int i = 0; i < rows.length; i++) {
 	       
@@ -342,17 +344,19 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		}
 		
 		
-		public void renderUpdatedStandings(Object[][] rows, String[] columns) {		
+		public void renderUpdatedStandings(Object[][] rows, String[] columns, ArrayList<Team> currentSeasonTeams) {		
+			
+			
 			
 			int teamIndex = 0;
 			for (int i = 0; i < rows.length; i++) {
 	       
-	            rows[i][0] = this.teams.get(teamIndex).getName();
-	            rows[i][1] = this.teams.get(teamIndex).getGamesPlayed();
-	          	rows[i][2] = this.teams.get(teamIndex).getWins();
-	          	rows[i][3] = this.teams.get(teamIndex).getLosses();
-	          	rows[i][4] = this.teams.get(teamIndex).getTies();
-	          	rows[i][5] = this.teams.get(teamIndex).getPoints();	             	 
+	            rows[i][0] = currentSeasonTeams.get(teamIndex).getName();
+	            rows[i][1] = currentSeasonTeams.get(teamIndex).getGamesPlayed();
+	          	rows[i][2] = currentSeasonTeams.get(teamIndex).getWins();
+	          	rows[i][3] = currentSeasonTeams.get(teamIndex).getLosses();
+	          	rows[i][4] = currentSeasonTeams.get(teamIndex).getTies();
+	          	rows[i][5] = currentSeasonTeams.get(teamIndex).getPoints();	             	 
 	           	teamIndex++;
 	        }
 			

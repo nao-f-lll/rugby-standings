@@ -1,7 +1,6 @@
 package com.standings.ui.page.panel;
 
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -17,7 +16,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,10 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
-
 import com.standings.model.Game;
 import com.standings.model.ParentFrame;
 import com.standings.model.Season;
@@ -374,18 +369,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	    
 	       
 		allowToModifyField(thirdGameBox,thirdVisitorTeamPointLabel, thirdVisitorTeamPointField, thirdLocalTeamPointLabel, thirdLocalTeamPointField);
-		
-		
-	    
-	       
-	       
-	       
-
-
-        
-     
-        
-       
+		       
         
         updateButton = new JButton("Actualizar");
         updateButton.setBounds(1070, 620, 130, 45);
@@ -555,7 +539,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
                 "Equipo", "Partidos Jugados", "Victorias", "Derrotas", "Empates", "Puntos"
         };
         
-        standingsPanel.renderUpdatedStandings(rows, columns);
+        standingsPanel.renderUpdatedStandings(rows, columns, this.teams);
 
         JTable table = new JTable(rows, columns);
         table.setEnabled(false);
@@ -633,14 +617,14 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	            		secondGameBox.setSelected(false);
 	            		thirdGameBox.setSelected(false);
 	            		
-	            		if (firstLocalTeamPointField.getText().equals("?")) {
+	            		//if (firstLocalTeamPointField.getText().equals("?")) {
 	        	    		
-	        	    		updateButton.setEnabled(false);	
+	        	    		//updateButton.setEnabled(false);	
 	        	    	
-	        	    	} else {
+	        	    	//} else {
 	        	    		 
-	        	    		 updateButton.setEnabled(true);
-	        	    	}
+	        	    		// updateButton.setEnabled(true);
+	        	    	//}
 	                } catch (NumberFormatException ex) {
 	                    System.err.println("Error parsing week number");
 	                }
@@ -876,49 +860,76 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	 * @param gameThree indice del tercer juego en la lista de juegos.
 	 */
 	public void showGameInfo(int gameOne, int gameTwo, int gameThree) {
-        
 		
-			firstLocalTeamName.setText(games.get(gameOne).getLocalTeam().getName());
+		firstLocalTeamName.setText(games.get(gameOne).getLocalTeam().getName());
+		firstVisitorTeamName.setText(games.get(gameOne).getVisitorTeam().getName());
 		
-			firstLocalTeamPointField.setText(String.valueOf(games.get(gameOne).getLocalScore()));
-			firstLocalTeamPointField.setVisible(false);
-			firstLocalTeamPointLabel.setText(String.valueOf(games.get(gameOne).getLocalScore()));
-			firstLocalTeamPointLabel.setVisible(true);
-			
-			firstVisitorTeamName.setText(games.get(gameOne).getVisitorTeam().getName());
-			
-			firstVisitorTeamPointField.setText(String.valueOf(games.get(gameOne).getVisitorScore()));
-			firstVisitorTeamPointField.setVisible(false);
-			firstVisitorTeamPointLabel.setText(String.valueOf(games.get(gameOne).getVisitorScore()));
-			firstVisitorTeamPointLabel.setVisible(true);
-       
-			secondLocalTeamName.setText(games.get(gameTwo).getLocalTeam().getName());
 		
+		  if (games.get(gameOne).isActive()) {
+				firstLocalTeamPointField.setText(String.valueOf(games.get(gameOne).getLocalScore()));
+				firstLocalTeamPointLabel.setText(String.valueOf(games.get(gameOne).getLocalScore()));
+				firstVisitorTeamPointField.setText(String.valueOf(games.get(gameOne).getVisitorScore()));
+				firstVisitorTeamPointLabel.setText(String.valueOf(games.get(gameOne).getVisitorScore()));
+
+		  } else {
+			  firstLocalTeamPointField.setText("?");
+				firstLocalTeamPointLabel.setText("?");
+				firstVisitorTeamPointField.setText("?");
+				firstVisitorTeamPointLabel.setText("?");
+		  }
+		
+		firstLocalTeamPointField.setVisible(false);		
+		firstLocalTeamPointLabel.setVisible(true);
+				
+		firstVisitorTeamPointField.setVisible(false);
+		firstVisitorTeamPointLabel.setVisible(true);
+   
+		
+		
+		
+		secondLocalTeamName.setText(games.get(gameTwo).getLocalTeam().getName());
+		secondVisitorTeamName.setText(games.get(gameTwo).getVisitorTeam().getName());
+
+		if (games.get(gameTwo).isActive()) {
 			secondLocalTeamPointField.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
-			secondLocalTeamPointField.setVisible(false);
 			secondLocalTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getLocalScore()));
-			secondLocalTeamPointLabel.setVisible(true);
-			
-			secondVisitorTeamName.setText(games.get(gameTwo).getVisitorTeam().getName());
-		
 			secondVisitorTeamPointField.setText(String.valueOf(games.get(gameTwo).getVisitorScore()));
-			secondVisitorTeamPointField.setVisible(false);
-			secondVisitorTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getVisitorScore()));
-			secondVisitorTeamPointLabel.setVisible(true);
-    	  
-			thirdLocalTeamName.setText(games.get(gameThree).getLocalTeam().getName());
+			secondVisitorTeamPointLabel.setText(String.valueOf(games.get(gameTwo).getVisitorScore()));			
+		} else {
+			secondLocalTeamPointField.setText("?");
+			secondLocalTeamPointLabel.setText("?");
+			secondVisitorTeamPointField.setText("?");
+			secondVisitorTeamPointLabel.setText("?");			
+		}
 		
+		secondLocalTeamPointField.setVisible(false);
+		secondLocalTeamPointLabel.setVisible(true);	
+		secondVisitorTeamPointField.setVisible(false);
+		secondVisitorTeamPointLabel.setVisible(true);
+	
+		
+		
+		thirdLocalTeamName.setText(games.get(gameThree).getLocalTeam().getName());
+		thirdVisitorTeamName.setText(games.get(gameThree).getVisitorTeam().getName());
+
+
+		if (games.get(gameThree).isActive()) {
 			thirdLocalTeamPointField.setText(String.valueOf(games.get(gameThree).getLocalScore()));
-			thirdLocalTeamPointField.setVisible(false);
 			thirdLocalTeamPointLabel.setText(String.valueOf(games.get(gameThree).getLocalScore()));
-			thirdLocalTeamPointLabel.setVisible(true);
-    	  
-			thirdVisitorTeamName.setText(games.get(gameThree).getVisitorTeam().getName());
-			
 			thirdVisitorTeamPointField.setText(String.valueOf(games.get(gameThree).getVisitorScore()));
-			thirdVisitorTeamPointField.setVisible(false);
 			thirdVisitorTeamPointLabel.setText(String.valueOf(games.get(gameThree).getVisitorScore()));
-			thirdVisitorTeamPointLabel.setVisible(true);
+
+		} else {
+			thirdLocalTeamPointField.setText("?");
+			thirdLocalTeamPointLabel.setText("?");
+			thirdVisitorTeamPointField.setText("?");
+			thirdVisitorTeamPointLabel.setText("?");
+		}
+		
+		thirdLocalTeamPointField.setVisible(false);
+		thirdLocalTeamPointLabel.setVisible(true);		
+		thirdVisitorTeamPointField.setVisible(false);
+		thirdVisitorTeamPointLabel.setVisible(true);		
     }
 
 

@@ -123,6 +123,11 @@ public class Team implements Serializable{
 	    public void setPoints(int points) { this.points = points; }
 
 	    
+	    public void setGamesPlayed(int gamesPlayed) {
+	    	this.gamesPlayed = gamesPlayed;
+	    }
+	    
+	    
 	    /**
 	     * Incrementa el contador de victorias del equipo.
 	     */

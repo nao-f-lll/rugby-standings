@@ -267,6 +267,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		                    	goToStandingButton.setEnabled(true);
 		                    	creatSeasonButton.setEnabled(false);
 		                    	endSeasonButton.setEnabled(false);
+		                    	removeSeasonButton.setEnabled(false);
 		                    	listOne.setEnabled(false);
 		                    	listTwo.setEnabled(false);
 		                    	
@@ -284,6 +285,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		                    	goToStandingButton.setEnabled(true);
 		                    	creatSeasonButton.setEnabled(false);
 		                    	endSeasonButton.setEnabled(true);
+		                    	removeSeasonButton.setEnabled(true);
 		                    	listOne.setEnabled(false);
 		                    	listTwo.setEnabled(false);
 
@@ -303,6 +305,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	                    	 
 	                    	 creatSeasonButton.setEnabled(true);
 		                     endSeasonButton.setEnabled(false);
+		                     removeSeasonButton.setEnabled(false);
 
 		                    	addOneTeamButton.setEnabled(true);
 		                    	removeOneTeamButton.setEnabled(true);
@@ -445,12 +448,13 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	private void removeSeason(){
 		
 		  int selectedRow = table.getSelectedRow();
-		  if (seasons.get(selectedRow).getState().equals("actual")) {
+	        int result = userDialogOkCancel("¿Estas seguro de que quieres borrar la temporada?", "Borrar temporada", JOptionPane.WARNING_MESSAGE);
+
+		  if (result == JOptionPane.OK_OPTION) {		  
 			  seasons.remove(selectedRow);     
 	          addRowToTable(true);
 	          SportsDashboardPage.setHasSeasonDataChanged(true);
-		  } else {
-			  userDialog("No se pueden borrar las temporadas finalizadas, solo el actual", "Borra temporada", JOptionPane.WARNING_MESSAGE);
+		  
 		  }
 	}
 	
@@ -462,8 +466,18 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 
 	    int selectedRow = table.getSelectedRow();
 	    Season season = seasons.get(selectedRow);
-
-	    if (season.getState().equals("actual")) {
+	    boolean isSeasonFinished = true;
+	    
+	    
+	    for (int i = 0; i < season.getTeams().size(); i++) {
+	    	if (season.getTeams().get(i).getGamesPlayed() < 10) {
+	    		userDialog("No se puede finalizar la temporada. los partidos aun no estan terminados", "Finalizar temporada", JOptionPane.WARNING_MESSAGE);
+	    		isSeasonFinished = false;
+	    		break;
+	    	}
+	    }
+	    
+	    if (isSeasonFinished) {
 
 	        int result = userDialogOkCancel("¿Estas seguro de que quieres finalizar la temporada?", "Finalizar temporada", JOptionPane.WARNING_MESSAGE);
 	        if (result == JOptionPane.OK_OPTION) {
@@ -531,51 +545,67 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	 */
 	private void creatNewSeason() {
 	
-		if (listTwoModel.size() == 6) {
-	
-			seasons.remove(seasons.size() -1);
+		
+		 
+		  
+		    if (listTwoModel.size() == 6) {
+		    	
+		    	  boolean isSeasonFinished = true;
+				   int selectedRow = table.getSelectedRow();
+				    
+				    for (int i = 0; i < seasons.get(selectedRow - 1).getTeams().size(); i++) {
+				    	if (seasons.get(selectedRow - 1).getTeams().get(i).getGamesPlayed() < 10) {
+				    		userDialog("No se puede crear una nueva temporada. la temporada anterior aun no esta terminada", "Crear temporada", JOptionPane.WARNING_MESSAGE);
+				    		isSeasonFinished = false;
+				    		break;
+				    	}
+				    }
+				    
+		    	
+		    if (isSeasonFinished ) {		    
+		    
+		    	seasons.remove(seasons.size() -1);
+		    	for (int i = 0; i < seasons.size() - 1; i++) {
+		    		if (seasons.get(i).getState().equals("actual")) {
+		    			seasons.get(i).setState("finalizada");
+		    			break;
+		    		}
+		    	}
 			
-			for (int i = 0; i < seasons.size() - 1; i++) {
-	    		if (seasons.get(i).getState().equals("actual")) {
-	    			seasons.get(i).setState("finalizada");
-	        		break;
-	    		} else {
-	    			
-	    		}
-	    	}
-			
-			newSeasonTeamsNames = new String[6];
-			for (int i = 0; i < listTwoModel.size(); i++) {
-				newSeasonTeamsNames[i] = listTwoModel.get(i);
-			}
-			ListSelectionModel selectionModel = table.getSelectionModel();
-			selectionModel.clearSelection();
-			ArrayList<Team> teams = new ArrayList<>();
-			ArrayList<Game>  games = new ArrayList<>();
-			ArrayList<Week>  weeks = new ArrayList<>();
-			Season lastSeason = seasons.get(seasons.size() - 1);
-	  	    lastSeason.setState("finalizada");
-	        Season  newSeason = new Season(lastSeason.getId() + 1, lastSeason.getYear() + 1, "actual", weeks, teams, games);
-	        seasons.add(newSeason);
-	        boolean isNewSeason = true;
-	        standingsPanel = new StandingsPanel(newSeason, seasons, allTeams, isNewSeason, newSeasonTeamsNames);
-	        SportsDashboardPage.setHasSeasonDataChanged(true);
-	        addRowToTable(true);  
+				newSeasonTeamsNames = new String[6];
+				for (int j = 0; j < listTwoModel.size(); j++) {
+					newSeasonTeamsNames[j] = listTwoModel.get(j);
+				}
+				ListSelectionModel selectionModel = table.getSelectionModel();
+				selectionModel.clearSelection();
+				ArrayList<Team> teams = new ArrayList<>();
+				ArrayList<Game>  games = new ArrayList<>();
+				ArrayList<Week>  weeks = new ArrayList<>();
+				Season lastSeason = seasons.get(seasons.size() - 1);
+				lastSeason.setState("finalizada");
+	  	    	Season  newSeason = new Season(lastSeason.getId() + 1, lastSeason.getYear() + 1, "actual", weeks, teams, games);
+	        	seasons.add(newSeason);
+	        	boolean isNewSeason = true;
+	        	standingsPanel = new StandingsPanel(newSeason, seasons, allTeams, isNewSeason, newSeasonTeamsNames);
+	        	SportsDashboardPage.setHasSeasonDataChanged(true);
+	        	addRowToTable(true);  
 	     
-	        fillListOne();
-	        listTwoModel.removeAllElements();
+	        	fillListOne();
+	        	listTwoModel.removeAllElements();
+		    
+				ArrayList<Team> futureTeams = new ArrayList<>();
+				ArrayList<Game>  futureGames = new ArrayList<>();
+				ArrayList<Week>  futureweeks = new ArrayList<>();
 	        
-			ArrayList<Team> futureTeams = new ArrayList<>();
-			ArrayList<Game>  futureGames = new ArrayList<>();
-			ArrayList<Week>  futureweeks = new ArrayList<>();
-	        
-	        Season futureSeason = new Season(newSeason.getId() + 1, newSeason.getYear() + 1, "proximamente", futureweeks,futureTeams,futureGames);
-	        seasons.add(futureSeason);
-	        addRowToTable(true); 
-		} else {
-			userDialog("Tienes que selecionar seis equipos para crear una nueva temporada", "Creacion de temporada", JOptionPane.WARNING_MESSAGE);
-		}  
-	}
+	        	Season futureSeason = new Season(newSeason.getId() + 1, newSeason.getYear() + 1, "proximamente", futureweeks,futureTeams,futureGames);
+	        	seasons.add(futureSeason);
+	        	addRowToTable(true); 
+		    	}
+		    }else {
+				userDialog("Tienes que selecionar seis equipos para crear una nueva temporada", "Creacion de temporada", JOptionPane.WARNING_MESSAGE);
+			}  
+		}
+	
 
 	/**
 	 * Muestra un cuadro de diálogo con el texto y título especificados.

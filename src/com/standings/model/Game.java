@@ -23,11 +23,19 @@ public class Game implements Serializable{
 	    private final Team visitorTeam;
 	    private int localScore;
 	    private int visitorScore;
+	    private String localScoreString;
+	    private String visitorScoreString;
 	    private int weekNumber;
-		private int oldLocalScore;
-		private int  oldVisitorScore;
+	    private String oldLocalScoreString;
+	  	private String  oldVisitorScoreString;	
+	    private int oldLocalScore;
+		private int  oldVisitorScore;	    
 	    private Fecha fecha;
-	    public  transient FileWriter fileWriter; 
+	    public  transient FileWriter fileWriter;
+	    private boolean active;
+	    private boolean activeForLocalTeam;
+	    private boolean activeForVisitorTeam;
+	    
 
 	    /**
 	     * Constructor de la clase Game.
@@ -40,7 +48,8 @@ public class Game implements Serializable{
 	     * @param oldVisitorScore Puntaje antiguo del equipo visitante.
 	     * @param week            Número de semana.
 	     */
-	    public Game(Team localTeam, Team visitorTeam, int localScore, int visitorScore, int oldLocalScore, int oldVisitorScore, int weekNumber) {
+	    
+	     public Game(Team localTeam, Team visitorTeam, int localScore, int visitorScore, int oldLocalScore, int oldVisitorScore, int weekNumber) {
 	    	
 	        this.localTeam = localTeam;
 	        this.visitorTeam = visitorTeam;
@@ -49,6 +58,21 @@ public class Game implements Serializable{
 	        this.weekNumber = weekNumber;
 	        this.oldLocalScore = oldLocalScore;
 	        this.oldVisitorScore = oldVisitorScore;
+	    }
+	    
+	    
+	    public Game(Team localTeam, Team visitorTeam, String localScoreString, String visitorScoreString, String oldLocalScoreString, String oldVisitorScoreString, int weekNumber) {
+	    	
+	        this.localTeam = localTeam;
+	        this.visitorTeam = visitorTeam;
+	        this.localScoreString = localScoreString;
+	        this.visitorScoreString = visitorScoreString;	          
+	        this.weekNumber = weekNumber;
+	        this.oldLocalScoreString = oldLocalScoreString;
+	        this.oldVisitorScoreString = oldVisitorScoreString;
+	        this.active = false;
+	        this.activeForLocalTeam = false;
+	        this.activeForVisitorTeam = false;
 	    }
 
 	    // getters
@@ -69,6 +93,12 @@ public class Game implements Serializable{
 	     */
 	    public int getOldLocalScore() {return oldLocalScore;}
 
+	    
+	    public boolean isActive() {
+	    	return active;
+	    }
+	    
+	    
 	
 	    /**
 	     * Obtiene el puntaje antiguo del equipo visitante.
@@ -116,12 +146,38 @@ public class Game implements Serializable{
 		public void setOldVisitorScore(int oldVisitorScore) {
 			this.oldVisitorScore = oldVisitorScore;
 		}
+		
+		public void setActive(boolean active) {
+			this.active = active;
+		}
 
 		public void setOldLocalScore(int oldLocalScore) {
 			this.oldLocalScore = oldLocalScore;
 		}
 	    
-		  /**
+		
+		
+		  public boolean isActiveForLocalTeam() {
+			return activeForLocalTeam;
+		}
+
+
+		public void setActiveForLocalTeam(boolean activeForLocalTeam) {
+			this.activeForLocalTeam = activeForLocalTeam;
+		}
+
+
+		public boolean isActiveForVisitorTeam() {
+			return activeForVisitorTeam;
+		}
+
+
+		public void setActiveForVisitorTeam(boolean activeForVisitorTeam) {
+			this.activeForVisitorTeam = activeForVisitorTeam;
+		}
+
+
+		/**
 	     * Obtiene una representación en cadena del objeto Game.
 	     * 
 	     * @return Cadena que representa el objeto Game.

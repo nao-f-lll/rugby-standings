@@ -192,34 +192,42 @@ public class WeekSixPanel extends JPanel implements ActionListener{
 	   	this.games  = season.getGames();
 	   	this.weeks =  season.getWeeks();
 	   	this.season = season;
-		
-		firstLocalTeamName.setText(games.get(GAME_ONE).getLocalTeam().getName());
-        firstLocalTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getLocalScore()));
-        
-        
-        firstVisitorTeamName.setText(games.get(GAME_ONE).getVisitorTeam().getName());
-        firstVisitorTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getVisitorScore()));
 	
-     
+	   	firstLocalTeamName.setText(games.get(GAME_ONE).getLocalTeam().getName());
+		firstVisitorTeamName.setText(games.get(GAME_ONE).getVisitorTeam().getName());
+		
+		if (games.get(GAME_ONE).isActive()) {
+			firstLocalTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getLocalScore()));  
+	        firstVisitorTeamPoint.setText(String.valueOf(games.get(GAME_ONE).getVisitorScore()));
+		} else {
+			firstLocalTeamPoint.setText("?");  
+	        firstVisitorTeamPoint.setText("?");
+		}
+		
+ 
           secondLocalTeamName.setText(games.get(GAME_TWO).getLocalTeam().getName());
-    	  secondLocalTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getLocalScore()));
-    	  
-    	
     	  secondVisitorTeamName.setText(games.get(GAME_TWO).getVisitorTeam().getName());
-    	
-    	  secondVisitorTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getVisitorScore()));
-    	
-    	  
+
+    	  if (games.get(GAME_TWO).isActive()) {
+    		  secondLocalTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getLocalScore()));
+        	  secondVisitorTeamPoint.setText(String.valueOf(games.get(GAME_TWO).getVisitorScore()));
+  		} else {
+  			secondLocalTeamPoint.setText("?");  
+  			secondVisitorTeamPoint.setText("?");
+  		}
+
     	  
     	  thirdLocalTeamName.setText(games.get(GAME_THREE).getLocalTeam().getName());
-    
-    	  thirdLocalTeamPoint.setText(String.valueOf(games.get(GAME_THREE).getLocalScore()));
-    	  
-    	  
     	  thirdVisitorTeamName.setText(games.get(GAME_THREE).getVisitorTeam().getName());
-    	  
-    	  thirdVisitorTeamPoint.setText(String.valueOf(games.get(GAME_THREE).getVisitorScore()));
-    }
+    	     	 
+    	  if (games.get(GAME_THREE).isActive()) {  
+        	  thirdLocalTeamPoint.setText(String.valueOf(games.get(GAME_THREE).getLocalScore()));
+        	  thirdVisitorTeamPoint.setText(String.valueOf(games.get(GAME_THREE).getVisitorScore()));
+  		} else {
+  			thirdLocalTeamPoint.setText("?");  
+  			thirdVisitorTeamPoint.setText("?");
+  		}
+	}
 
 
 

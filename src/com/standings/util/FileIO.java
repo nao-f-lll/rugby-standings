@@ -152,8 +152,6 @@ public class FileIO <T> implements Serializable{
 		
 		try {
 		
-			
-
 				fileWriter = new FileWriter("C:\\Users\\ik_1DW3A\\Documents\\nao-f-lll.github.io/resultados/"+ season.getYear() + ".xml");
 				String header = """
 						<?xml version="1.0" encoding="UTF-8"?>
@@ -182,34 +180,34 @@ public class FileIO <T> implements Serializable{
 				 String orden = "";
 				 switch (i + 1) {
 				 case 1:
-					 orden = "<orden> UNO  </orden>";			
+					 orden = "<orden> Uno  </orden>";			
 					 break;
 				 case 2:
-					 orden = "<orden> DOS  </orden>";	;
+					 orden = "<orden> Dos  </orden>";	;
 					 break;
 				 case 3:
-					 orden = "<orden> TRES  </orden>";	;
+					 orden = "<orden> Tres  </orden>";	;
 					 break;
 				 case 4:
-					 orden = "<orden> CUATRO  </orden>";	;
+					 orden = "<orden> Cuatro  </orden>";	;
 					 break;
 				 case 5:
-					 orden = "<orden> CINCO  </orden>";	;
+					 orden = "<orden> Cinco  </orden>";	;
 					 break;
 				 case 6:
-					 orden = "<orden> SIES  </orden>";	;
+					 orden = "<orden> Seis  </orden>";	;
 					 break;
 				 case 7:
-					 orden = "<orden> SIETE  </orden>";	;
+					 orden = "<orden> Siete  </orden>";	;
 					 break;
 				 case 8:
-					 orden = "<orden> OCHO  </orden>";	;
+					 orden = "<orden> Ocho  </orden>";	;
 					 break;
 				 case 9:
-					 orden = "<orden> NUEVE  </orden>";	;
+					 orden = "<orden> Nueve  </orden>";	;
 					 break;
 				 case 10:
-					 orden = "<orden> DIEZ  </orden>";	;
+					 orden = "<orden> Diez  </orden>";	;
 					 break;
 				default:
 					break;
@@ -245,8 +243,16 @@ public class FileIO <T> implements Serializable{
 				 bufferWriter.newLine();
 				 bufferWriter.write("</logo>"); 
 				 bufferWriter.newLine();
-				 String localTeamPoints = "<puntos>" + game.getLocalScore() + "</puntos>";
+				 String localTeamPoints;
+				 
+				 if (game.isActive()) {
+					 localTeamPoints = "<puntos>" + game.getLocalScore() + "</puntos>";
+				 } else {
+					 localTeamPoints = "<puntos> ? </puntos>";
+
+				 }
 				 bufferWriter.write(localTeamPoints); 
+				 
 				 bufferWriter.newLine();
 				 bufferWriter.write("</equipo_local>"); 
 				 bufferWriter.newLine();
@@ -268,8 +274,19 @@ public class FileIO <T> implements Serializable{
 				 bufferWriter.newLine();
 				 bufferWriter.write("</logo>"); 
 				 bufferWriter.newLine();
-				 String visitorTeamPoints = "<puntos>" + game.getVisitorScore() + "</puntos>";
+				 
+				 String visitorTeamPoints;
+				 
+				 if (game.isActive()) {
+					 visitorTeamPoints  = "<puntos>" + game.getVisitorScore() + "</puntos>";
+				 } else {
+					 visitorTeamPoints = "<puntos> ? </puntos>";
+
+				 }
+				 
+				 
 				 bufferWriter.write(visitorTeamPoints); 
+				 
 				 bufferWriter.newLine();
 				 bufferWriter.write("</equipo_visitante>"); 
 				 bufferWriter.newLine();
