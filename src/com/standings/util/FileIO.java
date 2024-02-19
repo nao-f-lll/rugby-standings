@@ -354,7 +354,7 @@ public class FileIO <T> implements Serializable{
 		for (int i = 0; i < seasons.size(); i++) {
 			 bufferWriter.write("<temporada id=\"" + seasons.get(i).getId() + "\">"); 
 			 bufferWriter.newLine();			 
-			 bufferWriter.write("<año>" + seasons.get(i).getYear() + "</año>"); 
+			 bufferWriter.write("<year>" + seasons.get(i).getYear() + "</year>"); 
 			 bufferWriter.newLine();			 
 			 bufferWriter.write("<estado>" + seasons.get(i).getState() + "</estado>"); 
 			 bufferWriter.newLine();

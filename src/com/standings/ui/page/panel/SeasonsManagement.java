@@ -450,8 +450,10 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		  int selectedRow = table.getSelectedRow();
 	        int result = userDialogOkCancel("¿Estas seguro de que quieres borrar la temporada?", "Borrar temporada", JOptionPane.WARNING_MESSAGE);
 
-		  if (result == JOptionPane.OK_OPTION) {		  
-			  seasons.remove(selectedRow);     
+		  if (result == JOptionPane.OK_OPTION) {
+			  int lastSeasonYear =  seasons.get(selectedRow).getYear();
+			  seasons.remove(selectedRow);
+			  seasons.get(seasons.size() - 1).setYear(lastSeasonYear);
 	          addRowToTable(true);
 	          SportsDashboardPage.setHasSeasonDataChanged(true);
 		  
