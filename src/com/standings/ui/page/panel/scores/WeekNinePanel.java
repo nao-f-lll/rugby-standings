@@ -170,7 +170,9 @@ public class WeekNinePanel extends JPanel implements ActionListener{
 		           exoportXMLButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				   add(exoportXMLButton);
 				   exoportXMLButton.addActionListener(this);
-				    addGameInfo(this.season);
+				   if (this.season.getTeams().size() > 0) {
+					   addGameInfo(this.season);
+				   }
 	       
 	}
 	

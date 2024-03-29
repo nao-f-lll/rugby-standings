@@ -410,17 +410,17 @@ public class LoginPage extends ParentFrame  implements ActionListener, KeyListen
 			break;
 		case EMAIL_NOT_FOUND:
 			errorMessageForEmail.setText("Email no registrado");
-			fileIo.writeToFile(Time.getCurrentTime(), "*****", "data/logs/failed_attempts.cvs", "Email no registrado", GUEST_SESSION_ID);
+			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/failed_attempts.cvs", "Email no registrado", emailField.getText() , GUEST_SESSION_ID);
 			break;
 		case INCORRECT_PASSWORD:
 			errorMessageForPassword.setText("Clave incorrecta");
 			sessionId = LoginValidationUtil.getUserSessionId(credentials, emailField.getText());
-			fileIo.writeToFile(Time.getCurrentTime(), "*****", "data/logs/failed_attempts.cvs", "Contraseña incorrecta", sessionId);
+			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/failed_attempts.cvs", "Contraseña incorrecta",emailField.getText(), sessionId);
 			break;
 		default :
 			this.dispose(); 
 			sessionId = LoginValidationUtil.getUserSessionId(credentials, emailField.getText());
-			fileIo.writeToFile(Time.getCurrentTime(), "*****", "data/logs/successful_attempts.cvs", "Inicio de sesion correcto", sessionId); 
+			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/successful_attempts.cvs", "Inicio de sesion correcto",emailField.getText(), sessionId); 
 	
 			new SportsDashboardPage();
 		}

@@ -3,7 +3,6 @@ package com.standings.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.standings.model.RugbyTeamsNames;
 import com.standings.ui.page.panel.UpdateDataPanel;
 
 /**
@@ -63,38 +62,9 @@ public class StandingsDataUtil {
     
     
    
-    /**
-     * Verifica si el nombre del equipo es incorrecto.
-     *
-     * @param localClubField   Nombre del club local.
-     * @param visitorClubField Nombre del club visitante.
-     * @return true si uno de los equipos tiene un nombre incorrecto; de lo contrario, false.
-     */
+ 
     
-    public static boolean validateStandingsDataForWrongTeamName(String localClubField, String visitorClubField) {
-        
-    	return  isNotValidTeamName(localClubField) || isNotValidTeamName(visitorClubField);
-
-    }
-    
-    /**
-     * Verifica si el nombre del equipo es incorrecto.
-     *
-     * @param teamName Nombre del equipo.
-     * @return true si el nombre del equipo no es válido; de lo contrario, false.
-     */
-    
-    private static boolean isNotValidTeamName(String teamName) {
-    	
-    	RugbyTeamsNames[] validTeams = RugbyTeamsNames.values();
-    	    for (RugbyTeamsNames team : validTeams) {
-    	        if (team.name().equals(teamName)) {
-    	            return false;
-    	        }
-    	        
-    	    }
-    	    return true;    
-    }
+   
     
     /**
      * Verifica si ambos equipos tienen el mismo nombre.

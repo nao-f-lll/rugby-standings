@@ -10,7 +10,7 @@ import com.standings.credentials.LoginCredentials;
  */
 public class SignUpValidationUtil {
 
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$");
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-z0-9ñ._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[A-Z])(?=.*\\d).{8,}$");
     private static final Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-ZñÑçÇáÁóÓíÍéÉúÚ]+( [a-zA-ZñÑçÇáÁóÓíÍéÉúÚ]+)*$");
 

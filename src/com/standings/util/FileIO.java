@@ -46,7 +46,7 @@ public class FileIO <T> implements Serializable{
      * @param additionalInfo Información adicional para el registro.
      * @param sessionId      ID de sesión.
      */
-	public void writeToFile(String timeStamps, String data, String filePath, String additionalInfo, int sessionId) {
+	public void writeToFile(String timeStamps, String filePath, String additionalInfo, String userName, int sessionId) {
 		
 		if (sessionId == -1) {
 			sessionId = (int) (Math.random()  * 100);
@@ -55,7 +55,7 @@ public class FileIO <T> implements Serializable{
 		try {
 			fileWriter = new FileWriter(filePath, true);
 			bufferWriter = new BufferedWriter(fileWriter);
-			bufferWriter.write("Registro: " + additionalInfo + ", Datos: " + data + ", ID de sesion: " + sessionId + ", tiempo: " + timeStamps);
+			bufferWriter.write("Registro: " + additionalInfo + ", ID de sesion: " + sessionId + ", nombre de usuario o email: " + userName + ", tiempo: " + timeStamps);
 			bufferWriter.newLine();
 			bufferWriter.close();
 			fileWriter.close();

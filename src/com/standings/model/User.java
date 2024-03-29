@@ -24,22 +24,22 @@ public class User implements Serializable{
 	// Declaracion de las variables 
 	private static final long serialVersionUID = -2123744883602981956L;
 	private int sessionId;
-	private String name;
+	private String username;
 	private String email;
 	private String password;
 	
-	
+	 
 	 /**
      * Constructor de la clase User.
      * 
-     * @param name       Nombre del usuario.
+     * @param username       Nombre del usuario.
      * @param email      Correo electrónico del usuario.
      * @param password   Contraseña del usuario.
      * @param sessionIds Lista de identificadores de sesión existentes.
      */
-	public User(String name, String email, String password, ArrayList<Integer> sessionIds) {
+	public User(String username, String email, String password, ArrayList<Integer> sessionIds) {
 		this.sessionId = checkForSessionId(sessionIds);
-		this.name = name;
+		this.username = username;
 		this.email = email;
 		this.password =	password;
 	}
@@ -60,7 +60,7 @@ public class User implements Serializable{
 
 
 	public String getName() {
-		return name;
+		return username;
 	}
 
 	
@@ -80,8 +80,8 @@ public class User implements Serializable{
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String username) {
+		this.username = username;
 	}
 
 
@@ -115,7 +115,7 @@ public class User implements Serializable{
      */
 	@Override
 	public String toString() {
-		return "User [sessionId= " + sessionId + ", name= " + name + ", email= " + email + ", password= " + password + "]";
+		return "User [sessionId= " + sessionId + ", name= " + username + ", email= " + email + ", password= " + password + "]";
 	}
 	
 	

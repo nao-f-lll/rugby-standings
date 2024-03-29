@@ -176,7 +176,9 @@ public class WeekSixPanel extends JPanel implements ActionListener{
 				   add(exoportXMLButton);
 				   exoportXMLButton.addActionListener(this);
 
-				   addGameInfo(this.season);
+				   if (this.season.getTeams().size() > 0) {
+					   addGameInfo(this.season);
+				   }
 	       
 	}
 	

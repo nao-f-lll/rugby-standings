@@ -501,7 +501,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 		} else {
 			credentials.saveUserData(userFullName, userEmail, userPassword);
 			sessionId = SignUpValidationUtil.getUserSessionId(credentials);
-			fileIo.writeToFile(Time.getCurrentTime(), "*****", "data/logs/account_created.cvs", "Cuenta creada", sessionId);
+			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/account_created.cvs", "Cuenta creada", userFullName, sessionId);
 			this.dispose();
 			new LoginPage(credentials);
 		}
@@ -548,7 +548,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
         JPanel buttonPanel = (JPanel)passwordRequirementPane.getComponent(1);
         
         JButton accepetButton = (JButton)buttonPanel.getComponent(0);
-        accepetButton.setText("Accept");
+        accepetButton.setText("Acceptar");
         accepetButton.setFocusable(false);
         accepetButton.setBackground(Color.LIGHT_GRAY);
         

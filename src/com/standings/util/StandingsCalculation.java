@@ -31,7 +31,6 @@ public class StandingsCalculation {
 	private final static String defaultLocalScoreString = "?";
 	private final static String  defaultVisitorScoreString ="?";
 	private Season season;
-	private  ArrayList<Season> seasons;
 
 
 
@@ -45,9 +44,8 @@ public class StandingsCalculation {
      * @param season La temporada para la cual se calcularán las clasificaciones
      * @param seasons La lista de temporadas que contiene la temporada actual
      */
-	public StandingsCalculation(Season season, ArrayList<Season> seasons) {
+	public StandingsCalculation(Season season) {
 		this.season = season;
-		this.seasons = seasons;
 		initializeTheCalculation(this.season.getTeams(),this.season.getGames(), this.season);
 		
 	}
@@ -66,13 +64,15 @@ public class StandingsCalculation {
 		
 		private static void initializeTheCalculation( ArrayList<Team> teams,  ArrayList<Game> games, Season season) {
 			
-			games.addAll(generateMatchesDataFirstHalfPart(teams)); 
-			games.addAll(generateMatchesDataSecondHalfPart(teams));
-			initializeWeeks(season);
-			updateStandings(teams, games);           
-			sortStandings(teams);
+		
+		
+				games.addAll(generateMatchesDataFirstHalfPart(teams)); 
+				games.addAll(generateMatchesDataSecondHalfPart(teams));
+				initializeWeeks(season);
+				updateStandings(teams, games);           
+				sortStandings(teams);
 			
-			
+	
 		}
 		
 		

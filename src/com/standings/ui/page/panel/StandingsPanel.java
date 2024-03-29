@@ -2,6 +2,7 @@ package com.standings.ui.page.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,8 +12,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,7 +25,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import com.standings.model.RugbyTeamsNames;
 import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.util.FileIO;
@@ -44,26 +46,15 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -2913604003111840139L;
 	private JTable table;
 	private ArrayList<Team> teams;
-	private RugbyTeamsNames[] rugbyTeamsNames;
 	private Object[][] rows;
 	private String[] columns;
 	private Season season;
 	private ArrayList<Season> seasons;
-	private ArrayList<Team> allTeams;
 	private JButton printPdfButton;
 	private JButton printXmlButton;
 	
-	private String allblacksLogoPath;
-	private String shamrockLogoPath;
-	private String sakurasLogoPath;
-	private String redRoseLogoPath;
-	private String wallabiesLogoPath;
-	private String springboksLogoPath;
-	private String thistleLogoPath;
-	private String feathersLogoPath;
-	
+
 	private boolean isNewSeason;
-	private String[] newSeasonTeamsNames; 
 	private FileIO<Season> fileIO;
 	private JScrollPane scrollPane;
 	
@@ -75,56 +66,17 @@ public class StandingsPanel extends JPanel implements ActionListener {
      * @param seasons Lista de temporadas
      * @param allTeams Lista de todos los equipos
      */
-		public StandingsPanel( Season season, ArrayList<Season> seasons, ArrayList<Team> allTeams) {
+		public StandingsPanel( Season season,  boolean isNewSeason) {
 			
 			initializeFrameGraphics();
+			this.isNewSeason = isNewSeason;
             this.season = season;
-            this.seasons = seasons;		
-            this.allTeams = allTeams;
-			initializeTeams();
+            this.teams = season.getTeams(); 
 			initializeTabel();
 	}
+
 		
-		
-		  /**
-	     * Constructor de la clase StandingsPanel.
-	     * 
-	     * @param season La temporada actual
-	     * @param seasons Lista de temporadas
-	     * @param allTeams Lista de todos los equipos
-	     * @param isNewSeason Indica si es una nueva temporada
-	     */		
-	public StandingsPanel( Season season, ArrayList<Season> seasons, ArrayList<Team> allTeams, boolean isNewSeason) {
-			
-			initializeFrameGraphics();
-            this.season = season;
-            this.seasons = seasons;		
-            this.allTeams = allTeams;
-            this.isNewSeason = isNewSeason;
-			initializeTeams();
-			initializeTabel();
-	}
-		
-	
-	/**
-     * Constructor de la clase StandingsPanel.
-     * 
-     * @param season La temporada nueva 
-     * @param seasons Lista de temporada nueva
-     * @param allTeams Lista de todos los equipos buevos
-     * @param isNewSeason Indica si es una nueva temporada
-     * @param newSeasonTeamsNames Lista de nombres de equipos de la nueva temporada
-     */
-	public StandingsPanel( Season season, ArrayList<Season> seasons, ArrayList<Team> allTeams, boolean isNewSeason, String[] newSeasonTeamsNames) {
-		this.newSeasonTeamsNames = newSeasonTeamsNames;
-		initializeFrameGraphics();
-        this.season = season;
-        this.seasons = seasons;		
-        this.allTeams = allTeams;
-        this.isNewSeason = isNewSeason;
-		initializeAllTeams();
-		initializeTabel();
-	}
+
 
 	
 	/**
@@ -163,102 +115,6 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		}
 		
 		
-	
-		
-		 /**
-	     * Inicializa los equipos.
-	     */
-		
-		private void initializeTeams() {
-			
-	
-				this.teams = season.getTeams(); 
-				
-				if (this.isNewSeason) {
-					initializeIcons();
-					String[] iconsPath = {allblacksLogoPath,springboksLogoPath,sakurasLogoPath,  redRoseLogoPath, shamrockLogoPath, wallabiesLogoPath, thistleLogoPath, feathersLogoPath};	
-				
-						rugbyTeamsNames = RugbyTeamsNames.values();
-						int index = 0;
-				
-							for (int i = 0; i < rugbyTeamsNames.length - 2; i++) {	
-								Team team = new Team(rugbyTeamsNames[i].name(), iconsPath[index]);
-								this.teams.add(team);		
-								index++;					
-					}
-				}	
-		}
-	
-		
-		 /**
-	     * Inicializa todos los equipos para la nueva temporada.
-	     * 
-	     * @param newSeasonTeamsNames Nombres de los equipos de la nueva temporada
-	     */
-		private void initializeAllTeams() {
-			
-				
-			this.teams = season.getTeams(); 
-		
-
-					initializeIcons();
-					String[] iconsPath = {allblacksLogoPath,springboksLogoPath,sakurasLogoPath,  redRoseLogoPath, shamrockLogoPath, wallabiesLogoPath, thistleLogoPath, feathersLogoPath};	
-				
-					this.allTeams = new ArrayList<>();
-						rugbyTeamsNames = RugbyTeamsNames.values();
-						int index = 0;
-				
-							for (int i = 0; i < rugbyTeamsNames.length ; i++) {	
-								Team team = new Team(rugbyTeamsNames[i].name(), iconsPath[index]);
-								allTeams.add(team);		
-								index++;					
-					}
-							
-							
-							ArrayList<Team> filteredTeams = new ArrayList<>();
-				
-								for (Team team : allTeams) {
-								    if (Arrays.asList(newSeasonTeamsNames).contains(team.getName())) {
-								    	filteredTeams.add(team);
-								        if (filteredTeams.size() > 5) {
-								            break;
-								        }
-								    }
-								
-							}
-							
-							this.teams.addAll(filteredTeams);		
-		}
-		
-		
-
-		
-		
-
-		 /**
-	     * Inicializa las rutas de los iconos de los equipos.
-	     */
-		private void initializeIcons() {
-			allblacksLogoPath = "media/Imagenes/logos/all_blacks_badge_white.png";
-			shamrockLogoPath = "media/Imagenes/logos/shamrock-logo.png";
-			sakurasLogoPath = "media/Imagenes/logos/sakuras-logo.png";
-			springboksLogoPath = "media/Imagenes/logos/south_Africa_national_rugby_union_team.png";
-			redRoseLogoPath = "media/Imagenes/logos/red_rose_logo.png";
-			wallabiesLogoPath = "media/Imagenes/logos/wallabies-logo.png";
-			thistleLogoPath = "media/Imagenes/logos/thistle_logo.png";
-			feathersLogoPath = "media/Imagenes/logos/feathers_logo.png";
-			
-			
-		
-
-		}
-		
-		
-		
-
-
-
-
 
 		/**
 	     * Inicializa la tabla de clasificación con las filas y columnas predeterminadas.
@@ -277,14 +133,15 @@ public class StandingsPanel extends JPanel implements ActionListener {
 					columns =	new String[] {
 		             		"Equipo", "Partidos Jugados", "Victorias", "Derrotas", "Empates", "Puntos"
 		             	};										
-
-
-					 
-					
+				
 					if (isNewSeason) {
-						new StandingsCalculation(this.season, this.seasons);
+						new StandingsCalculation(this.season);						
 					}
-					renderUpdatedStandings();
+					
+					
+						renderUpdatedStandings();
+					
+					
 
 
 					scrollPane = new JScrollPane(table);
@@ -318,6 +175,36 @@ public class StandingsPanel extends JPanel implements ActionListener {
 			}
 		
 		
+	
+		private void handleIconRendering() {
+		     table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+		         
+							private static final long serialVersionUID = -2661844236545326544L;
+
+							@Override
+				               public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				                   if (value instanceof Object[]) {
+				                       Object[] teamInfo = (Object[]) value;
+				                       if (teamInfo.length == 2) {
+				                           ImageIcon logo = (ImageIcon) teamInfo[0];
+				                           String name = (String) teamInfo[1];
+
+				                           JLabel label = new JLabel(name, logo, JLabel.LEFT);
+				                           label.setOpaque(true);
+				                           label.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+				                           label.setFont(new Font(null, 20,20));
+				                           return label;
+				                       }
+				                   }
+				                   return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				               }
+				           });
+		}
+		
+	
+		
+		
+		
 		 /**
 	     * Actualiza la tabla de clasificaciones con los datos actualizados de los equipos.
 	     * Recorre la matriz de filas y actualiza cada celda con el nombre del equipo, los partidos jugados,
@@ -330,8 +217,16 @@ public class StandingsPanel extends JPanel implements ActionListener {
 			 
 			int teamIndex = 0;
 			for (int i = 0; i < rows.length; i++) {
-	       
+	       	    
+				/*
+	            Object[] teamInfo = new Object[2];
+	            teamInfo[0] = this.teams.get(teamIndex).getEscudo();
+	            teamInfo[1] = this.teams.get(teamIndex).getName();
+	              */
+				
 	            rows[i][0] = this.teams.get(teamIndex).getName();
+	            
+	            
 	            rows[i][1] = this.teams.get(teamIndex).getGamesPlayed();
 	          	rows[i][2] = this.teams.get(teamIndex).getWins();
 	          	rows[i][3] = this.teams.get(teamIndex).getLosses();
@@ -341,6 +236,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));
+	         
 		}
 		
 		
@@ -351,7 +247,14 @@ public class StandingsPanel extends JPanel implements ActionListener {
 			int teamIndex = 0;
 			for (int i = 0; i < rows.length; i++) {
 	       
+				/*
+	            Object[] teamInfo = new Object[2];
+	            teamInfo[0] = this.teams.get(teamIndex).getEscudo();
+	            teamInfo[1] = this.teams.get(teamIndex).getName();
+	              */
+				
 	            rows[i][0] = currentSeasonTeams.get(teamIndex).getName();
+	            
 	            rows[i][1] = currentSeasonTeams.get(teamIndex).getGamesPlayed();
 	          	rows[i][2] = currentSeasonTeams.get(teamIndex).getWins();
 	          	rows[i][3] = currentSeasonTeams.get(teamIndex).getLosses();
@@ -361,6 +264,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));
+	     
 		}
 		
 		
@@ -376,7 +280,14 @@ public class StandingsPanel extends JPanel implements ActionListener {
 			int teamIndex = 0;
 			for (int i = 0; i < rows.length; i++) {
 	       
-	            rows[i][0] = teams.get(teamIndex).getName();
+				/*
+	            Object[] teamInfo = new Object[2];
+	            teamInfo[0] = this.teams.get(teamIndex).getEscudo();
+	            teamInfo[1] = this.teams.get(teamIndex).getName();
+	              */
+				
+	            rows[i][0] = teams.get(teamIndex).getName(); 
+	            
 	            rows[i][1] = teams.get(teamIndex).getGamesPlayed();
 	          	rows[i][2] = teams.get(teamIndex).getWins();
 	          	rows[i][3] = teams.get(teamIndex).getLosses();
@@ -387,7 +298,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));
-
+	          
 		
 	  
 		}
@@ -403,7 +314,14 @@ public class StandingsPanel extends JPanel implements ActionListener {
 			int teamIndex = 0;
 			for (int i = 0; i < rows.length; i++) {
 	       
+				/*
+	            Object[] teamInfo = new Object[2];
+	            teamInfo[0] = this.teams.get(teamIndex).getEscudo();
+	            teamInfo[1] = this.teams.get(teamIndex).getName();
+	              */
+				
 	            rows[i][0] = teams.get(teamIndex).getName();
+	            
 	            rows[i][1] = teams.get(teamIndex).getGamesPlayed();
 	          	rows[i][2] = teams.get(teamIndex).getWins();
 	          	rows[i][3] = teams.get(teamIndex).getLosses();
@@ -414,7 +332,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));
-
+	          
 		
 	  
 		}
@@ -447,7 +365,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		private void printTabelAsPDF() {
 			
 		
-			MessageFormat header = new MessageFormat("Clasificaión de la temporada " + season.getYear());
+			MessageFormat header = new MessageFormat("Tabla de clasificacion de la temporada " + season.getYear());
 			MessageFormat footer = new MessageFormat("Federación de World Rugby");
 	
 		
