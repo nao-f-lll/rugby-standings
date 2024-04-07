@@ -64,6 +64,38 @@ public class FileIO <T> implements Serializable{
 		}
 	}
 
+	
+	
+	public void writeToFile(String timeStamps, String filePath, String additionalInfo, String teamName) {
+		
+	
+		try {
+			fileWriter = new FileWriter(filePath, true);
+			bufferWriter = new BufferedWriter(fileWriter);
+			bufferWriter.write("Registro: " + additionalInfo + ", nombre de equipo: " + teamName + ", tiempo: " + timeStamps);
+			bufferWriter.newLine();
+			bufferWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void writeToFile(String timeStamps, String filePath, String additionalInfo, int seasonId, int seasonYear) {
+		
+		
+		try {
+			fileWriter = new FileWriter(filePath, true);
+			bufferWriter = new BufferedWriter(fileWriter);
+			bufferWriter.write("Registro: " + additionalInfo + ", id de temporada: " + seasonId + ", año de temporada: " + seasonYear + ", tiempo: " + timeStamps);
+			bufferWriter.newLine();
+			bufferWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Escribe los datos de on objeto en un archivo.

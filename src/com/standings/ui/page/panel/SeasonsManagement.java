@@ -33,6 +33,8 @@ import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.model.Week;
 import com.standings.ui.page.SportsDashboardPage;
+import com.standings.util.FileIO;
+import com.standings.util.Time;
 
 /**
  * Clase que gestiona las temporadas.
@@ -76,6 +78,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private String[] newSeasonTeamsNames;
     private UpdateDataPanel updateDataPanel;
     private StandingsPanel standingsPanel;
+	private FileIO<Season> fileIo;
     
     
 /**
@@ -97,7 +100,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 			this.seasons = seasons;
 			this.allTeams = allTeams;
 			this.standingsPanel = standingsPanel;
-		
+			fileIo = new FileIO<>(); 
 
 			
 		    addSeasonPanel = new JPanel();
@@ -438,6 +441,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 
 		  if (result == JOptionPane.OK_OPTION) {
 			  int lastSeasonYear =  seasons.get(selectedRow).getYear();
+			  fileIo.writeToFile(Time.getCurrentTime(), "data/logs/season_logs.cvs", "Temporada eliminada", seasons.get(selectedRow).getId(), seasons.get(selectedRow).getYear());
 			  seasons.remove(selectedRow);
 			  seasons.get(seasons.size() - 1).setYear(lastSeasonYear);
 			  seasons.get(seasons.size() - 1).setId(selectedRow + 1);
@@ -470,6 +474,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 
 	        int result = userDialogOkCancel("¿Estas seguro de que quieres finalizar la temporada?", "Finalizar temporada", JOptionPane.WARNING_MESSAGE);
 	        if (result == JOptionPane.OK_OPTION) {
+				fileIo.writeToFile(Time.getCurrentTime(), "data/logs/season_logs.cvs", "Temporada finalizada", season.getId(), season.getYear());
 	            season.setState("finalizada");
 	            addRowToTable(false);
 	            SportsDashboardPage.setHasSeasonDataChanged(true);
@@ -595,6 +600,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        	Season futureSeason = new Season(newSeason.getId() + 1, newSeason.getYear() + 1, "proximamente", futureweeks,futureTeams,futureGames);
 	        	seasons.add(futureSeason);
 	        	addRowToTable(true); 
+				fileIo.writeToFile(Time.getCurrentTime(), "data/logs/season_logs.cvs", "Temporada nueva", newSeason.getId(), newSeason.getYear());
 		    	}
 		    }else {
 				userDialog("Tienes que selecionar seis equipos para crear una nueva temporada", "Creacion de temporada", JOptionPane.WARNING_MESSAGE);

@@ -37,6 +37,7 @@ import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.ui.page.SportsDashboardPage;
 import com.standings.util.FileIO;
+import com.standings.util.Time;
 
 
 public class TeamsPanel extends JPanel implements ActionListener {
@@ -356,6 +357,8 @@ public class TeamsPanel extends JPanel implements ActionListener {
 						createTable();	    
 						resetFields();
 						saveData();
+						fileIo.writeToFile(Time.getCurrentTime(), "data/logs/team_logs.cvs", "Equipo añadido", nombre);
+
 				} else {
 					JOptionPane.showMessageDialog(this, "El equipo existe, inserta un equipo nuevo",  "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -380,6 +383,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 			allTeams.get(selectedIndex).setEscudo((ImageIcon) escudoPreviewLable.getIcon());
 			}
 			
+			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/team_logs.cvs", "Equipo actualizado", allTeams.get(selectedIndex).getName());
 			createTable();	    
 			saveData();
 			
@@ -390,6 +394,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para borrar",  "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				model.removeRow(selectedIndex);
+				fileIo.writeToFile(Time.getCurrentTime(), "data/logs/team_logs.cvs", "Equipo borrado", allTeams.get(selectedIndex).getName());
 				allTeams.remove(selectedIndex);	
 				resetFields();
 				saveData();
