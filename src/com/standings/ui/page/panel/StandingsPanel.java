@@ -51,9 +51,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	private Season season;
 	private ArrayList<Season> seasons;
 	private JButton printPdfButton;
-	private JButton printXmlButton;
 	
-
 	private boolean isNewSeason;
 	private FileIO<Season> fileIO;
 	private JScrollPane scrollPane;
@@ -74,10 +72,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
             this.teams = season.getTeams(); 
 			initializeTabel();
 	}
-
 		
-
-
 	
 	/**
     * Inicializa los elementos gráficos del panel.
@@ -98,24 +93,14 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	     */
 		private void initializeButtons() {
 			  printPdfButton = new JButton("Exportar PDF");
-			  printPdfButton.setBounds(810, 720, 150, 40);
+			  printPdfButton.setBounds(690, 720, 150, 40);
 			  printPdfButton.setBackground(Color.lightGray);
 			  printPdfButton.setFocusable(false);
 			  printPdfButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			  add(printPdfButton);
-			  printPdfButton.addActionListener(this);
-			  
-			  printXmlButton = new JButton("Exportar XML");
-			  printXmlButton.setBounds(550, 720, 150, 40);
-			  printXmlButton.setBackground(Color.lightGray);
-			  printXmlButton.setFocusable(false);
-			  printXmlButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			  add(printXmlButton);
-			  printXmlButton.addActionListener(this);
+			  printPdfButton.addActionListener(this);			  
 		}
 		
-		
-
 		/**
 	     * Inicializa la tabla de clasificación con las filas y columnas predeterminadas.
 	     * Si es una nueva temporada, calcula las clasificaciones y las renderiza.
@@ -202,9 +187,6 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		}
 		
 	
-		
-		
-		
 		 /**
 	     * Actualiza la tabla de clasificaciones con los datos actualizados de los equipos.
 	     * Recorre la matriz de filas y actualiza cada celda con el nombre del equipo, los partidos jugados,
@@ -332,9 +314,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 	        }
 			
 	          table.setModel(new DefaultTableModel(rows, columns));
-	          
-		
-	  
+	          			  
 		}
 		
 		/**
@@ -348,11 +328,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == printPdfButton) {
 				printTabelAsPDF();
-			} else if (e.getSource() == printXmlButton) {
-				CreatXML();
-			}
-			
-			
+			}					
 		}
 		
 		/**
@@ -380,12 +356,7 @@ public class StandingsPanel extends JPanel implements ActionListener {
 
 		}
 		
-		private void CreatXML() {
-			season.convertToXML();
-			fileIO = new FileIO<Season>();
-			fileIO.writeMetaData(seasons);
-			userDialog("Se ha exportado el archivo XML", "Exportar XML", JOptionPane.INFORMATION_MESSAGE);
-		}
+	
 		
 
 		/**

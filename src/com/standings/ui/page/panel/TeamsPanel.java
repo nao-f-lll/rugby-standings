@@ -123,6 +123,11 @@ public class TeamsPanel extends JPanel implements ActionListener {
          escudoButton.setBounds(50, 256, 155, 25);
          addTeamPanel.add(escudoButton);
          escudoButton.addActionListener(this);
+         escudoButton.setFocusable(false);
+         escudoButton.setBackground(Color.LIGHT_GRAY);
+         escudoButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+         escudoButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+         
          
          nombreField = new JTextField();
          nombreField.setColumns(10);
@@ -150,10 +155,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
          fundacionLable = new JLabel("Fundación");
          fundacionLable.setBounds(289, 353, 70, 15);
          addTeamPanel.add(fundacionLable);
-         
-         
-         
-         
+          
          int currentYear = 2024;
          
          allYearFrom1800To2024 = new DefaultComboBoxModel<>();
@@ -168,23 +170,42 @@ public class TeamsPanel extends JPanel implements ActionListener {
          fundacionCombo.setSelectedIndex(fundacionCombo.getItemCount() - 1);	
          fundacionCombo.setBounds(403, 351, 200, 25);
          addTeamPanel.add(fundacionCombo);
+         fundacionCombo.setFocusable(false);
+         fundacionCombo.setBackground(Color.LIGHT_GRAY);
+         fundacionCombo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
          
          creatTeamButton = new JButton("Crear");
-         creatTeamButton.setBounds(100, 492, 117, 25);
+         creatTeamButton.setBounds(100, 492, 117, 35);
          addTeamPanel.add(creatTeamButton);
-         creatTeamButton.addActionListener(this);
+         creatTeamButton.addActionListener(this); 
+         creatTeamButton.setFocusable(false);
+         creatTeamButton.setBackground(Color.LIGHT_GRAY);
+         creatTeamButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+         creatTeamButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+         
          
          updateTeamButton = new JButton("Actualizar");
-         updateTeamButton.setBounds(299, 492, 117, 25);
+         updateTeamButton.setBounds(299, 492, 117, 35);
          addTeamPanel.add(updateTeamButton);
-         updateTeamButton.addActionListener(this);
-      
+         updateTeamButton.addActionListener(this);  
+         updateTeamButton.setFocusable(false);
+         updateTeamButton.setBackground(Color.LIGHT_GRAY);
+         updateTeamButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+         updateTeamButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+	        
          
          deleteTeamButton = new JButton("Borrar");
-         deleteTeamButton.setBounds(486, 492, 117, 25);
+         deleteTeamButton.setBounds(486, 492, 117, 35);
          addTeamPanel.add(deleteTeamButton);
-         deleteTeamButton.addActionListener(this);
+         deleteTeamButton.addActionListener(this);       
+         deleteTeamButton.setFocusable(false);
+         deleteTeamButton.setBackground(Color.LIGHT_GRAY);
+         deleteTeamButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+         deleteTeamButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
          
          escudoPreviewLable = new JLabel("");
          escudoPreviewLable.setBounds(50, 129, 167, 103);

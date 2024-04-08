@@ -41,6 +41,7 @@ import com.standings.model.Team;
 import com.standings.model.Week;
 import com.standings.model.design.CustomBorder;
 import com.standings.model.design.CustomButton;
+import com.standings.ui.page.panel.PlayersPanel;
 import com.standings.ui.page.panel.ScoresPanel;
 import com.standings.ui.page.panel.SeasonsManagement;
 import com.standings.ui.page.panel.StandingsPanel;
@@ -69,6 +70,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     private TeamsPanel teamsPanel; 
     private UpdateDataPanel updateDataPanel;
     private SeasonsManagement seasonsManagementPanel;
+    private PlayersPanel playersPanel;
     
     private JButton goToScoresButton;
     private JButton goToStandingButton;
@@ -235,23 +237,26 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         scoresPanel = new ScoresPanel(panelButton, season);
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);      
         seasonsManagementPanel = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, goToScoresButton, goToStandingButton, allTeams, seasons, standingsPanel, scoresPanel);
+        playersPanel = new PlayersPanel();
         
         scoresPanel.setLayout(null);
         standingsPanel.setLayout(null);
         teamsPanel.setLayout(null);
         updateDataPanel.setLayout(null);
         seasonsManagementPanel.setLayout(null);
-     
- ///////////////////////////////////////////
+        playersPanel.setLayout(null);
+        ///////////////////////////////////////////
+        mainPanel.add(playersPanel, BorderLayout.CENTER);
+        playersPanel.add(panelButton);
         
-  	 
+        JPanel registerPanel = new JPanel();
+        registerPanel.setBounds(0, 59, 634, 754);
+        playersPanel.add(registerPanel);
+        ////////////////////////////////////   
         
-     
-     ////////////////////////////////////   
         
-        
-   mainPanel.add(scoresPanel, BorderLayout.CENTER);
-    scoresPanel.add(panelButton);
+  // mainPanel.add(scoresPanel, BorderLayout.CENTER);
+  // scoresPanel.add(panelButton);
 
 
     }

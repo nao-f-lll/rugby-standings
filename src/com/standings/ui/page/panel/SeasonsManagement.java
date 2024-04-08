@@ -79,6 +79,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private UpdateDataPanel updateDataPanel;
     private StandingsPanel standingsPanel;
 	private FileIO<Season> fileIo;
+	private JButton exportSeasonsButton;
     
     
 /**
@@ -360,7 +361,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        
 	        endSeasonButton = new JButton("Finalizar Temporada");
 	        endSeasonButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-	        endSeasonButton.setBounds(250, 650, 180, 49);
+	        endSeasonButton.setBounds(375, 650, 180, 49);
 	        endSeasonButton.setFocusable(false);
 	        endSeasonButton.setBackground(Color.LIGHT_GRAY);
 	        endSeasonButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -370,13 +371,25 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        
 	        removeSeasonButton = new JButton("Borrar Temporada");
 	        removeSeasonButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-	        removeSeasonButton.setBounds(550, 650, 180, 49);
+	        removeSeasonButton.setBounds(625, 650, 180, 49);
 	        removeSeasonButton.setFocusable(false);
 	        removeSeasonButton.setBackground(Color.LIGHT_GRAY);
 	        removeSeasonButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	        removeSeasonButton.addActionListener(this);
 	        modifySeasonPanel.add(removeSeasonButton);
+
+	       
+	        exportSeasonsButton = new JButton("Exportar Datos");
+	        exportSeasonsButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	        exportSeasonsButton.setBounds(115, 650, 180, 49);
+	        exportSeasonsButton.setFocusable(false);
+	        exportSeasonsButton.setBackground(Color.LIGHT_GRAY);
+	        exportSeasonsButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	        exportSeasonsButton.addActionListener(this);
+	        modifySeasonPanel.add(exportSeasonsButton);
 	    	
+	        
+	        
 	    	addRowToTable(true);
 	
 	}

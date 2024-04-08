@@ -1,17 +1,19 @@
 package com.standings.model;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 public class Jugador {
 	
 	private String nombre;
-	private ImageIcon fotoPersonal;
-	private Team equipo;
+	private ArrayList<ImageIcon> fotosPersonales;
+	private ArrayList<Team> equipos;
 	
-	public Jugador(String nombre, ImageIcon fotoPersonal, Team equipo) {
+	public Jugador(String nombre, ArrayList<ImageIcon> fotosPersonales, ArrayList<Team> equipos) {
 		this.nombre = nombre;
-		this.fotoPersonal = fotoPersonal;
-		this.equipo = equipo;
+		this.fotosPersonales = fotosPersonales;
+		this.equipos = equipos;
 	}
 
 	public String getNombre() {
@@ -22,21 +24,19 @@ public class Jugador {
 		this.nombre = nombre;
 	}
 
-	public ImageIcon getFotoPersonal() {
-		return fotoPersonal;
+	public ArrayList<ImageIcon> getFotoPersonal() {
+		return fotosPersonales;
 	}
 
-	public void setFotoPersonal(ImageIcon fotoPersonal) {
-		this.fotoPersonal = fotoPersonal;
+	public void setFotoPersonal(ArrayList<ImageIcon> fotosPersonales) {
+		this.fotosPersonales = fotosPersonales;
 	}
 
-	public Team getEquipo() {
-		return equipo;
+	public ArrayList<Team> getEquipo() {
+		return equipos;
 	}
 
-	public void setEquipo(Team equipo) {
-		this.equipo = equipo;
+	public void setEquipo(ArrayList<Team> equipos) {
+		this.equipos = equipos;
 	}
-	
-	
 }

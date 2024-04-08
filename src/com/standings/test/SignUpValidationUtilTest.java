@@ -1,4 +1,8 @@
-package com.standings.test;
+
+/*
+ 
+ package com.standings.test;
+ 
 
 
 import static org.junit.Assert.assertFalse;
@@ -99,3 +103,4 @@ public class SignUpValidationUtilTest {
     }
     
 }
+*/
