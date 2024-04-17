@@ -1,6 +1,11 @@
 package com.standings.credentials;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,14 +73,24 @@ public class LoginCredentials implements Serializable{
     public void saveUserData(String name,String userEmail, String userPassword){
     	
     	loginInfo.put(userEmail, userPassword);
-    	User user = new User(name, userEmail, userPassword, sessionIds); 
+    	User user = new User(name, userEmail, userPassword, sessionIds);	
     	users.add(user);
+<<<<<<< HEAD
     	
     	
     	writeDataToOODataBase(user);
+=======
+    	writeUserDataFromRationalDB(user);
+    	
+    	
+    	
+    	
+    	
+>>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
     }
      
     
+<<<<<<< HEAD
     // TO DO
     private void writeDataToOODataBase(User user) {
     	
@@ -85,6 +100,33 @@ public class LoginCredentials implements Serializable{
 		entityManager.getTransaction().begin();
 		entityManager.persist(user);
 		entityManager.getTransaction().commit();	
+=======
+    
+    private void writeUserDataFromRationalDB(User user)  {
+    	
+    	try {
+    		Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/usuarios", "root", "");
+
+			Statement st = conexion.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			 
+			try  {
+				st.executeUpdate("INSERT INTO usuarios.usuario(username, email, sessionID, upassword) VALUES ('" + user.getName() +"','" + user.getEmail() + "','" + user.getSessionId() + "','" + user.getPassword() + "');");
+				st.close();
+			
+				conexion.close();
+			} catch (SQLException e) {
+				int errorcode = e.getErrorCode();
+				if (errorcode == 1062) {
+					System.out.println("Error Clave Duplicada. Ya existe un registro con esa clave.");
+				}
+			}
+    	}  
+    		catch (SQLException e) {
+		
+	
+			e.printStackTrace();
+		}
+>>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
     }
    
     /**
@@ -94,6 +136,7 @@ public class LoginCredentials implements Serializable{
     
     
     private void  readUserData() {
+<<<<<<< HEAD
     	readUserdataFromOODataBase();
 			
     }    
@@ -111,5 +154,58 @@ public class LoginCredentials implements Serializable{
 			users.add(user);
 		}  
 		
+=======
+    
+    	
+    	readUserDataFromRationalDB();
+ 
+    	
+    }   
+    
+    
+    private void readUserDataFromRationalDB() {
+    	
+    	user = null;
+    	
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/usuarios", "root", "");
+		
+
+			Statement st = conexion.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	
+			
+			ResultSet rs = st.executeQuery("SELECT * FROM usuarios.usuario;");
+		
+			if(rs.first()) {
+		
+				rs.beforeFirst();
+				while (rs.next()){
+					
+					user = new User((String) rs.getObject("username"), (String) rs.getObject("email"), (String) rs.getObject("upassword"), (int) rs.getObject("sessionID"));
+			    	users.add(user);
+				}
+				
+			}
+			else {
+			
+			}
+			
+			rs.close();
+	
+			st.close();
+			
+			conexion.close();
+		} catch (SQLException e) {
+		
+	
+			e.printStackTrace();
+		}
+    	
+    			
+   	 for (int i = 0; i < users.size(); i++) {
+        	user = users.get(i);
+        	 loginInfo.put(user.getEmail(), user.getPassword());
+        }
+>>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
     }
 }

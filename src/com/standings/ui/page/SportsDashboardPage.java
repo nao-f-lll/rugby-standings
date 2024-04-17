@@ -31,9 +31,11 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import com.standings.model.Fecha;
 import com.standings.model.Game;
 import com.standings.model.ParentFrame;
 import com.standings.model.Season;
@@ -49,8 +51,10 @@ import com.standings.ui.page.panel.TeamsPanel;
 import com.standings.ui.page.panel.UpdateDataPanel;
 import com.standings.util.FileIO;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 /**
  * La clase SportsDashboardPage representa la página principal del panel de control de la aplicación,
@@ -70,13 +74,14 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     private TeamsPanel teamsPanel; 
     private UpdateDataPanel updateDataPanel;
     private SeasonsManagement seasonsManagementPanel;
-    private PlayersPanel playersPanel;
+    private PlayersPanel playersManagementPanel;
     
     private JButton goToScoresButton;
     private JButton goToStandingButton;
     private JButton goToTeamsManagementButton;
     private JButton goToUpdateDataButton;
     private JButton goToSeasonsMangementButton;
+    private JButton goToPlayersMangementButton;
     private ArrayList<Team> teams;
     private ArrayList<Team> allTeams;
 	private ArrayList<Game> games;
@@ -87,6 +92,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private static boolean hasSeasondataCHanged;
 	private boolean isNewSeason;
 	private  Season futureSeason;
+	
 	
 	/////////////////////////////////////////
 
@@ -237,14 +243,30 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         scoresPanel = new ScoresPanel(panelButton, season);
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);      
         seasonsManagementPanel = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, goToScoresButton, goToStandingButton, allTeams, seasons, standingsPanel, scoresPanel);
-        playersPanel = new PlayersPanel();
+        playersManagementPanel = new PlayersPanel(panelButton, allTeams);
         
         scoresPanel.setLayout(null);
         standingsPanel.setLayout(null);
         teamsPanel.setLayout(null);
         updateDataPanel.setLayout(null);
         seasonsManagementPanel.setLayout(null);
-        playersPanel.setLayout(null);
+        playersManagementPanel.setLayout(null);
+        ///////////////////////////////////////////
+
+    
+      
+        
+
+     
+
+        ////////////////////////////////////   
+        
+        
+        
+       mainPanel.add(scoresPanel, BorderLayout.CENTER);
+       scoresPanel.add(panelButton);
+
+>>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
 
         
         mainPanel.add(scoresPanel, BorderLayout.CENTER);
@@ -268,7 +290,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
                  
         goToStandingButton = new JButton("Clasificación");
         goToStandingButton.setFont(new Font("Tahoma", Font.BOLD, 25));
-        goToStandingButton.setBounds(205, 10, 212, 33);
+        goToStandingButton.setBounds(197, 11, 212, 33);
         goToStandingButton.setFocusable(false);
         goToStandingButton.setBackground(Color.WHITE);
         goToStandingButton.setUI(new CustomButton());
@@ -277,7 +299,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         
         goToTeamsManagementButton = new JButton("Equipos");
         goToTeamsManagementButton.setFont(new Font("Tahoma", Font.BOLD, 25));
-        goToTeamsManagementButton.setBounds(432, 11, 204, 33);
+        goToTeamsManagementButton.setBounds(426, 11, 204, 33);
         goToTeamsManagementButton.setFocusable(false);
         goToTeamsManagementButton.setBackground(Color.WHITE);
         goToTeamsManagementButton.setUI(new CustomButton()); 
@@ -296,15 +318,24 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         
         goToSeasonsMangementButton  = new JButton("Temporadas");
         goToSeasonsMangementButton.setFont(new Font("Tahoma", Font.BOLD, 25));
-        goToSeasonsMangementButton.setBounds(648, 11, 204, 33);
+        goToSeasonsMangementButton.setBounds(869, 11, 204, 33);
         goToSeasonsMangementButton.setFocusable(false);
         goToSeasonsMangementButton.setBackground(Color.WHITE);
         goToSeasonsMangementButton.setUI(new CustomButton()); 
         goToSeasonsMangementButton.setBorder(null);
         goToSeasonsMangementButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
+        goToPlayersMangementButton  = new JButton("Jugadores");
+        goToPlayersMangementButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+        goToPlayersMangementButton.setBounds(642, 11, 204, 33);
+        goToPlayersMangementButton.setFocusable(false);
+        goToPlayersMangementButton.setBackground(Color.WHITE);
+        goToPlayersMangementButton.setUI(new CustomButton()); 
+        goToPlayersMangementButton.setBorder(null);
+        goToPlayersMangementButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         goToScoresButton.addActionListener(this);
+        goToPlayersMangementButton.addActionListener(this);
         goToStandingButton.addActionListener(this);
         goToTeamsManagementButton.addActionListener(this);
         goToUpdateDataButton.addActionListener(this);
@@ -315,6 +346,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         panelButton.add(goToTeamsManagementButton);
         panelButton.add(goToUpdateDataButton);  
         panelButton.add(goToSeasonsMangementButton);
+        panelButton.add(goToPlayersMangementButton);
     }
     
     /**
@@ -364,6 +396,9 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
        buttonPanelMap.put(goToTeamsManagementButton, teamsPanel);
        buttonPanelMap.put(goToUpdateDataButton, updateDataPanel);
        buttonPanelMap.put(goToSeasonsMangementButton, seasonsManagementPanel);
+       buttonPanelMap.put(goToPlayersMangementButton, playersManagementPanel);
+       
+       
 
         for (JButton button : buttonPanelMap.keySet()) {
             button.setBorder(null);

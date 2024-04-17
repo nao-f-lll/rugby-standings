@@ -80,6 +80,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	private FileIO<Team> fileIo;
 	private final String FILE_PATH = "data/objects/teams.ser";
 	private Season season;
+	private JLabel playerListLabel;
     
     public TeamsPanel( JPanel panelButton, ArrayList<Team> allTeams) {
     	this.panelButton = panelButton;
@@ -115,6 +116,9 @@ public class TeamsPanel extends JPanel implements ActionListener {
          creatTeamLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
          addTeamPanel.add(creatTeamLabel);
          
+         
+         
+	  
          nombreLable = new JLabel("Nombre");
          nombreLable.setBounds(289, 135, 70, 15);
          addTeamPanel.add(nombreLable);
@@ -209,6 +213,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
          
          escudoPreviewLable = new JLabel("");
          escudoPreviewLable.setBounds(50, 129, 167, 103);
+         escudoPreviewLable.setHorizontalAlignment(SwingConstants.CENTER);
    		 escudoPreviewLable.setIcon(new ImageIcon(SportsDashboardPage.class.getResource("/images/escudoGenerico.png")));
          addTeamPanel.add(escudoPreviewLable);
           
@@ -221,12 +226,18 @@ public class TeamsPanel extends JPanel implements ActionListener {
          this.add(teamTablePanel);
          teamTablePanel.setLayout(null);
          
+         playerListLabel = new JLabel("Lista de equipos");
+	     playerListLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+	     playerListLabel.setBounds(350, 10, 316, 68);
+	     teamTablePanel.add(playerListLabel);
+         
+         
  		columnas = new Vector<String>();
  		columnas.add("Nombre");
  		columnas.add("Escudo");
  		columnas.add("Estadio");
  		columnas.add("Ciudad");
- 		columnas.add("Año de Fundación");
+ 		columnas.add("Fundación");
          
  		datosTabla = new Vector<Vector<Object>>();
     
