@@ -63,9 +63,7 @@ public class FileIO <T> implements Serializable{
 			e.printStackTrace();
 		}
 	}
-
-	
-	
+		
 	public void writeToFile(String timeStamps, String filePath, String additionalInfo, String teamName) {
 		
 	

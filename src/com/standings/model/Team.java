@@ -40,6 +40,11 @@ public class Team implements Serializable{
 	    private Estadio estadio;
 	    private ArrayList<Jugador> jugadores;
 	    private int fundacion;
+	    
+	    
+	    
+	    // do that
+	    private int ID;
 	  
 	    
 	    /**
