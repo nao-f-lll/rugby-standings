@@ -174,7 +174,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         	   lastSeason.setState("finalizada");
                season = new Season(lastSeason.getId() + 1,lastSeason.getYear() + 1, "actual", weeks, teams, games);
            } else {
-        	   // use should select the year//////
+        	   // user should select the year//////
         	   /////
         	   /////
         	   /////
@@ -191,7 +191,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
           seasons.add(season);
           seasons.add(futureSeason);
           hasSeasondataCHanged = true;
-      
+
     }
     
     /**
@@ -245,24 +245,11 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         updateDataPanel.setLayout(null);
         seasonsManagementPanel.setLayout(null);
         playersPanel.setLayout(null);
-        ///////////////////////////////////////////
-        mainPanel.add(playersPanel, BorderLayout.CENTER);
-        playersPanel.add(panelButton);
-        
-        JPanel registerPanel = new JPanel();
-        registerPanel.setBounds(0, 59, 634, 754);
-        playersPanel.add(registerPanel);
-        ////////////////////////////////////   
-        
-        
-  // mainPanel.add(scoresPanel, BorderLayout.CENTER);
-  // scoresPanel.add(panelButton);
 
-
+        
+        mainPanel.add(scoresPanel, BorderLayout.CENTER);
+        scoresPanel.add(panelButton);
     }
-   
-
-
     /**
      * Inicializa los botones de la interfaz de usuario.
      * Los botones incluyen opciones para acceder a los partidos, la clasificación, los equipos,

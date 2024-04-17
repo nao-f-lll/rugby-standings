@@ -27,6 +27,7 @@ import com.standings.model.User;
 import com.standings.util.FileIO;
 import com.standings.util.SignUpValidationUtil;
 import com.standings.util.Time;
+import javax.swing.JComboBox;
 
 /**
  * La clase SignUpPage implementa la interfaz grafica y utiliza la logica de {@link SignUpValidationUtil}
@@ -76,6 +77,8 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
     private LoginCredentials credentials;
     private int sessionId;
     private FileIO<User> fileIo;
+    private JLabel roleLabel;
+    private JComboBox<String> rolecomboBox;
    
     
 	
@@ -90,6 +93,15 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 		setTitle("Registrar");
 		initializFrameGraphics(credentials);
 		initializePanelsGraphics();
+		
+		
+		roleLabel = new JLabel("Role");
+		roleLabel.setBounds(34, 304, 50, 15);
+		rightInnerPanel.add(roleLabel);
+		
+		rolecomboBox = new JComboBox<>();
+		rolecomboBox.setBounds(137, 301, 97, 21);
+		rightInnerPanel.add(rolecomboBox);
 
 	}
 	
@@ -255,7 +267,7 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
     */
    private void initializeSignUpButton() {
        signUpButton = new JButton("Registrar");
-       signUpButton.setBounds(34, 316, 100, 25);
+       signUpButton.setBounds(34, 344, 100, 25);
        signUpButton.addActionListener(this);
        signUpButton.setFocusable(false); 
        signUpButton.setBackground(Color.lightGray);
@@ -304,6 +316,8 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 		errorMessageForFullName.setForeground(Color.RED);
 		rightInnerPanel.add(errorMessageForFullName);
 		errorMessageForFullName.setBounds(137, 91, 111, 25);
+		
+		
    }
    
    /**
@@ -500,6 +514,8 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 			userDialog("Las contraseñas no coinciden", "Requisito de contraseña");
 		} else {
 			credentials.saveUserData(userFullName, userEmail, userPassword);
+			
+			
 			sessionId = SignUpValidationUtil.getUserSessionId(credentials);
 			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/account_created.cvs", "Cuenta creada", userFullName, sessionId);
 			this.dispose();

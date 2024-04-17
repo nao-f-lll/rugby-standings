@@ -9,6 +9,9 @@ public class Jugador {
 	private String nombre;
 	private ArrayList<ImageIcon> fotosPersonales;
 	private ArrayList<Team> equipos;
+	private String DNI;
+	private Fecha fechaDeNacemiento;   
+	
 	
 	public Jugador(String nombre, ArrayList<ImageIcon> fotosPersonales, ArrayList<Team> equipos) {
 		this.nombre = nombre;

@@ -3,9 +3,10 @@ package com.standings.credentials;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import javax.persistence.*;
 import com.standings.model.User;
-import com.standings.util.FileIO;
 
 /**
  * 
@@ -22,11 +23,8 @@ public class LoginCredentials implements Serializable{
 	
 	private static final long serialVersionUID = -8698867336887932284L;
 	private HashMap<String, String> loginInfo = new HashMap<String, String>();
-    private final String FILE_PATH = "data/objects/users.ser";
     private ArrayList<User> users;
     private ArrayList<Integer> sessionIds;
-    private User user;
-    private FileIO<User> fileIo;
     
     
     /**
@@ -36,7 +34,6 @@ public class LoginCredentials implements Serializable{
     public LoginCredentials() {
     	sessionIds = new ArrayList<>();
     	users = new ArrayList<>();
-    	fileIo = new FileIO<>();
     	readUserData(); 	  	
     }
       
@@ -69,25 +66,50 @@ public class LoginCredentials implements Serializable{
      * @param userPassword  Contraseña del usuario.
      */
     public void saveUserData(String name,String userEmail, String userPassword){
+    	
     	loginInfo.put(userEmail, userPassword);
     	User user = new User(name, userEmail, userPassword, sessionIds); 
     	users.add(user);
-    	fileIo.writeObject(FILE_PATH, users);	
+    	
+    	
+    	writeDataToOODataBase(user);
     }
+     
     
+    // TO DO
+    private void writeDataToOODataBase(User user) {
+    	
+    	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("objectdb:db/users.odb");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		
+		entityManager.getTransaction().begin();
+		entityManager.persist(user);
+		entityManager.getTransaction().commit();	
+    }
    
-    
     /**
      * 	Lee los datos de usuario almacenados en el archivo y actualiza la información de
      *  inicio de sesión.
      */
+    
+    
     private void  readUserData() {
-    	user = null;	
-    	users = fileIo.readObject( FILE_PATH, users);
-    	
-    	 for (int i = 0; i < users.size(); i++) {
-         	user = users.get(i);
-         	 loginInfo.put(user.getEmail(), user.getPassword());
-         }
+    	readUserdataFromOODataBase();
+			
     }    
+    
+    private void readUserdataFromOODataBase() {
+    	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("objectdb:db/users.odb");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		
+		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u", User.class);
+		
+		List<User> results = typedQuery.getResultList();
+			
+		for (User user : results) {
+			loginInfo.put(user.getEmail(), user.getPassword());
+			users.add(user);
+		}  
+		
+    }
 }
