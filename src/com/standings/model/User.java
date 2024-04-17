@@ -3,6 +3,9 @@ package com.standings.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * Clase que representa a un usuario en el sistema.
  * 
@@ -19,14 +22,18 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 2024-02-02
  */
+
+@Entity
 public class User implements Serializable{
 	
 	// Declaracion de las variables 
 	private static final long serialVersionUID = -2123744883602981956L;
+	@Id
 	private int sessionId;
 	private String username;
 	private String email;
 	private String password;
+	private String role;
 	
 	 
 	 /**
