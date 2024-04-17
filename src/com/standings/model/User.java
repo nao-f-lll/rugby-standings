@@ -45,6 +45,13 @@ public class User implements Serializable{
 	}
 	
 	
+	public User(String username, String email, String password, int sessionIds) {
+		this.sessionId = sessionIds;
+		this.username = username;
+		this.email = email;
+		this.password =	password;
+	}
+	
 	
 	// getters y setters
 	public int getSessionId() {
