@@ -11,7 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.swing.JOptionPane;
+
 import com.standings.model.User;
+import com.standings.util.UserDialogUtil;
 
 /**
  * 
@@ -30,6 +33,7 @@ public class LoginCredentials implements Serializable{
 	private HashMap<String, String> loginInfo = new HashMap<String, String>();
     private ArrayList<User> users;
     private ArrayList<Integer> sessionIds;
+    private User user;
     
     
     /**
@@ -75,22 +79,13 @@ public class LoginCredentials implements Serializable{
     	loginInfo.put(userEmail, userPassword);
     	User user = new User(name, userEmail, userPassword, sessionIds);	
     	users.add(user);
-<<<<<<< HEAD
-    	
-    	
+  	
     	writeDataToOODataBase(user);
-=======
     	writeUserDataFromRationalDB(user);
-    	
-    	
-    	
-    	
-    	
->>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
     }
      
     
-<<<<<<< HEAD
+
     // TO DO
     private void writeDataToOODataBase(User user) {
     	
@@ -99,8 +94,12 @@ public class LoginCredentials implements Serializable{
 		
 		entityManager.getTransaction().begin();
 		entityManager.persist(user);
-		entityManager.getTransaction().commit();	
-=======
+		entityManager.getTransaction().commit();
+		
+		entityManager.close();
+		entityManagerFactory.close();
+    }
+
     
     private void writeUserDataFromRationalDB(User user)  {
     	
@@ -111,22 +110,18 @@ public class LoginCredentials implements Serializable{
 			 
 			try  {
 				st.executeUpdate("INSERT INTO usuarios.usuario(username, email, sessionID, upassword) VALUES ('" + user.getName() +"','" + user.getEmail() + "','" + user.getSessionId() + "','" + user.getPassword() + "');");
-				st.close();
-			
+				st.close();			
 				conexion.close();
 			} catch (SQLException e) {
 				int errorcode = e.getErrorCode();
 				if (errorcode == 1062) {
-					System.out.println("Error Clave Duplicada. Ya existe un registro con esa clave.");
+					UserDialogUtil.userDialog("Ya existe un registro con esa clave", "Error Clave Duplicada", JOptionPane.WARNING_MESSAGE);
 				}
 			}
     	}  
     		catch (SQLException e) {
-		
-	
-			e.printStackTrace();
+				UserDialogUtil.userDialog("No se ha podido conctarse a la base de datos", "Error al conectarse a MySQL", JOptionPane.ERROR_MESSAGE);
 		}
->>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
     }
    
     /**
@@ -136,9 +131,8 @@ public class LoginCredentials implements Serializable{
     
     
     private void  readUserData() {
-<<<<<<< HEAD
     	readUserdataFromOODataBase();
-			
+    	readUserDataFromRationalDB(); 
     }    
     
     private void readUserdataFromOODataBase() {
@@ -154,12 +148,10 @@ public class LoginCredentials implements Serializable{
 			users.add(user);
 		}  
 		
-=======
-    
-    	
-    	readUserDataFromRationalDB();
- 
-    	
+		
+		entityManager.close();
+		entityManagerFactory.close();
+    		
     }   
     
     
@@ -168,12 +160,8 @@ public class LoginCredentials implements Serializable{
     	user = null;
     	
 		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/usuarios", "root", "");
-		
-
-			Statement st = conexion.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-	
-			
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/usuarios", "root", "");		
+			Statement st = conexion.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);			
 			ResultSet rs = st.executeQuery("SELECT * FROM usuarios.usuario;");
 		
 			if(rs.first()) {
@@ -185,20 +173,12 @@ public class LoginCredentials implements Serializable{
 			    	users.add(user);
 				}
 				
-			}
-			else {
-			
-			}
-			
+			}		
 			rs.close();
-	
-			st.close();
-			
+			st.close();			
 			conexion.close();
-		} catch (SQLException e) {
-		
-	
-			e.printStackTrace();
+		} catch (SQLException e) {	
+			UserDialogUtil.userDialog("No se ha podido conctarse a la base de datos", "Error al conectarse a MySQL", JOptionPane.ERROR_MESSAGE);		
 		}
     	
     			
@@ -206,6 +186,5 @@ public class LoginCredentials implements Serializable{
         	user = users.get(i);
         	 loginInfo.put(user.getEmail(), user.getPassword());
         }
->>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
     }
 }

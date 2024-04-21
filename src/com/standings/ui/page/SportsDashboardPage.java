@@ -224,7 +224,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         scoresPanel = new ScoresPanel(panelButton, season);
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);      
         seasonsManagementPanel = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, goToScoresButton, goToStandingButton, allTeams, seasons, standingsPanel, scoresPanel);
-        playersManagementPanel = new PlayersPanel(panelButton, allTeams);
+        playersManagementPanel = new PlayersPanel(panelButton, allTeams, seasons);
         
         scoresPanel.setLayout(null);
         standingsPanel.setLayout(null);
@@ -237,17 +237,9 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     
       
         
-
+        ///////////////////////////////////////////
      
 
-        ////////////////////////////////////   
-        
-        
-        
-       mainPanel.add(scoresPanel, BorderLayout.CENTER);
-       scoresPanel.add(panelButton);
-
->>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
 
         
         mainPanel.add(scoresPanel, BorderLayout.CENTER);

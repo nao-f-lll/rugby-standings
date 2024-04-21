@@ -70,7 +70,8 @@ public class Team implements Serializable{
 	        this.escudo = escudo;
 	        this.ciudad = ciudad;
 	        this.estadio = estadio;
-	        this.fundacion = fundacion;      
+	        this.fundacion = fundacion;
+	        this.jugadores = new ArrayList<>();
 	    }
 	    
 	    // getters y setters
@@ -132,10 +133,11 @@ public class Team implements Serializable{
 			return jugadores;
 		}
 
-		public void setJugadores(ArrayList<Jugador> jugadores) {
-			this.jugadores = jugadores;
+		
+		public void addJugador(Jugador jugador) {
+			this.jugadores.add(jugador);
 		}
-
+		
 		public int getFundacion() {
 			return fundacion;
 		}

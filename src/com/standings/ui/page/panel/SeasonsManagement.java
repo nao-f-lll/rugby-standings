@@ -181,9 +181,6 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        addSeasonPanel.add(seasonYearsLabel);
 	        seasonYearsLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 
-	        	        
-	      
-	        
 
 	        creatSeasonButton = new JButton("Crear Temporada");
 	        creatSeasonButton.setFont(new Font("Tahoma", Font.PLAIN, 15));

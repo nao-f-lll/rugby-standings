@@ -77,8 +77,6 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
     private LoginCredentials credentials;
     private int sessionId;
     private FileIO<User> fileIo;
-    private JLabel roleLabel;
-    private JComboBox<String> rolecomboBox;
    
     
 	
@@ -93,15 +91,6 @@ public class SignUpPage extends ParentFrame implements ActionListener, KeyListen
 		setTitle("Registrar");
 		initializFrameGraphics(credentials);
 		initializePanelsGraphics();
-		
-		
-		roleLabel = new JLabel("Role");
-		roleLabel.setBounds(34, 304, 50, 15);
-		rightInnerPanel.add(roleLabel);
-		
-		rolecomboBox = new JComboBox<>();
-		rolecomboBox.setBounds(137, 301, 97, 21);
-		rightInnerPanel.add(rolecomboBox);
 
 	}
 	
