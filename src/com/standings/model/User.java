@@ -104,7 +104,16 @@ public class User implements Serializable{
 		this.sessionId = sessionId;
 	}
 
-	
+	public String getRole() {
+		return role;
+	}
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
 	/**
      * Genera un identificador de sesión único para el usuario.
      * 

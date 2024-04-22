@@ -3,11 +3,9 @@ package com.standings.ui.page;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -16,26 +14,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
-
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
-import com.standings.model.Fecha;
 import com.standings.model.Game;
 import com.standings.model.ParentFrame;
 import com.standings.model.Season;
@@ -50,11 +36,6 @@ import com.standings.ui.page.panel.StandingsPanel;
 import com.standings.ui.page.panel.TeamsPanel;
 import com.standings.ui.page.panel.UpdateDataPanel;
 import com.standings.util.FileIO;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 
 /**
  * La clase SportsDashboardPage representa la página principal del panel de control de la aplicación,
@@ -243,7 +224,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         scoresPanel = new ScoresPanel(panelButton, season);
         updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);      
         seasonsManagementPanel = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, goToScoresButton, goToStandingButton, allTeams, seasons, standingsPanel, scoresPanel);
-        playersManagementPanel = new PlayersPanel(panelButton, allTeams);
+        playersManagementPanel = new PlayersPanel(panelButton, allTeams, seasons);
         
         scoresPanel.setLayout(null);
         standingsPanel.setLayout(null);
@@ -256,17 +237,9 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
     
       
         
-
+        ///////////////////////////////////////////
      
 
-        ////////////////////////////////////   
-        
-        
-        
-       mainPanel.add(scoresPanel, BorderLayout.CENTER);
-       scoresPanel.add(panelButton);
-
->>>>>>> 9118f63f551296d176d8736d2550b898c54753a3
 
         
         mainPanel.add(scoresPanel, BorderLayout.CENTER);

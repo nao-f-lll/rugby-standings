@@ -68,6 +68,13 @@ public class Fecha implements Serializable{
 			this.año = año;
 		}
 	}
+	@Override
+	public String toString() {
+		return dia + "/" + mes + "/" + año;
+	}
+	
+	
+	
 
 }
 

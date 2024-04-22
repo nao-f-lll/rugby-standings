@@ -220,5 +220,11 @@ public class Season implements Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	
+	@Override
+	public String toString() {
+		return String.valueOf(year);
+	}
 }

@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -45,8 +46,6 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	
     private static final long serialVersionUID = -538081400942327500L;
 	
- 
-
 	private JPanel teamsPanelButton;
 	private JPanel panelButton;
 	
@@ -85,13 +84,20 @@ public class TeamsPanel extends JPanel implements ActionListener {
     public TeamsPanel( JPanel panelButton, ArrayList<Team> allTeams) {
     	this.panelButton = panelButton;
     	
+    	File file = new File(FILE_PATH);
     	fileIo = new FileIO<>(); 
-    	this.allTeams  = fileIo.readObject(FILE_PATH, this.allTeams);
     	
-    	for (int i = 0; i < this.allTeams.size(); i++) {
+    	if (!file.exists() || file.length() == 0)  {
+    		this.allTeams  = new ArrayList<>();
+    	} else {
+    		this.allTeams  = fileIo.readObject(FILE_PATH, this.allTeams);
+    	}
+    	
+       	for (int i = 0; i < this.allTeams.size(); i++) {
     		allTeams.add(this.allTeams.get(i));
     	} 	
     	this.allTeams = allTeams;
+    
     	
     	initializeTeamsPanels();
     	createTable();	
@@ -110,6 +116,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
          addTeamPanel.setBounds(0, 59, 634, 754);
          this.add(addTeamPanel);
          addTeamPanel.setLayout(null);
+         addTeamPanel.setBackground(new Color(255, 255, 255));
          
          creatTeamLabel = new JLabel("Crear un equipo nuevo");
          creatTeamLabel.setBounds(163, 0, 316, 68);
@@ -166,8 +173,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 
          
          for (int startYear = 1800; startYear <= currentYear; startYear++) {
-       	  allYearFrom1800To2024.addElement(startYear);
-       	  
+       	  allYearFrom1800To2024.addElement(startYear);      	  
          }
          
          fundacionCombo = new JComboBox<>(allYearFrom1800To2024);
@@ -326,7 +332,20 @@ public class TeamsPanel extends JPanel implements ActionListener {
 			datosTabla.add(fila);
 			}	
 			//inicializamos el dtm de nuevo con sus datos
-			model = new DefaultTableModel(datosTabla, columnas);
+		   model = new DefaultTableModel(datosTabla, columnas) {
+	        	private static final long serialVersionUID = -7029166140539557671L;
+
+	        	 /**
+	             * Determina si una celda específica en la tabla es editable.
+	             * @param row indice de fila de la celda.
+	             * @param column indice de columna de la celda.
+	             * @return false para indicar que la celda no es editable.
+	             */
+				@Override
+	        	public boolean isCellEditable(int row, int column) {
+	        		return false;
+	        	}
+	        };
 			//aplicas el modelo
 			table.setModel(model);	
 			
@@ -355,9 +374,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == escudoButton) {
-    		
-  	   
-          
+    		 
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setCurrentDirectory(null);
           
@@ -369,9 +386,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 				imagePath = fileChooser.getSelectedFile().getAbsolutePath();
 				escudoPreviewLable.setIcon(setIcon(imagePath, null));  	
 			}
-          
-       
-  		
+           		
 		} else if (e.getSource() == creatTeamButton) {
 			
 								
@@ -389,6 +404,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 						createTable();	    
 						resetFields();
 						saveData();
+						
 						fileIo.writeToFile(Time.getCurrentTime(), "data/logs/team_logs.cvs", "Equipo añadido", nombre);
 
 				} else {
