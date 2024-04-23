@@ -84,7 +84,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
   	private DefaultComboBoxModel<Integer> yearDefaultComboBox;
   	private DefaultComboBoxModel<Integer> monthDefaultComboBox;
   	private DefaultComboBoxModel<Integer> dayDefaultComboBox;
-  	private  String imagePath;
+  	private String imagePath;
     
 	
 	public PlayersPanel(JPanel panelButton, ArrayList<Team> allTeams, ArrayList<Season> seasons) {
@@ -427,7 +427,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		 if (e.getSource() == creatPlayerButton) {
+		 if (e.getSource() == creatPlayerButton  ) {
 			 
 			 Team team = (Team) teamComboBox.getSelectedItem();
 			 String playerName = nameTextField.getText();
@@ -437,9 +437,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
 				 if (team != null) {
 
 					 Nationality playerNationality = (Nationality) nationalityComboBox.getSelectedItem();
-					 ImageIcon personalImage  = (ImageIcon) fotoPersonalPreviewLable.getIcon();			 
-				
-				 
+					 ImageIcon personalImage  = (ImageIcon) fotoPersonalPreviewLable.getIcon();			 			 
 					 int day = (int) playerBirthDayComboBox.getSelectedItem();		 
 					 int month = (int) playerBirthMonthComboBox.getSelectedItem();
 					 int year = (int) playerBirthYearComboBox.getSelectedItem();
@@ -474,9 +472,52 @@ public class PlayersPanel extends JPanel implements ActionListener {
 					imagePath = fileChooser.getSelectedFile().getAbsolutePath();
 					fotoPersonalPreviewLable.setIcon(setIcon(imagePath, null));  	
 				}
+		 } else if (e.getSource() == updatePlayerButton) {
+			 int selectedIndex = table.getSelectedRow();
+		
+				if (selectedIndex == -1) {
+					JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para actualizar",  "Error al actualizar", JOptionPane.ERROR_MESSAGE);
+			 
+				} else {
+					Team team = (Team) teamComboBox.getSelectedItem();
+					team.getJugadores().get(selectedIndex).setNombre(nameTextField.getText());					
+					team.getJugadores().get(selectedIndex).setEquipo(team);				
+					team.getJugadores().get(selectedIndex).setNationality(( Nationality )nationalityComboBox.getSelectedItem());;
+					team.getJugadores().get(selectedIndex).setFotoPersonal((ImageIcon) fotoPersonalPreviewLable.getIcon());
+					
+					int day = (int) playerBirthDayComboBox.getSelectedItem();		 
+					 int month = (int) playerBirthMonthComboBox.getSelectedItem();
+					 int year = (int) playerBirthYearComboBox.getSelectedItem();   
+					 Fecha fechaDeNacemiento = new Fecha(day, month, year);	 		
+					team.getJugadores().get(selectedIndex).setFechaDeNacemiento(fechaDeNacemiento);;
+
+	
+				 	selectTeamComboBox.setSelectedItem(team);
+				}
+		 } else if (e.getSource() == deletePlayerButton) {
+			 int selectedIndex = table.getSelectedRow();
+				
+				if (selectedIndex == -1) {
+					JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para borrar",  "Error al borrar", JOptionPane.ERROR_MESSAGE);
+				} else {
+					model.removeRow(selectedIndex);
+					Team team = (Team) teamComboBox.getSelectedItem();
+					team.getJugadores().remove(selectedIndex);
+					resetFields();
+				}
 		 }
 	}
 	
+	
+	private void resetFields() {
+		nameTextField.setText("");
+		yearDefaultComboBox.setSelectedItem(1900);  
+		monthDefaultComboBox.setSelectedItem(1) ;
+	    dayDefaultComboBox.setSelectedItem(1);
+	    nationalityComboBox.setSelectedItem("AFGANISTÁN");
+	    teamComboBox.setSelectedItem(null);
+	    fotoPersonalPreviewLable.setIcon(new ImageIcon(SportsDashboardPage.class.getResource("/images/escudoGenerico.png")));
+	}
 	
 	
     private ImageIcon setIcon(String myImagePath, byte[] byteImage) {

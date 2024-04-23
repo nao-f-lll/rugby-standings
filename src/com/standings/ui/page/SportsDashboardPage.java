@@ -71,7 +71,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private ArrayList<Season> seasons;
 	private FileIO<Season> fileIo;
 	private static boolean hasSeasondataCHanged;
-	private boolean isNewSeason;
+	private boolean isDataBaseEmpty;
 	private  Season futureSeason;
 	
 	
@@ -94,11 +94,11 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	        checkIfFileExists();
 	        
 	        
-	        if (isNewSeason) {
+	       if (isDataBaseEmpty) {
 	        	initializeStandingsNewSeason();
-	        } else {
+	       } else {
 	        	initializeStandingsData();
-	        }
+	       }
 			initializePanelGraphics();	
 		   
 	  }
@@ -106,9 +106,9 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	   private void checkIfFileExists() {
 			  File file = new File(FILE_PATH);
 		        if (!file.exists() || file.length() == 0) {
-		        	 isNewSeason = true;
+		        	 isDataBaseEmpty = true;
 		        } else {
-		        	  isNewSeason = false;
+		        	isDataBaseEmpty = false;
 		        } 
 		}
     
@@ -166,16 +166,16 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         	   /////
         	   /////
         	   ///
-               season = new Season(1, 2023, "actual", weeks, teams, games);
+        	   //season = new Season(1, 2023, "actual", weeks, teams, games);
               
        		ArrayList<Team> futureTeams = new ArrayList<>();
 			ArrayList<Game>  futureGames = new ArrayList<>();
 			ArrayList<Week>  futureweeks = new ArrayList<>();
                
-            futureSeason = new Season(season.getId() + 1, season.getYear()+ 1,  "proximamente", futureweeks, futureTeams, futureGames);
+            futureSeason = new Season(1, 2024,  "proximamente", futureweeks, futureTeams, futureGames);
            }
         
-          seasons.add(season);
+          //seasons.add(season);
           seasons.add(futureSeason);
           hasSeasondataCHanged = true;
 
@@ -220,9 +220,14 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
      */
     private void initializeButtonPanels() {    		
     	teamsPanel = new TeamsPanel(panelButton, allTeams);
-    	standingsPanel = new StandingsPanel(season, isNewSeason);   	
+    	standingsPanel = new StandingsPanel(season);
         scoresPanel = new ScoresPanel(panelButton, season);
-        updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);      
+        if (season != null) {
+            updateDataPanel = new UpdateDataPanel(season.getTeams(), season.getGames(),standingsPanel, scoresPanel);      
+
+        } else {        
+        	updateDataPanel = new UpdateDataPanel(standingsPanel, scoresPanel);      
+        }
         seasonsManagementPanel = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, goToScoresButton, goToStandingButton, allTeams, seasons, standingsPanel, scoresPanel);
         playersManagementPanel = new PlayersPanel(panelButton, allTeams, seasons);
         
@@ -234,9 +239,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         playersManagementPanel.setLayout(null);
         ///////////////////////////////////////////
 
-    
-      
-        
+
         ///////////////////////////////////////////
      
 

@@ -169,6 +169,27 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
     	
     }
 	
+	public UpdateDataPanel(StandingsPanel standingsPanel, ScoresPanel scoresPanel) {
+		 
+		this.games = null;
+    	this.teams = null;
+    	this.standingsPanel = standingsPanel;
+    	this.scoresPanel = scoresPanel;
+    	isFirstBoxSelected = false;
+    	isSecondBoxSelected = false;
+    	isThirdBoxSelected = false;
+
+		localClubPointsField = new JTextField();
+		visitorClubPointsField = new JTextField();
+    	
+		localClubField = new JTextField();
+		visitorClubField = new JTextField();
+		newSeason = false;
+		
+		initializeGraphics();
+    	
+    }
+	
 	
 	/**
 	 * Actualiza los datos del panel.
@@ -262,19 +283,14 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		    secondLocalTeamPointLabel.setBounds(1110, 342, 33, 27);
 		    this.add(secondLocalTeamPointLabel);
 		    
-		    
-		    
-		    
-	    
+		      
 		    secondVisitorTeamName = new JLabel();
 		    secondVisitorTeamName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		    secondVisitorTeamName.setBounds(900, 380, 100, 37);      
 		    this.add(secondVisitorTeamName);
 		       
 	  
-	
-		       
-		       
+
 		    secondVisitorTeamPointField = new JTextField();
 		    secondVisitorTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		    secondVisitorTeamPointField.setBounds(1110, 382, 33, 27);
@@ -320,8 +336,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		    thirdVisitorTeamName.setBounds(900, 520, 100, 37);
 		    this.add(thirdVisitorTeamName);
 		       
-		       
-		
+
 		       
 		    thirdVisitorTeamPointField = new JTextField();
 		    thirdVisitorTeamPointField.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -350,9 +365,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		this.add(firstGameBox);	
 		allowToModifyField(firstGameBox, firstLocalTeamPointLabel, firstLocalTeamPointField, firstVisitorTeamPointLabel, firstVisitorTeamPointField);
 
-	   
-	    
-	    
+ 
 		secondGameBox = new CustomCheckBox();
 		secondGameBox.setBounds(1300, 350 ,50 , 45);
 		secondGameBox.addActionListener(this);
@@ -388,9 +401,7 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
         instructionPanel.setLayout(null);
         
         
-        
-        
-        
+
         titleInstructionsLabel = new JLabel("Instrucciones para insertar/actualizar los datos");
         titleInstructionsLabel.setIcon(new ImageIcon(SportsDashboardPage.class.getResource("/images/instructionBlue.png")));
         titleInstructionsLabel.setForeground(new Color(0, 0, 0));
@@ -612,7 +623,10 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	                try {
 	                    int weekNumber = Integer.parseInt(parts[1]);
 	                    selectedWeekNumber = weekNumber;
-	                    changeGames();
+	                    if (season != null) {
+	                    	changeGames();
+	                    }
+	                    
 	                    firstGameBox.setSelected(false);
 	            		secondGameBox.setSelected(false);
 	            		thirdGameBox.setSelected(false);
@@ -861,6 +875,10 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 	 */
 	public void showGameInfo(int gameOne, int gameTwo, int gameThree) {
 		
+		if (season != null) {
+			
+		
+		
 		firstLocalTeamName.setText(games.get(gameOne).getLocalTeam().getName());
 		firstVisitorTeamName.setText(games.get(gameOne).getVisitorTeam().getName());
 		
@@ -930,6 +948,8 @@ public class UpdateDataPanel extends JPanel  implements ActionListener {
 		thirdLocalTeamPointLabel.setVisible(true);		
 		thirdVisitorTeamPointField.setVisible(false);
 		thirdVisitorTeamPointLabel.setVisible(true);		
+		
+		}
     }
 
 

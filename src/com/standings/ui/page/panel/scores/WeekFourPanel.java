@@ -63,8 +63,7 @@ public class WeekFourPanel extends JPanel implements ActionListener{
 		   	this.setBounds(0, 115, 1525, 845);
 		   	this.setLayout(null);
 			this.season = season;
-		   	this.games  = season.getGames();
-		   	this.weeks = season.getWeeks();
+	
 		   	
 		    gameOnePanel = new JPanel();
 		       gameOnePanel.setBackground(Color.LIGHT_GRAY);
@@ -173,8 +172,14 @@ public class WeekFourPanel extends JPanel implements ActionListener{
 				   add(exoportXMLButton);
 				   exoportXMLButton.addActionListener(this);
 
-				   if (this.season.getTeams().size() > 0) {
-					   addGameInfo(this.season);
+				   if (season != null) {
+					   
+					   this.games  = season.getGames();
+				   		this.weeks = season.getWeeks();
+				   		if (this.season.getTeams().size() > 0) {
+					  
+					   		addGameInfo(this.season);
+				   		}
 				   }
 	       
 	}

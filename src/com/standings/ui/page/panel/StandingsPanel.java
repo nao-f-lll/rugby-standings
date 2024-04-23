@@ -72,6 +72,15 @@ public class StandingsPanel extends JPanel implements ActionListener {
 			initializeTabel();
 	}
 		
+	public StandingsPanel( Season season) {
+			
+			initializeFrameGraphics();
+			this.isNewSeason = false;
+            this.season = season;
+            //this.teams = season.getTeams(); 
+			initializeTabel();
+	}
+		
 	
 	/**
     * Inicializa los elementos gráficos del panel.
@@ -122,8 +131,11 @@ public class StandingsPanel extends JPanel implements ActionListener {
 						new StandingsCalculation(this.season);						
 					}
 					
-					
+					if (seasons != null) {
 						renderUpdatedStandings();
+					}
+					
+						
 					
 					
 

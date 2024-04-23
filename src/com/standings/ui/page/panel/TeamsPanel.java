@@ -429,11 +429,12 @@ public class TeamsPanel extends JPanel implements ActionListener {
 			allTeams.get(selectedIndex).setCiudad(ciudadField.getText());
 			allTeams.get(selectedIndex).setFundacion((int) fundacionCombo.getSelectedItem());
 			allTeams.get(selectedIndex).setEscudo((ImageIcon) escudoPreviewLable.getIcon());
-			}
-			
 			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/team_logs.cvs", "Equipo actualizado", allTeams.get(selectedIndex).getName());
 			createTable();	    
 			saveData();
+			}
+			
+			
 			
 		} else if (e.getSource() == deleteTeamButton) {
 			int selectedIndex = table.getSelectedRow();
@@ -448,7 +449,7 @@ public class TeamsPanel extends JPanel implements ActionListener {
 				saveData();
 			}	
 			
-		}	
+		} 
 	}
 	
 	private void saveData() {

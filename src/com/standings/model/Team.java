@@ -39,6 +39,7 @@ public class Team implements Serializable{
 	    private String ciudad;
 	    private Estadio estadio;
 	    private ArrayList<Jugador> jugadores;
+	    private ArrayList<Jugador> jugadoresAnteriores;
 	    private int fundacion;
 	    
 	    
@@ -72,6 +73,7 @@ public class Team implements Serializable{
 	        this.estadio = estadio;
 	        this.fundacion = fundacion;
 	        this.jugadores = new ArrayList<>();
+	        this.jugadoresAnteriores = new ArrayList<>();
 	    }
 	    
 	    // getters y setters
@@ -133,9 +135,12 @@ public class Team implements Serializable{
 			return jugadores;
 		}
 
-		
 		public void addJugador(Jugador jugador) {
 			this.jugadores.add(jugador);
+		}
+		
+		public void removeJugador(Jugador jugador) {
+			this.jugadores.remove(jugador);
 		}
 		
 		public int getFundacion() {
