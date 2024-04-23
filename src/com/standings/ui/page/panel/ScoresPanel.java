@@ -101,8 +101,6 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	       weekOneButton.setUI(new CustomButton()); 
 	       weekOneButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	       weeksPanelButton.add(weekOneButton);
-	       
-
 
 	       weekTwoButton = new JButton("J-2");
 	       weekTwoButton.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -226,12 +224,11 @@ public class ScoresPanel extends JPanel implements ActionListener {
 	       weekEighthButton.addActionListener(this);
 	       weekNineButton.addActionListener(this);
 	       weekTenButton.addActionListener(this);
-	          
 	}
 	
 	public void initializeWeekPanels() {
 		
-		 weekOnePanel    = new WeekOnePanel(this.season);	 
+		 weekOnePanel    = new WeekOnePanel(this.season);	
 		 weekTwoPanel    = new WeekTwoPanel(this.season);	 
 		 weekThreePanel  = new WeekThreePanel(this.season);
 		 weekFourPanel   = new WeekFourPanel(this.season);
@@ -263,6 +260,7 @@ public class ScoresPanel extends JPanel implements ActionListener {
 		weekEighthPanel.addGameInfo(season);
 		weekNinePanel.addGameInfo(season);
 		weekTenPanel.addGameInfo(season);
+		
 	}
 	
 	
