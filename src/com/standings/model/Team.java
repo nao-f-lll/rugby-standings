@@ -76,6 +76,16 @@ public class Team implements Serializable{
 	        this.jugadoresAnteriores = new ArrayList<>();
 	    }
 	    
+	    public Team(String name, ImageIcon escudo, String ciudad, Estadio estadio, int fundacion, ArrayList<Jugador> jugadoresActuales, ArrayList<Jugador> jugadoresAnteriores) {
+	        this.name = name;
+	        this.escudo = escudo;
+	        this.ciudad = ciudad;
+	        this.estadio = estadio;
+	        this.fundacion = fundacion;
+	        this.jugadores = jugadoresActuales;
+	        this.jugadoresAnteriores = jugadoresAnteriores;
+	    }
+	    
 	    // getters y setters
 	    
 	    /**
@@ -133,6 +143,10 @@ public class Team implements Serializable{
 
 		public ArrayList<Jugador> getJugadores() {
 			return jugadores;
+		}
+		
+		public ArrayList<Jugador> getJugadoresAnteriores() {
+			return jugadoresAnteriores;
 		}
 
 		public void addJugador(Jugador jugador) {
@@ -253,7 +267,24 @@ public class Team implements Serializable{
 	    public void decrementGamesPlayed() { gamesPlayed--; }
 
 	    
-	    /**
+	    
+	    
+	    public void setWins(int wins) {
+			this.wins = wins;
+		}
+
+
+		public void setLosses(int losses) {
+			this.losses = losses;
+		}
+
+
+		public void setTies(int ties) {
+			this.ties = ties;
+		}
+
+
+		/**
 	     * Representación en cadena (String) del equipo.
 	     * 
 	     * @return Nombre del equipo.

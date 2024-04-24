@@ -160,24 +160,18 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         	   Season lastSeason = seasons.get(seasons.size() - 2);
         	   lastSeason.setState("finalizada");
                season = new Season(lastSeason.getId() + 1,lastSeason.getYear() + 1, "actual", weeks, teams, games);
-           } else {
-        	   // user should select the year//////
-        	   /////
-        	   /////
-        	   /////
-        	   ///
-        	   //season = new Season(1, 2023, "actual", weeks, teams, games);
-              
-       		ArrayList<Team> futureTeams = new ArrayList<>();
-			ArrayList<Game>  futureGames = new ArrayList<>();
-			ArrayList<Week>  futureweeks = new ArrayList<>();
+           } else {           
+       		//ArrayList<Team> futureTeams = new ArrayList<>();
+			//ArrayList<Game>  futureGames = new ArrayList<>();
+			//ArrayList<Week>  futureweeks = new ArrayList<>();
                
-            futureSeason = new Season(1, 2024,  "proximamente", futureweeks, futureTeams, futureGames);
+            //futureSeason = new Season(1, 2024,  "proximamente", futureweeks, futureTeams, futureGames);
            }
         
           //seasons.add(season);
-          seasons.add(futureSeason);
-          hasSeasondataCHanged = true;
+         // seasons.add(futureSeason);
+         
+          //hasSeasondataCHanged = true;
 
     }
     
@@ -242,11 +236,18 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 
         ///////////////////////////////////////////
      
-
-
-        
         mainPanel.add(scoresPanel, BorderLayout.CENTER);
         scoresPanel.add(panelButton);
+        
+        if (isDataBaseEmpty) {
+        	moveUserToSeasonManagementPanel();
+        }
+        
+    
+
+       
+        
+       
     }
     /**
      * Inicializa los botones de la interfaz de usuario.
@@ -388,6 +389,31 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
             showPanel(panelToShow);
         }
     	
+    }
+    
+    
+    private void moveUserToSeasonManagementPanel() {
+    	
+    	Map<JButton, JPanel> buttonPanelMap = new HashMap<>();
+        buttonPanelMap.put(goToScoresButton, scoresPanel);
+        buttonPanelMap.put(goToStandingButton, standingsPanel);
+       buttonPanelMap.put(goToTeamsManagementButton, teamsPanel);
+       buttonPanelMap.put(goToUpdateDataButton, updateDataPanel);
+       buttonPanelMap.put(goToSeasonsMangementButton, seasonsManagementPanel);
+       buttonPanelMap.put(goToPlayersMangementButton, playersManagementPanel);
+       
+    	
+        for (JButton button : buttonPanelMap.keySet()) {
+            button.setBorder(null);
+        }
+
+        JButton clickedButton = goToSeasonsMangementButton;
+        JPanel panelToShow = seasonsManagementPanel;
+
+        if (panelToShow != null) {
+            clickedButton.setBorder(new CustomBorder(25));
+            showPanel(panelToShow);
+        }
     }
     
 
