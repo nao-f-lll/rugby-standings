@@ -80,10 +80,12 @@ public class TeamsPanel extends JPanel implements ActionListener {
 	private final String FILE_PATH = "data/objects/teams.ser";
 	private Season season;
 	private JLabel playerListLabel;
+	private PlayersPanel playersPanel;
+	private SeasonsManagement seasonsManagementPanel;
     
-    public TeamsPanel( JPanel panelButton, ArrayList<Team> allTeams) {
+    public TeamsPanel(JPanel panelButton, ArrayList<Team> allTeams) {
     	this.panelButton = panelButton;
-    	
+    		
     	File file = new File(FILE_PATH);
     	fileIo = new FileIO<>(); 
     	
@@ -110,6 +112,10 @@ public class TeamsPanel extends JPanel implements ActionListener {
     }
     
   
+    
+    public void setPlayersManagementPanel(PlayersPanel playersPanel) {
+    	this.playersPanel = playersPanel;
+    }
     
     private void initializeCreatNewTeamPanel() {
     	 addTeamPanel = new JPanel();
@@ -369,6 +375,11 @@ public class TeamsPanel extends JPanel implements ActionListener {
 			});
 		}
 	
+	
+	public void setSeasonsManagementPanel(SeasonsManagement seasonsManagementPanel) {
+		this.seasonsManagementPanel = seasonsManagementPanel;
+	}
+	
     
 
 	@Override
@@ -404,23 +415,20 @@ public class TeamsPanel extends JPanel implements ActionListener {
 						createTable();	    
 						resetFields();
 						saveData();
-						
+						this.playersPanel.repaintTeamsComboBoxes();
+						this.seasonsManagementPanel.repaintFirstList();
 						fileIo.writeToFile(Time.getCurrentTime(), "data/logs/team_logs.cvs", "Equipo añadido", nombre);
-
 				} else {
 					JOptionPane.showMessageDialog(this, "El equipo existe, inserta un equipo nuevo",  "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
 				JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos",  "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		
-     
-					
+			
 		} else if (e.getSource() == updateTeamButton) {
 					
 			int selectedIndex = table.getSelectedRow();
-			
-			
+						
 			if (selectedIndex == -1) {
 				JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para actualizar",  "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -432,10 +440,12 @@ public class TeamsPanel extends JPanel implements ActionListener {
 			fileIo.writeToFile(Time.getCurrentTime(), "data/logs/team_logs.cvs", "Equipo actualizado", allTeams.get(selectedIndex).getName());
 			createTable();	    
 			saveData();
+			this.playersPanel.repaintTeamsComboBoxes();
+			this.seasonsManagementPanel.repaintFirstList();
+
 			}
 			
-			
-			
+		
 		} else if (e.getSource() == deleteTeamButton) {
 			int selectedIndex = table.getSelectedRow();
 			
@@ -447,6 +457,8 @@ public class TeamsPanel extends JPanel implements ActionListener {
 				allTeams.remove(selectedIndex);	
 				resetFields();
 				saveData();
+				this.playersPanel.repaintTeamsComboBoxes();
+				this.seasonsManagementPanel.repaintFirstList();
 			}	
 			
 		} 

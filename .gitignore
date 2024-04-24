@@ -5,6 +5,7 @@
 /.settings/
 /bin/
 /.idea/
-/src/log
-/data
+/src/log/
+/data/logs/*
+/data/objects/*
 /db

@@ -32,8 +32,6 @@ public class Jugador implements Serializable{
 	}
 	
 	
-	
-	
 
 	public Nationality getNationality() {
 		return nationality;

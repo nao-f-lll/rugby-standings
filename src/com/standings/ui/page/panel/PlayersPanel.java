@@ -332,30 +332,11 @@ public class PlayersPanel extends JPanel implements ActionListener {
         playerBirthYearComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	}
 	
-	private void initializeComboBoxes() {
+	public void initializeComboBoxes() {
 		
 		refreshTeamsComboBoxModel();
-		
-		selectTeamComboBox = new JComboBox<>(teamsComboBoxModel);
-		selectTeamComboBox.addActionListener(this); 
-	    selectTeamComboBox.setBounds(185, 114, 200, 25);
-	    selectTeamComboBox.setFocusable(false);
-	    selectTeamComboBox.setBackground(Color.LIGHT_GRAY);
-	    selectTeamComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-	    selectTeamComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-	    playerTablePanel.add(selectTeamComboBox);
-
-        teamComboBox = new JComboBox<>(teamsComboBoxModelForPlayerRegister);
-        teamComboBox.addActionListener(this); 
-        teamComboBox.setBounds(428, 339, 200, 25);
-        teamComboBox.setFocusable(false);
-        teamComboBox.setBackground(Color.LIGHT_GRAY);
-        teamComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        teamComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        registerPanel.add(teamComboBox);
-           
-        teamComboBox.setSelectedIndex(teamComboBox.getItemCount() - 1); 
-    	selectTeamComboBox.setSelectedIndex(selectTeamComboBox.getItemCount() - 1);
+				
+		createComboBoxes();
     	
 		seasonsComboBoxModel = new DefaultComboBoxModel<>();
 		
@@ -374,16 +355,77 @@ public class PlayersPanel extends JPanel implements ActionListener {
 	     playerTablePanel.add(selectSeasonComboBox);  
 	}
 	
-	public void refreshTeamsComboBoxModel() {		
+	private void refreshTeamsComboBoxModel() {	
+		
 		teamsComboBoxModel = new DefaultComboBoxModel<>();
 		teamsComboBoxModelForPlayerRegister = new DefaultComboBoxModel<>();
 		for (Team team : allTeams) {
 			teamsComboBoxModel.addElement(team);
 			teamsComboBoxModelForPlayerRegister.addElement(team);			
 		}
+
+	}
+
+	
+	
+	public void repaintTeamsComboBoxes() {
 		
+	    teamsComboBoxModel.removeAllElements();
+	    teamsComboBoxModelForPlayerRegister.removeAllElements(); 
+
+	    for (Team team : allTeams) {
+	        teamsComboBoxModel.addElement(team);
+	        teamsComboBoxModelForPlayerRegister.addElement(team);			
+	    }
+
+	    teamComboBox.repaint();
+	    selectTeamComboBox.repaint();
+        
+        teamComboBox.setSelectedIndex(teamComboBox.getItemCount() - 1); 
+    	selectTeamComboBox.setSelectedIndex(selectTeamComboBox.getItemCount() - 1);
 	}
 	
+	public void repaintSeasonComboBoxes() {
+		
+		seasonsComboBoxModel.removeAllElements();
+
+	    for (Season season : seasons) {
+	    	seasonsComboBoxModel.addElement(season);
+	    }
+
+	    selectSeasonComboBox.repaint();
+        
+	    selectSeasonComboBox.setSelectedIndex(selectSeasonComboBox.getItemCount() - 1); 
+	}
+	
+	
+
+	
+	private void createComboBoxes() {
+		System.out.println("Dentro de createComboBox");
+		
+		selectTeamComboBox = new JComboBox<>(teamsComboBoxModel);
+		selectTeamComboBox.addActionListener(this); 
+	    selectTeamComboBox.setBounds(185, 114, 200, 25);
+	    selectTeamComboBox.setFocusable(false);
+	    selectTeamComboBox.setBackground(Color.LIGHT_GRAY);
+	    selectTeamComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	    selectTeamComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	    playerTablePanel.add(selectTeamComboBox);
+
+        teamComboBox = new JComboBox<>(teamsComboBoxModelForPlayerRegister);
+        teamComboBox.addActionListener(this); 
+        teamComboBox.setBounds(428, 339, 200, 25);
+        teamComboBox.setFocusable(false);
+        teamComboBox.setBackground(Color.LIGHT_GRAY);
+        teamComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        teamComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        registerPanel.add(teamComboBox);
+              
+        teamComboBox.setSelectedIndex(teamComboBox.getItemCount() - 1); 
+    	selectTeamComboBox.setSelectedIndex(selectTeamComboBox.getItemCount() - 1);
+	}
+
 	private void populateTable(Team team) {
   
 	    datosTabla.clear(); // Clear existing data
@@ -479,20 +521,27 @@ public class PlayersPanel extends JPanel implements ActionListener {
 					JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para actualizar",  "Error al actualizar", JOptionPane.ERROR_MESSAGE);
 			 
 				} else {
-					Team team = (Team) teamComboBox.getSelectedItem();
-					team.getJugadores().get(selectedIndex).setNombre(nameTextField.getText());					
-					team.getJugadores().get(selectedIndex).setEquipo(team);				
-					team.getJugadores().get(selectedIndex).setNationality(( Nationality )nationalityComboBox.getSelectedItem());;
-					team.getJugadores().get(selectedIndex).setFotoPersonal((ImageIcon) fotoPersonalPreviewLable.getIcon());
+					Team newTeam = (Team) teamComboBox.getSelectedItem();
+					Team oldTeam = (Team) selectTeamComboBox.getSelectedItem();
 					
-					int day = (int) playerBirthDayComboBox.getSelectedItem();		 
+					Jugador jugador = oldTeam.getJugadores().get(selectedIndex);
+					oldTeam.removeJugador(jugador);
+					
+					jugador.setNombre(nameTextField.getText());		
+					
+					jugador.setEquipo(newTeam);					
+					newTeam.addJugador(jugador);	
+					
+					jugador.setNationality(( Nationality )nationalityComboBox.getSelectedItem());;
+					jugador.setFotoPersonal((ImageIcon) fotoPersonalPreviewLable.getIcon());
+										
+					 int day = (int) playerBirthDayComboBox.getSelectedItem();		 
 					 int month = (int) playerBirthMonthComboBox.getSelectedItem();
 					 int year = (int) playerBirthYearComboBox.getSelectedItem();   
 					 Fecha fechaDeNacemiento = new Fecha(day, month, year);	 		
-					team.getJugadores().get(selectedIndex).setFechaDeNacemiento(fechaDeNacemiento);;
-
+					 jugador.setFechaDeNacemiento(fechaDeNacemiento);;
 	
-				 	selectTeamComboBox.setSelectedItem(team);
+				 	selectTeamComboBox.setSelectedItem(newTeam);
 				}
 		 } else if (e.getSource() == deletePlayerButton) {
 			 int selectedIndex = table.getSelectedRow();
@@ -507,15 +556,13 @@ public class PlayersPanel extends JPanel implements ActionListener {
 				}
 		 }
 	}
-	
-	
+		
 	private void resetFields() {
 		nameTextField.setText("");
 		yearDefaultComboBox.setSelectedItem(1900);  
 		monthDefaultComboBox.setSelectedItem(1) ;
 	    dayDefaultComboBox.setSelectedItem(1);
 	    nationalityComboBox.setSelectedItem("AFGANISTÁN");
-	    teamComboBox.setSelectedItem(null);
 	    fotoPersonalPreviewLable.setIcon(new ImageIcon(SportsDashboardPage.class.getResource("/images/escudoGenerico.png")));
 	}
 	

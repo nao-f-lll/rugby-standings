@@ -83,6 +83,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
     private StandingsPanel standingsPanel;
 	private FileIO<Season> fileIo;
 	private JButton exportSeasonsButton;
+	private PlayersPanel playersPanel;
     
     
 /**
@@ -242,12 +243,12 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	 	                    scoresPanel.renderAllWeeksScores(season);
 	 	        	        updateDataPanel.updateData(season.getTeams(), season.getGames(), season);
 	 	        	        listTwoModel.clear();
-	 	        	       listOneModel.clear();
+	 	        	        listOneModel.clear();
 	 	        	        for (int i = 0; i < season.getTeams().size(); i++) {	
 	 	        	        	listTwoModel.addElement(season.getTeams().get(i).getName());
 	 	        	        }
 	 	        	        
-	 	        	       String[] tempTeamsNames = new String[6];
+	 	        	        String[] tempTeamsNames = new String[6];
 	 	        	        for (int i = 0; i < season.getTeams().size(); i++) {
 	 	        	        	tempTeamsNames[i] = season.getTeams().get(i).getName();
 	 	        	        }
@@ -390,8 +391,6 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        exportSeasonsButton.addActionListener(this);
 	        modifySeasonPanel.add(exportSeasonsButton);
 	    	
-	        
-	        
 	       
 	        	addRowToTable(true);
 	        
@@ -463,6 +462,15 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		}
 	}
 	
+	public void repaintFirstList() {	
+		listOneModel.removeAllElements();
+
+	    for (Team team : allTeams) {
+	    	listOneModel.addElement(team.getName());;
+	    }
+	    listOne.repaint();
+    }
+	
 	
 	/**
 	 * Borra la temporada seleccionada si está en estado "actual".
@@ -480,10 +488,15 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 			  seasons.get(seasons.size() - 1).setId(selectedRow + 1);
 	          addRowToTable(true);
 	          SportsDashboardPage.setHasSeasonDataChanged(true);
-		  
+	          this.playersPanel.repaintSeasonComboBoxes();
 		  }
 	}
 	
+	
+	
+	public void setPlayersManagementPanel(PlayersPanel playersPanel) {
+		this.playersPanel = playersPanel;
+	}
 	
 	/**
 	 * Finaliza la temporada seleccionada si está en estado "actual".
@@ -631,6 +644,8 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		        	seasons.add(futureSeason);
 		        	addRowToTable(true); 
 					fileIo.writeToFile(Time.getCurrentTime(), "data/logs/season_logs.cvs", "Temporada nueva", newSeason.getId(), newSeason.getYear());
+				
+					this.playersPanel.repaintSeasonComboBoxes();
 				} else if (seasons.size() == 1) {
 						
 						System.out.println("parte 2");
@@ -659,7 +674,8 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 						seasons.add(futureSeason);
 						addRowToTable(true); 
 						fileIo.writeToFile(Time.getCurrentTime(), "data/logs/season_logs.cvs", "Temporada nueva", newSeason.getId(), newSeason.getYear());
-					} else {
+						this.playersPanel.repaintSeasonComboBoxes();	
+				} else {
 						System.out.println("parte 3");
 						
 						Season newSeason = new Season(1, 2024, "actual", weeks, teams, games);					
@@ -683,7 +699,8 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 						seasons.add(futureSeason);
 						addRowToTable(true); 
 						fileIo.writeToFile(Time.getCurrentTime(), "data/logs/season_logs.cvs", "Temporada nueva", newSeason.getId(), newSeason.getYear());
-					}
+						this.playersPanel.repaintSeasonComboBoxes();	
+				}
 		    	}
 		    }else {
 				userDialog("Tienes que selecionar seis equipos para crear una nueva temporada", "Creacion de temporada", JOptionPane.WARNING_MESSAGE);
