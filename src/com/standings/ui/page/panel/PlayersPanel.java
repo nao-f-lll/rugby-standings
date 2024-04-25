@@ -44,7 +44,6 @@ public class PlayersPanel extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 4497166479859458705L;
-	private JPanel panelButton;
 	private JPanel registerPanel;
 	private JLabel fotoPersonalPreviewLable;
 	private JLabel playerNameLabel;
@@ -87,8 +86,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
   	private String imagePath;
     
 	
-	public PlayersPanel(JPanel panelButton, ArrayList<Team> allTeams, ArrayList<Season> seasons) {
-		this.panelButton = panelButton;
+	public PlayersPanel( ArrayList<Team> allTeams, ArrayList<Season> seasons) {
 		this.allTeams = allTeams;
 		this.seasons = seasons;
 		initializePlayersPanels(); 	
@@ -189,11 +187,16 @@ public class PlayersPanel extends JPanel implements ActionListener {
 	    
 	    creatEmptyTable();
 	    initializeComboBoxes();
+	
+	    
+	    /*
 	    
 	    if (selectTeamComboBox.getSelectedItem() != null) {
 	    	//populateTable(selectTeamComboBox.getSelectedIndex());
 	    }
-	    	     
+	    
+	    */
+	    
 	     playerListLabel = new JLabel("Lista de jugadores");
 	     playerListLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 	     playerListLabel.setBounds(350, 10, 316, 68);
@@ -333,10 +336,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
 	}
 	
 	public void initializeComboBoxes() {
-		
-		refreshTeamsComboBoxModel();
-				
-		createComboBoxes();
+	
     	
 		seasonsComboBoxModel = new DefaultComboBoxModel<>();
 		
@@ -353,12 +353,19 @@ public class PlayersPanel extends JPanel implements ActionListener {
 	     selectSeasonComboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	     selectSeasonComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	     playerTablePanel.add(selectSeasonComboBox);  
+	     
+	 	
+			refreshTeamsComboBoxModel();
+					
+			createComboBoxes();
 	}
 	
 	private void refreshTeamsComboBoxModel() {	
 		
 		teamsComboBoxModel = new DefaultComboBoxModel<>();
 		teamsComboBoxModelForPlayerRegister = new DefaultComboBoxModel<>();
+	
+	
 		for (Team team : allTeams) {
 			teamsComboBoxModel.addElement(team);
 			teamsComboBoxModelForPlayerRegister.addElement(team);			
@@ -366,8 +373,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
 
 	}
 
-	
-	
+
 	public void repaintTeamsComboBoxes() {
 		
 	    teamsComboBoxModel.removeAllElements();
@@ -521,10 +527,11 @@ public class PlayersPanel extends JPanel implements ActionListener {
 					JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para actualizar",  "Error al actualizar", JOptionPane.ERROR_MESSAGE);
 			 
 				} else {
-					Team newTeam = (Team) teamComboBox.getSelectedItem();
+					Team newTeam = (Team) teamComboBox.getSelectedItem();				
 					Team oldTeam = (Team) selectTeamComboBox.getSelectedItem();
 					
 					Jugador jugador = oldTeam.getJugadores().get(selectedIndex);
+					
 					oldTeam.removeJugador(jugador);
 					
 					jugador.setNombre(nameTextField.getText());		

@@ -27,7 +27,6 @@ import com.standings.model.User;
 import com.standings.util.FileIO;
 import com.standings.util.SignUpValidationUtil;
 import com.standings.util.Time;
-import javax.swing.JComboBox;
 
 /**
  * La clase SignUpPage implementa la interfaz grafica y utiliza la logica de {@link SignUpValidationUtil}

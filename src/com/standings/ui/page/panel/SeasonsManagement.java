@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -29,9 +28,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import com.standings.model.Estadio;
 import com.standings.model.Game;
-import com.standings.model.Jugador;
 import com.standings.model.Season;
 import com.standings.model.Team;
 import com.standings.model.Week;

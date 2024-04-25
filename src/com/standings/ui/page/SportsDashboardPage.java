@@ -72,7 +72,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
 	private FileIO<Season> fileIo;
 	private static boolean hasSeasondataCHanged;
 	private boolean isDataBaseEmpty;
-	private  Season futureSeason;
+	
 	
 	
 	/////////////////////////////////////////
@@ -223,7 +223,7 @@ public class SportsDashboardPage extends ParentFrame implements ActionListener, 
         	updateDataPanel = new UpdateDataPanel(standingsPanel, scoresPanel);      
         }
         seasonsManagementPanel = new SeasonsManagement(updateDataPanel, goToUpdateDataButton, goToScoresButton, goToStandingButton, allTeams, seasons, standingsPanel, scoresPanel);
-        playersManagementPanel = new PlayersPanel(panelButton, allTeams, seasons);
+        playersManagementPanel = new PlayersPanel(allTeams, seasons);
         
         teamsPanel.setPlayersManagementPanel(playersManagementPanel);
         seasonsManagementPanel.setPlayersManagementPanel(playersManagementPanel);
