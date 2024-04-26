@@ -504,8 +504,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	    int selectedRow = table.getSelectedRow();
 	    Season season = seasons.get(selectedRow);
 	    boolean isSeasonFinished = true;
-	    
-	 /*   
+	      
 	    for (int i = 0; i < season.getTeams().size(); i++) {
 	    	if (season.getTeams().get(i).getGamesPlayed() < 10) {
 	    		userDialog("No se puede finalizar la temporada. los partidos aun no estan terminados", "Finalizar temporada", JOptionPane.WARNING_MESSAGE);
@@ -525,19 +524,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 	        }
 	    }
 	    
-	    */
-	    ///////////////////////////  temp
-	    
-
-
-	        int result = userDialogOkCancel("¿Estas seguro de que quieres finalizar la temporada?", "Finalizar temporada", JOptionPane.WARNING_MESSAGE);
-	        if (result == JOptionPane.OK_OPTION) {
-				fileIo.writeToFile(Time.getCurrentTime(), "data/logs/season_logs.cvs", "Temporada finalizada", season.getId(), season.getYear());
-	            season.setState("finalizada");
-	            addRowToTable(false);
-	            SportsDashboardPage.setHasSeasonDataChanged(true); 
 	    }
-	}
 	
 
 	
@@ -601,7 +588,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 		    	  boolean isSeasonFinished = true;
 				 //  int selectedRow = table.getSelectedRow();
 				
-		    	  /*
+		    	  
 				   if (seasons.size() >= 2) {
 					   for (int i = 0; i < seasons.get(i).getTeams().size(); i++) {
 					    	if (seasons.get(i).getTeams().get(i).getGamesPlayed() < 10) {
@@ -612,7 +599,7 @@ public class SeasonsManagement extends JPanel implements ActionListener{
 					    	}
 					    }
 				   }
-				   */
+				   
 				    
 				   
 		    	
