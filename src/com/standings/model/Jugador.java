@@ -26,6 +26,17 @@ public class Jugador implements Serializable{
 		this.fechaDeNacemiento = fechaDeNacemiento;
 		this.nationality = nationality;
 	}
+	
+	
+	public Jugador(Jugador jugador) {
+		
+		this.nombre = jugador.getNombre();
+		fotosPersonales = jugador.getFotosPersonales();
+		this.fotosPersonales.add(jugador.getFotosPersonales().get(jugador.getFotosPersonales().size() - 1));
+		this.equipos.add(jugador.getEquipo());
+		this.fechaDeNacemiento = jugador.getFechaDeNacemiento();
+		this.nationality = jugador.getNationality();
+	}
 
 	public String getNombre() {
 		return nombre;

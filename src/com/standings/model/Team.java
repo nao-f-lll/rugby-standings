@@ -300,6 +300,23 @@ public class Team implements Serializable{
 			return Objects.hash(name);
 		}
 
+		
+		public void clonePlayers() {
+			
+			if (jugadoresAnteriores.size() != 0) {
+				for (int i = 0; i < jugadores.size(); i++) {
+					for (int j = 0; j < jugadoresAnteriores.size(); j++) {
+						if (!(jugadores.get(i).getNombre().equals(jugadoresAnteriores.get(j).getNombre()))) {
+							jugadoresAnteriores.add(jugadores.get(i));
+						}
+					}	
+				}
+			} else {
+				for (int i = 0; i < jugadores.size(); i++) {
+						jugadoresAnteriores.add(jugadores.get(i));
+					}	
+			}		
+		}
 
 		@Override
 		public boolean equals(Object obj) {

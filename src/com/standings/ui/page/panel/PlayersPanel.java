@@ -347,6 +347,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
 		
 	     selectSeasonComboBox = new JComboBox<>(seasonsComboBoxModel);
 	     selectSeasonComboBox.setSelectedIndex(selectSeasonComboBox.getItemCount() - 1);	
+	     selectSeasonComboBox.addActionListener(this); 
 	     selectSeasonComboBox.setBounds(608, 116, 200, 25);
 	     selectSeasonComboBox.setFocusable(false);
 	     selectSeasonComboBox.setBackground(Color.LIGHT_GRAY);
@@ -392,16 +393,19 @@ public class PlayersPanel extends JPanel implements ActionListener {
 	}
 	
 	public void repaintSeasonComboBoxes() {
-		
+		selectSeasonComboBox.removeActionListener(this);
 		seasonsComboBoxModel.removeAllElements();
+		
 
 	    for (Season season : seasons) {
 	    	seasonsComboBoxModel.addElement(season);
+	    	System.out.println(season.getYear());
 	    }
 
 	    selectSeasonComboBox.repaint();
         
-	    selectSeasonComboBox.setSelectedIndex(selectSeasonComboBox.getItemCount() - 1); 
+	   	selectSeasonComboBox.setSelectedIndex(selectSeasonComboBox.getItemCount() - 1); 
+	    selectSeasonComboBox.addActionListener(this);
 	}
 	
 	
@@ -432,12 +436,26 @@ public class PlayersPanel extends JPanel implements ActionListener {
     	selectTeamComboBox.setSelectedIndex(selectTeamComboBox.getItemCount() - 1);
 	}
 
-	private void populateTable(Team team) {
+	private void populateTable(Team team, Season season) {
   
-	    datosTabla.clear(); // Clear existing data
-	    
-	    	 ArrayList<Jugador> jugadores = team.getJugadores();
-	 	    
+	    datosTabla.clear(); 
+	    ArrayList<Jugador> jugadores;
+	    	 if (seasons.size() != 0) {
+	    		 if (!season.getState().equals("proximamente")) {
+	    			 jugadores = team.getJugadoresAnteriores();
+	    			 System.out.println("anteriores");
+	    		 } else {
+	    			 jugadores = team.getJugadores();
+	    		 }
+	    		
+	    		
+	    	 } else  {
+	    			jugadores = team.getJugadores();
+	    			 System.out.println("actuales");
+	    	 }
+	    	
+	    	
+	    	 
 	 	    for (Jugador jugador : jugadores) {
 	 	        Vector<Object> fila = new Vector<>();
 	 	        fila.add(jugador.getNombre());
@@ -448,7 +466,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
 	 	        datosTabla.add(fila);
 	 	    }
 	   
-	    // Update the existing model with the new data
+	   
 	    model.setDataVector(datosTabla, columnas);
 	    table.setModel(model);
 	    
@@ -505,7 +523,7 @@ public class PlayersPanel extends JPanel implements ActionListener {
 		 } else if (e.getSource() == selectTeamComboBox) { 
 			 
 			 if (selectTeamComboBox.getSelectedItem() != null) {
-				 populateTable((Team) selectTeamComboBox.getSelectedItem());
+				 populateTable((Team) selectTeamComboBox.getSelectedItem(), (Season) selectSeasonComboBox.getSelectedItem());
 			 }
 		 } else if (e.getSource() == fotoPersonalButton) {
 			 
@@ -527,18 +545,21 @@ public class PlayersPanel extends JPanel implements ActionListener {
 					JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para actualizar",  "Error al actualizar", JOptionPane.ERROR_MESSAGE);
 			 
 				} else {
-					Team newTeam = (Team) teamComboBox.getSelectedItem();				
+					
 					Team oldTeam = (Team) selectTeamComboBox.getSelectedItem();
+					Team newTeam = (Team) teamComboBox.getSelectedItem();	
+					
 					
 					Jugador jugador = oldTeam.getJugadores().get(selectedIndex);
 					
-					oldTeam.removeJugador(jugador);
-					
+					if (newTeam != oldTeam) {					
+						oldTeam.removeJugador(jugador);
+						
+						jugador.setEquipo(newTeam);
+						newTeam.addJugador(jugador);
+					}
+								
 					jugador.setNombre(nameTextField.getText());		
-					
-					jugador.setEquipo(newTeam);					
-					newTeam.addJugador(jugador);	
-					
 					jugador.setNationality(( Nationality )nationalityComboBox.getSelectedItem());;
 					jugador.setFotoPersonal((ImageIcon) fotoPersonalPreviewLable.getIcon());
 										
@@ -561,6 +582,23 @@ public class PlayersPanel extends JPanel implements ActionListener {
 					team.getJugadores().remove(selectedIndex);
 					resetFields();
 				}
+		 } else if (e.getSource() == selectSeasonComboBox) {
+			 		
+			 Season season = (Season) selectSeasonComboBox.getSelectedItem();
+			 ArrayList<Team> seasonteams = season.getTeams();
+			 teamsComboBoxModel.removeAllElements();
+			 if (season.getState().equals("proximamente")) {
+				 
+				 for (Team team : allTeams) {
+				        teamsComboBoxModel.addElement(team);		
+				    } 
+			 } else {
+				 for (Team team : seasonteams) {
+				        teamsComboBoxModel.addElement(team);		
+				    } 
+			 }
+			   
+
 		 }
 	}
 		
