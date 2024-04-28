@@ -1,7 +1,8 @@
 
 <h1 align="center">  rugby season data management </h1>
+<!--
 <p align="center">
-<!-- <picture>
+ <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/nao-f-lll/NFL-Standings/blob/main/.github/readme-images/app-icon.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/nao-f-lll/NFL-Standings/blob/main/.github/readme-images/dark-app-icon.png">
   <img src="https://github.com/nao-f-lll/NFL-Standings/blob/main/.github/readme-images/app-icon.png" alt="app icon" width="200">
@@ -9,10 +10,7 @@
    -->
 </p>
 
-*
- | Windows                                                                                                       |  Linux                           | Docker | Stable Release| Preview Release |
-|------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|-------|-----| ----------|
-| [![Static Badge](https://img.shields.io/badge/Stable-Download-0078D4?logo=Windows)](https://github.com/nao-f-lll/NFL-Standings/releases/download/v0.6-alpha/Standings_0.6_x64_windows_portable.zip) |  [![Static Badge](https://img.shields.io/badge/Stable-Download-FCC624?logo=Linux)](https://github.com/nao-f-lll/NFL-Standings/releases/download/v0.3-beta/Standings_0.3_x64_linux_portable.tar) |    [![Static Badge](https://img.shields.io/badge/Docker-Download-2496ED?logo=Docker)](https://hub.docker.com/r/naooff/nfl-standings) |      [![Static Badge](https://img.shields.io/badge/Stable-Release-21B352?logo=sellfy)](https://github.com/nao-f-lll/NFL-Standings/releases/tag/v0.6-alpha)           |            [![Static Badge](https://img.shields.io/badge/Preview-Release-DA552F?logo=producthunt)]()       
+     
 
 
 <p>
